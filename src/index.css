@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+.error {
+    /* background-color: #ed1a6f !important; */
+    border-color: #ed1a6f !important;
+}

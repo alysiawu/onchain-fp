@@ -606,7 +606,7 @@ const loginemail = localStorage.getItem('fp_email')
               />
             </FormItem>
 
-            <FormItem label="Calendarly Link *">
+            <FormItem label="Calendly Link *">
               <Input 
                 className={errorInput.calendlyLink ? 'error' : ''}
                 defaultValue="" 

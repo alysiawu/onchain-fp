@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import axios from 'axios';
 import { Helmet } from "react-helmet";
-import { marketplace as marketplaceAddress, placeholderAvatar } from '../../utils/constants'
+import { marketplace as marketplaceAddress } from '../../utils/constants'
 import marketplaceAbi from '../../artifacts/marketplace.json'
 
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
@@ -29,6 +29,8 @@ import { useAccountContext } from "contexts/accountContext";
 export interface AuthorPageProps {
   className?: string;
 }
+
+const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
 
 const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   const { currentAccount } = useAccountContext()
@@ -192,11 +194,11 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
               />
 
-              <FollowButton
+              {/* <FollowButton
                 isFollowing={false}
                 fontSize="text-sm md:text-base font-medium"
                 sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
-              />
+              /> */}
             </div>
           </div>
         </div>

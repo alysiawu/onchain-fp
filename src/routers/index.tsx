@@ -21,6 +21,7 @@ import NftDetailPage2 from "containers/NftDetailPage/NftDetailPage2";
 import PageCollection from "containers/PageCollection";
 import PageSearch from "containers/PageSearch";
 import JobsSearch from "containers/JobsSearch";
+import TalentStart from "containers/TalentStart";
 
 import PageUploadItem from "containers/PageUploadItem";
 import CreateNFTLock from "containers/CreateNFTLock";
@@ -34,6 +35,7 @@ import PageHome2 from "containers/PageHome/PageHome2";
 // import Create from "containers/Create/Create";
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
 import InterviewerOnboarding from "containers/InterviewerOnboarding";
+import TalentProfilePage from "containers/AuthorPage/TalentProfilePage";
 
 export const pages: Page[] = [
   // { path: "/", exact: true, component: PageHome2 },
@@ -77,6 +79,13 @@ const App = () => {
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/quick-apply" element={<QuickApplyTalent />} />
         <Route path="/talent-pitch" element={<TalentPitch />} />
+        <Route path="/get-started" element={<TalentStart />} />
+        <Route path="/:avatarString" element={<TalentProfilePage />} />
+
+        <Route path="/profile" element={<AuthorPage />} />
+
+
+
         <Route path="/sucess-talent" element={<QuickApplyTalent />} />
         <Route path="/create-onchain-idenity" element={<CreateNFTLock />} />
 
@@ -87,7 +96,10 @@ const App = () => {
         <Route path="/nft-detail/:tokenId" element={<NftDetailPage />} />
         <Route path="/connect-wallet" element={<PageConnectWallet />} />
         <Route path="/search" element={<PageSearch />} />
-        <Route path="/profile" element={<AuthorPage />} />
+    
+
+        <Route path="/talent-profile" element={<AuthorPage />} />
+
         <Route path="/create-nft" element={<PageUploadItem />} />
       
         <Route path="/linkedin" element={<LinkedInCallback />} />

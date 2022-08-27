@@ -17,6 +17,12 @@ type EventName = 'PostJobPage_Visted' | 'JobForm_Submiting'
 | 'InterviewerApplyPage_Submitting'
 | 'InterviewerApplyPage_Success'
 
+
+| 'TalentOnboardPage_Visited'
+| 'TalentOnboardPage_Submitting'
+| 'TalentOnboardPage_Success'
+
+
 export const trackEvent = (eventName: EventName, metadata: any) => {
     if ((window as any).analytics) {
         // let position

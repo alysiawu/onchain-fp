@@ -1,25 +1,24 @@
 // import Label from "components/Label/Label";
 import React, { FC, useState } from "react";
 import { getDatabase, ref, set, onValue } from "firebase/database";
-import { TwitterShareButton, TwitterIcon } from "react-share";
 
-import Web3Modal from 'web3modal'
-import { useNavigate } from 'react-router-dom';
-import { ethers } from 'ethers'
+// import Web3Modal from 'web3modal'
+// import { useNavigate } from 'react-router-dom';
+// import { ethers } from 'ethers'
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import {
   marketplace as marketplaceAddress, 
   authorization,
-  // JobFamilies,
-  // Companies,
-  // Locations,
+//   JobFamilies,
+//   Companies,
+//   Locations,
   PFPs
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
 import loading from 'images/loading.gif'
-import marketplaceAbi from '../artifacts/marketplace.json'
+// import marketplaceAbi from '../artifacts/marketplace.json'
 
 // import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
@@ -30,12 +29,13 @@ import FormItem from "components/FormItem";
 // import { nftsImgs } from "contains/fakeData";
 import MySwitch from "components/MySwitch";
 // import ButtonSecondary from "shared/Button/ButtonSecondary";
-// import NcImage from "shared/NcImage/NcImage";
+import NcImage from "shared/NcImage/NcImage";
 // import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
 import NcModal from "shared/NcModal/NcModal";
 import { useFirebaseContext } from "contexts/firebaseContext";
 import { trackEvent } from "utils/tracking";
-
+import { TwitterIcon, TwitterShareButton } from "react-share";
+// import { input } from "@testing-library/user-event/dist/types/utils";
 
 export interface PageUploadItemProps {
   className?: string;
@@ -76,8 +76,24 @@ export interface PageUploadItemProps {
 //   url: 'https://ipfs.infura.io:5001/api/v0'
 // })
 
-const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
+const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
   // const navigate = useNavigate()
+  const db = getDatabase()
+  const {
+    email, 
+    photoUrl,
+    displayName,
+    uid,
+    signInWithGoogle
+  } = useFirebaseContext()
+  
+
+  trackEvent('TalentOnboardPage_Visited', {
+    email, 
+    uid,
+  })
+  
+
   const [showMintingModal, setShowMintingModal] = useState(false)
   const [showMintSuccessModal, setShowMintSuccessModal] = useState(false)
   const [mintSuccess, setMintSuccess] = useState(false)
@@ -88,31 +104,33 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
     chain: 'polygon',
     name: '', 
     phone: '', 
-    intro: '',
      //TODO dropdown
     jobFamily: '', 
     //TODO dropdown
     location: '',
-    email: '',
-    linkToSystemDesign: '',
-    linkToCoding: '',
+    email,
+    interviewerIntro: '',
+    hourlyRate: '',
+    calendlyLink: '',
+    Linkedin: '',
+    avatarString: '',
+    linkToResume: '',
     price: '', 
   })
 
-  const {
-    email, 
-    photoUrl,
-    displayName,
-    uid,
-    signInWithGoogle
-  } = useFirebaseContext()
-
-
-  trackEvent('TalentPitchPage_Visted', {
-    email, 
-    uid,
+  const [errorInput, updateErrorInput] = useState({ 
+    name: false, 
+    phone: false, 
+    email: false,
+    Linkedin: false,
+    avatarString: false,
+    avatarStringErrorMsg: '',
+    linkToResume: false,
+    interviewerIntro: false,
+    hourlyRate: false,
+    calendlyLink: false
   })
-  
+
 
   let client: IPFSHTTPClient | undefined;
   try {
@@ -137,14 +155,15 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
       //TODO dropdown
       location,
       email,
-      linkToSystemDesign,
-      linkToCoding,
+      Linkedin,
+      avatarString,
+      linkToResume,
       price,
 
       // image,
     } = formInput
     console.log('---formInput', formInput)
-    // if (!name || !phone || !price || !jobFamily || !email || !location) return
+    if (!name || !phone || !email) return
     /* first, upload to IPFS */
     const data = JSON.stringify({
       name, 
@@ -154,8 +173,9 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
       //TODO dropdown
       location,
       email,
-      linkToSystemDesign,
-      linkToCoding,
+      Linkedin,
+      avatarString,
+      linkToResume,
       price,
       image: selected.featuredImage
     })
@@ -215,32 +235,87 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
     )
   }
 
-  const [errorInput, updateErrorInput] = useState({ 
-    name: false, 
-    phone: false, 
-    intro: false,
-    linkToSystemDesign: false,
-    linkToCoding: false,
-  })
+  const checkIsAvarAvail = (avatarString: string) => {
 
-  const submitAsTalent = async () => {
+    // ref(db, 'users/' + avatarString), {
+    //     name,
+    //     email,
+    //     Linkedin,
+    //     phone,
+    //     linkToResume,
+    //     interviewerIntro,
+    //     hourlyRate,
+    //     calendlyLink,
+    //     avatarString,
+    //   }
+
+    const userRef = ref(db, 'users/' + avatarString);
+
+    console.log('--userRef', userRef)
+
+    onValue(userRef, (snapshot) => {
+        console.log('--snapshot', snapshot, snapshot.exists())
+
+        // if (snapshot.exists()) {
+        var data = snapshot.val();
+        console.log('--data', data)
+        if (data) {
+            updateErrorInput({
+                ...errorInput,
+                avatarString: true,
+                avatarStringErrorMsg: 'pseudonym taken'
+            })
+        } else {
+            updateErrorInput({
+                ...errorInput,
+                avatarString: false,
+                avatarStringErrorMsg: ''
+            })
+        }
+        
+        
+
+        // set(ref(db, 'talents/' + avatarString), {
+        //     ...data,
+        //     intro,
+        //     // name,
+        //     // email,
+        //     linkToSystemDesign,
+        //     // phone,
+        //     linkToCoding,
+        // });
+      // setUsername(data.firstName + " " + data.lastName);
+      // TODO
+      // setUsername(data.email)
+    // }
+  });
+
+
+
+}
+
+  const talentProfileSubmit = async () => {
 
     const { 
       name, 
       phone, 
-      intro,
+      interviewerIntro,
+      hourlyRate,
+      calendlyLink,
       // location,
-      // email,
-
-      linkToSystemDesign,
-      linkToCoding,
+      email,
+      Linkedin,
+      avatarString,
+      linkToResume,
       // price,
 
       // image,
     } = formInput
 
+    localStorage.setItem('talentProfile', JSON.stringify(formInput))
+    localStorage.setItem('avatarString', avatarString)
 
-    trackEvent('TalentPitchPage_Submitting', {
+    trackEvent('TalentOnboardPage_Submitting', {
       uid,
       ...formInput
     })
@@ -260,70 +335,112 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
       })
       return
     }
-    if (!intro) {
+    if (!email) {
       updateErrorInput({
         ...errorInput,
-        intro: true
+        email: true
       })
       return
     }
-    if (!linkToSystemDesign) {
+    if (!Linkedin) {
       updateErrorInput({
         ...errorInput,
-        linkToSystemDesign: true
-      })
-      return
-    }
-    if (!linkToCoding) {
-      updateErrorInput({
-        ...errorInput,
-        linkToCoding: true
+        Linkedin: true
       })
       return
     }
 
+    if (!avatarString) {
+        updateErrorInput({
+            ...errorInput,
+            avatarString: true
+          })
+          return
+    }
 
-    const db = getDatabase();
+    if (!linkToResume) {
+      updateErrorInput({
+        ...errorInput,
+        linkToResume: true
+      })
+      return
+    }
+
+    // if (!interviewerIntro) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     interviewerIntro: true
+    //   })
+    //   return
+    // }
+    // if (!calendlyLink) {
+    //     updateErrorInput({
+    //       ...errorInput,
+    //       calendlyLink: true
+    //     })
+    //     return
+    //   }
+
+    //   if (!hourlyRate) {
+    //     updateErrorInput({
+    //       ...errorInput,
+    //       hourlyRate: true
+    //     })
+    //     return
+    //   }
+    // 
+    // const db = getDatabase();
 
 
-    const writeUserData = (name: string, phone: string,intro: string, linkToSystemDesign: string, linkToCoding: string) => {
-      const userId = `${name.trim()}${phone}`
+    // console.log('database', db)
+    // READ DB
+    // const starCountRef = ref(db, 'users/' + 1);
 
-      const starCountRef = ref(db, 'talents/' + userId);
-      console.log('--starCountRef', starCountRef)
-      onValue(starCountRef, (snapshot) => {
-        console.log('--snapshot', snapshot, snapshot.exists())
+    // onValue(starCountRef, (snapshot) => {
+    //   const data = snapshot.val();
+    //   console.log('------data', data)
+    //   // updateStarCount(postElement, data);
+    // });
 
-        // if (snapshot.exists()) {
-          var data = snapshot.val();
-          console.log('--data', data)
-          set(ref(db, 'talents/' + userId), {
-            ...data,
-            intro,
-            // name,
-            // email,
-            linkToSystemDesign,
-            // phone,
-            linkToCoding,
-          });
-          // setUsername(data.firstName + " " + data.lastName);
-          // TODO
-          // setUsername(data.email)
-        // }
+
+    const writeUserData = (
+      name: string, email: string, phone: string, Linkedin: string, linkToResume: string,
+
+      interviewerIntro: string,
+      calendlyLink: string,
+      hourlyRate: string,
+      avatarString: string
+      ) => {
+
+      const userId = `${avatarString.trim()}`
+
+      set(ref(db, 'users/' + userId), {
+        name,
+        email,
+        Linkedin,
+        phone,
+        linkToResume,
+        interviewerIntro,
+        hourlyRate,
+        calendlyLink,
+        avatarString,
       });
-
-      
     }
 
     await writeUserData(
       name,
+      email,
       phone,
-      intro,
-      linkToSystemDesign,
-      linkToCoding
+      Linkedin,
+      linkToResume,
+      interviewerIntro,
+      hourlyRate,
+      calendlyLink,
+      avatarString
     )
 
-    trackEvent('TalentPitchPage_Success', {
+
+    trackEvent('TalentOnboardPage_Success', {
       uid,
       ...formInput
     })
@@ -333,6 +450,12 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
 
   }
 
+  const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
+
+// const name = localStorage.getItem('fp_displayName')
+// const loginemail = localStorage.getItem('fp_email')
+
+const [avatarString, setAvatarString] = useState('eeeeee')
 
 // const dropdownPositon = 'down'
   return (
@@ -341,7 +464,7 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Stand out by stand up and speak?</title>
+        <title>Onramp your professional identity to web3</title>
       </Helmet>
 
       {!mintSuccess && 
@@ -351,80 +474,14 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
-              {/* Do you have what it takes to join Talent Nation? */}
-              Pitch yourself to your dream company
-              
+              Onramp Your Professional Identity to Web 3.0
+           
               {/* Build your first skill NFT */}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
-               * are required
-      
-             
-
-            </span>
-            <span className="block mt-3 sm:text-xl text-neutral-500 dark:text-neutral-400">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
-          
-              Show, don't tell, your future manager why you are the best for the job.
-       
-             
-
-            </span>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
-              Prove your problem solving skills and explain your thought process!
-             
-
-            </span>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400 font-bold">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
-     
-              Ideas for you to get started
-            
-
-            </span>
-
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
-            
-              - (Front End) Loom video / unlisted youtube link of you coding a React Timer, Progress bar etc with shared screen and your face shown. 
-              {/* examples https://www.youtube.com/watch?v=XEt09iK8IXs */}
-            
-
-            </span>
-
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
-            
-              - (Back End) Loom video / unlisted youtube link of you coding a traverse a directed graphql, or finding areas of connected islands in a metric of 0 and 1, you know, the usual leetcode questions with shared screen and your face shown. 
-              {/* examples https://www.youtube.com/watch?v=XEt09iK8IXs */}
-            
-
-            </span>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
-      
-              - (System Design) Jam board of you designing a news feed like facebook, twitter, Architect a home selling app like Zillow, People nearby app like Yelp. example: https://www.youtube.com/watch?v=NtMvNh0WFVM
-        
-       
-
-            </span>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
-      
-        
-              - (Culture Fit and Behavioral) Reverse hire your hiring manager, pitch yourself to your future team 
-              https://www.loom.com/blog/why-we-recorded-200-loom-videos-to-hire-one-teammate
-
+                * are required
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
@@ -433,6 +490,34 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
               <h3 className="text-lg sm:text-2xl font-semibold">
                 {/* Company & Title Information */}
               </h3>
+              <div className="w-32 lg:w-44 flex-shrink-0 mt-12 sm:mt-0">
+                <NcImage
+                    src={`https://api.multiavatar.com/${formInput.avatarString}.svg`}
+                    containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
+                />
+                </div>
+
+                <FormItem label="Type your pseudonym  *">
+                    <Input 
+                        className={errorInput.avatarString ? 'error' : ''}
+                        type='text'
+                            defaultValue="" 
+                            onChange={
+                            (e) => {
+                                checkIsAvarAvail(e.target.value)
+
+                                updateFormInput({
+                                ...formInput,
+                                avatarString: e.target.value,
+                            })
+                            }
+                        }
+                    />
+                    <span style={{color: 'red'}}>
+                        {errorInput.avatarStringErrorMsg}
+                    </span>
+                    </FormItem>
+
               {/* <span className="text-neutral-500 dark:text-neutral-400 text-sm">
                 File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV,
                 OGG, GLB, GLTF. Max size: 100 MB
@@ -480,8 +565,11 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
             {/* ---- */}
             <FormItem label="Name *">
               <Input 
-                defaultValue="" 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
                 className={errorInput.name ? 'error' : ''}
+                defaultValue={''}
                 onChange={
                   (e) => {
                     updateFormInput({
@@ -494,7 +582,7 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
             </FormItem>
             <FormItem label="Phone Number *">
               <Input 
-              className={errorInput.phone ? 'error' : ''}
+                className={errorInput.phone ? 'error' : ''}
                 defaultValue="" 
                 onChange={
                   (e) => {
@@ -506,32 +594,17 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
             </FormItem>
-            <FormItem label="Link to 2 min intro *">
-              <Input 
-              className={errorInput.intro ? 'error' : ''}
-                type='text'
-                defaultValue="" 
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      intro: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem>
       
-            <FormItem label="Link to Coding Video *">
+            <FormItem label="Link to Resume *">
               <Input 
-              className={errorInput.linkToCoding ? 'error' : ''}
+                className={errorInput.linkToResume ? 'error' : ''}
                type='text'
                 defaultValue="" 
                 onChange={
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      linkToCoding: e.target.value,
+                      linkToResume: e.target.value,
                   })
                   }
                 }
@@ -557,21 +630,23 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }}
               />
             </FormItem> */}
-            <FormItem label="Link to System Design Video *">
+            <FormItem label="Linkedin *">
               <Input 
-              className={errorInput.linkToSystemDesign ? 'error' : ''}
+                className={errorInput.Linkedin ? 'error' : ''}
                 type='text'
                 defaultValue="" 
                 onChange={
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      linkToSystemDesign: e.target.value,
+                      Linkedin: e.target.value,
                   })
                   }
                 }
               />
             </FormItem>
+
+        
            
 
             <h3 className="text-lg sm:text-2xl font-semibold">
@@ -614,9 +689,10 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
               </select> */}
 
             {/* </FormItem> */}
-            {/* <FormItem label="Email">
+            <FormItem label="Email *">
               <Input 
-                defaultValue="" 
+                className={errorInput.email ? 'error' : ''}
+                defaultValue={''} 
                 type='text'
                 onChange={
                   (e) => {
@@ -627,8 +703,59 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
                   }
                 }
               />
+            </FormItem>
+
+            {/* <FormItem label="Link to a 2 min Loom Video tell us your experience in technical interviewing, e.g. the leetcode algorithmns you like the most, system design question you enjoyed the most*">
+              <Input 
+                className={errorInput.interviewerIntro ? 'error' : ''}
+                defaultValue="" 
+                type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      interviewerIntro: e.target.value,
+                  })
+                  }
+                }
+              />
             </FormItem> */}
 
+            {/* <FormItem label="Calendly Link *">
+              <Input 
+                className={errorInput.calendlyLink ? 'error' : ''}
+                defaultValue="" 
+                type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      calendlyLink: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem> */}
+
+
+            {/* <FormItem label="HourlyRate *">
+              <Input 
+                className={errorInput.hourlyRate ? 'error' : ''}
+                defaultValue="" 
+                type='number'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      hourlyRate: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem> */}
+
+
+            
             {/* ---- */}
             {/* <FormItem
               label="External link"
@@ -705,7 +832,7 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
               >Done</a> */}
 
 <a style={{background: '#39ff14', padding: '10px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} onClick={() => {
-  submitAsTalent()
+  talentProfileSubmit()
 }} >Done</a>
 
               {/* <ButtonSecondary className="flex-1">Preview item</ButtonSecondary> */}
@@ -752,7 +879,14 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
-                Thanks for contacting us! We will get in touch with you shortly.
+                {/* Thanks for contacting us! We will get in touch with you shortly. */}
+
+
+
+              </h3>
+
+              <h3 className="text-lg sm:text-2xl font-semibold">
+              <a style={{background: '#39ff14', padding: '12px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} href={`/${formInput.avatarString}`} >Check out your profile here</a>
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
@@ -763,41 +897,33 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
               <a style={{background: '#39ff14', padding: '12px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3>
 
-
-             
-          </div>
-          <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8" style={{marginTop: '200px'}}>
-          
-
-          {/* <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39ff14', padding: '12px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
-              
-              <TwitterShareButton
-                style={{background: 'none', margin: '1rem', marginTop: '10px'}}
-                  title={"Pitch yourself and Skip the line to meet your future team at https://www.futureprotocol.co"}
-                  url={'https://www.futureprotocol.co/quick-apply'}
-                  hashtags={["futureprotocol", "talentnation", "rewritehowweinterview"]}
-                >
-                  <TwitterIcon size={32} round />
-            
-                </TwitterShareButton>
-                
-                </a>
-              </h3> */}
-              ✨ Share on twitter  here
-                <span style={{paddingTop: '10px'}}>
-
+      
+                <div style={{marginTop: '30px'}}>
+                ✨ Share on twitter here
                     <TwitterShareButton
                     style={{background: 'none', margin: '1rem', marginTop: '10px'}}
-                      title={"Pitch yourself and Skip the line to meet your future team at https://www.futureprotocol.co"}
-                      url={'https://www.futureprotocol.co/talent-pitch'}
-                      hashtags={["futureprotocol", "talentnation", "rewritehowweinterview"]}
+                      title={"I help interviewing tech candidates at https://www.futureprotocol.co"}
+                      url={'https://www.futureprotocol.co/interviewer-onboarding'}
+                      hashtags={["futureprotocol", "talentnation", "decentralizedtechscreening", "decentralizedtechinterview", "newprofessionalidentity"]}
                     >
                       <TwitterIcon size={32} round />
                 
                     </TwitterShareButton>
-                </span>
+                </div>
+
+
              
+          </div>
+          <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8" style={{marginTop: '200px'}}>
+         
+
+            {/* <h3 className="text-lg sm:text-2xl font-semibold">
+              ✨ Stand out by pitching yourself to your dream company ?
+            </h3>
+
+          <h3 className="text-lg sm:text-2xl font-semibold">
+              <a style={{background: '#39ff14', padding: '12px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
+              </h3> */}
           </div>
 
        
@@ -864,4 +990,4 @@ function CheckIcon(props: any) {
   );
 }
 
-export default TalentPitch;
+export default TalentStart;

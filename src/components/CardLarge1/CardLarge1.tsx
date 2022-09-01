@@ -95,7 +95,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           {/* DESCRIPTION */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
             <ButtonPrimary href={"/connect-wallet"} className="flex-1">
-              Unlock TC
+             BUY NOW
             </ButtonPrimary>
             {/* <ButtonSecondary href={"/nft-detail"} className="flex-1">
               View item

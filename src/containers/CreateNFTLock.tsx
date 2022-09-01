@@ -1,6 +1,6 @@
 import Label from "components/Label/Label";
 import React, { FC, useState } from "react";
-
+import { TwitterShareButton, TwitterIcon } from "react-share";
 import Web3Modal from 'web3modal'
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers'
@@ -13,9 +13,11 @@ import {
   JobFamilies,
   Companies,
   Locations,
-  PFPs
+  PFPs,
+  SkillBadges
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
+import polygon from "images/polygon-matic-logo.png"
 import loading from 'images/loading.gif'
 import marketplaceAbi from '../artifacts/marketplace.json'
 
@@ -33,6 +35,7 @@ import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
 import NcModal from "shared/NcModal/NcModal";
 
 import { WalletService } from "@unlock-protocol/unlock-js";
+import Textarea from "shared/Textarea/Textarea";
 
 const networks = {
   
@@ -79,21 +82,25 @@ const plans = [
 
 const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
   const navigate = useNavigate()
+  const [fileUrl, setFileUrl] = useState<string>('')
   const [showMintingModal, setShowMintingModal] = useState(false)
   const [showMintSuccessModal, setShowMintSuccessModal] = useState(false)
   const [mintSuccess, setMintSuccess] = useState(false)
+  const [uploadingFile, setUploadingFile] = useState(false)
   const { width, height } = useWindowSize()
   const [metadataIpfsUrl, setMetadataIpfsUrl] = useState<string>()
-  const [selected, setSelected] = useState(PFPs[1]);
+  const [selected, setSelected] = useState(SkillBadges[1]);
   const [formInput, updateFormInput] = useState({ 
     chain: 'polygon',
     title: '', 
     company: '', 
+    file: '',
      //TODO dropdown
     jobFamily: '', 
     //TODO dropdown
     location: '',
     yearOfExperience: '',
+    skillValueAdd: '',
     base: '',
     equity: '',
     price: '', 
@@ -115,6 +122,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
 
   
   async function uploadMetadataToIPFS() {
+    setUploadingFile(true)
     const { 
       title, 
       company, 
@@ -123,27 +131,33 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
       //TODO dropdown
       location,
       yearOfExperience,
+      skillValueAdd,
       base,
       equity,
       price,
 
+
       // image,
     } = formInput
+
+
     console.log('---formInput', formInput)
     // if (!title || !company || !price || !jobFamily || !yearOfExperience || !location) return
     /* first, upload to IPFS */
     const data = JSON.stringify({
       title, 
       company, 
+      image: fileUrl,
        //TODO dropdown
       jobFamily, 
       //TODO dropdown
       location,
       yearOfExperience,
+      skillValueAdd,
       base,
       equity,
       price,
-      image: selected.featuredImage
+      // image: selected.featuredImage
     })
     try {
       const added = client && await client.add(data)
@@ -151,9 +165,11 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
       /* after file is uploaded to IPFS, return the URL to use it in the transaction */
 
       setMetadataIpfsUrl(url)
+      setUploadingFile(false)
       return url
     } catch (error) {
       console.log('Error uploading file: ', error)
+      setUploadingFile(false)
     }  
   }
 
@@ -161,19 +177,39 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-        ✨ You created a salary data NFT !✨ 
+        ✨ Congrats! You Claimed a Skill NFT, this is the pass for your Web三DAO talentverse !✨ 
         </h3>
-        <span className="text-l flex mt-10">
+        {/* <span className="text-l flex mt-10">
           share to <img src={twitter} width='25' className='mr-5 ml-2' onClick={() => {
             
           }}/>
-        </span>
-        <div className="mt-4 space-x-3">
+        </span> */}
+
+         <h3 className="text-lg sm:text-2xl font-semibold mt-10">
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
+              
+              <TwitterShareButton
+                style={{background: 'none', margin: '1rem', marginTop: '10px'}}
+                  title={"I just minted my skill NFT as a pass to Wen三DAO talentverse https://www.futureprotocol.co/create"}
+                  url={'https://www.futureprotocol.co/create'}
+                  hashtags={["futureprotocol","Wen三DAO", "talentnation", "ownershipeconomy", "buildereconomy"]}
+                >
+                  <TwitterIcon size={32} round />
+            
+                </TwitterShareButton>
+                
+                </a>
+              </h3>
+
+              
+        <div className="mt-10 mb-10 space-x-3">
           {/* <ButtonPrimary onClick={handleClickSubmitForm} type="submit">
             Delete
           </ButtonPrimary> */}
           
-
+          <h3 className="text-lg sm:text-2xl font-semibold">
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              </h3>
           
         </div>
       </form>
@@ -189,7 +225,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
         ✨🔮 Magic in the works... 🔮✨ 
         </h3>
         <span className="text-l flex mt-10">
-          <img src={loading} width='50' className='mr-5'/> Minting your salary data into NFTs
+          <img src={loading} width='50' className='mr-5'/> Minting Skill NFT On Chain
         </span>
         <div className="mt-4 space-x-3">
           {/* <ButtonPrimary onClick={handleClickSubmitForm} type="submit">
@@ -226,7 +262,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     let transaction = await contract.createToken(url, price, { value: listingPrice })
     // let transaction = await contract.createToken(url, price, '0x0000000000000000000000000000000000001010', 10, { value: listingPrice })
     const res = await transaction.wait()
-      console.log('--res', res, 'transaction', transaction)
+      // console.log('--res', res, 'transaction', transaction)
     setMintSuccess(true)
     setShowMintingModal(false)
     setShowMintSuccessModal(true)
@@ -245,6 +281,52 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     // TODO 
     // navigate('/profile')
   }
+  const fileInput = React.createRef<HTMLInputElement>();
+
+  async function onUploadImageToIPFS(e: React.ChangeEvent<HTMLInputElement>) {
+    
+    let client: IPFSHTTPClient | undefined;
+    try {
+      client = ipfsHttpClient({
+        url: "https://ipfs.infura.io:5001/api/v0",
+        headers: {
+          authorization,
+        },
+      });
+
+      const file = e?.target?.files?.[0]
+      console.log('---file', file)
+      if (!file) return
+      try {
+        const added = await client.add(
+          file,
+          {
+            progress: (prog) => console.log(`received: ${prog}`)
+          }
+        )
+        const url = `https://ipfs.infura.io/ipfs/${added.path}`
+        
+        console.log('--url', url)
+        
+        
+        setFileUrl(url)
+   
+  
+      } catch (error) {
+        console.log('Error uploading file: ', error)
+      }  
+    } catch (error) {
+      console.error("IPFS error ", error);
+      client = undefined;
+    }
+
+    
+
+    // const client = ipfsHttpClient({ 
+    //   'https://ipfs.infura.io:5001/api/v0'
+    // })
+ 
+  }
 
 // const dropdownPositon = 'down'
   return (
@@ -262,65 +344,123 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
 
-              Build your first skill NFT
+              Build your first skill NFT 
             </h2>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400 flex">
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
+              We are on
+              <img src={polygon} style={{height: '25px', display: 'flex'}} className="pl-2" />
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
-            {/* <div> */}
-              <h3 className="text-lg sm:text-2xl font-semibold">
-                Company & Title Information
+            <div>
+              <h3 className="text-lg sm:text-2xl font-semibold mb-10">
+                {/* Company & Title Information */}
+                {/* <a 
+                    onClick={() => fileInput?.current?.click()} >   
+                        {`${fileUrl ? 'Change File' : 'Upload File'}`}
+                </a> */}
+
+                <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}
+                    onClick={() => fileInput?.current?.click()} >  
+                {`${fileUrl ? 'Change File' : 'Upload File'}`}</a>
+             
+
               </h3>
-              {/* <span className="text-neutral-500 dark:text-neutral-400 text-sm">
+
+                  {/* <input 
+                                        ref={fileInput}
+                                        type="file" 
+                                        hidden 
+                                        // accept=".doc,.docx,.pdf" 
+                                        id="fileID"  
+                                        value={formInput.file}
+                                        // onChange={onUploadImageToIPFS}
+
+                                        onChange={(e) => onUploadImageToIPFS(e)}
+
+                                        
+                                        /> */}
+                                
+
+
+                                   {/* {  fileUrl &&  <img className="rounded mt-4" width="350" style={{marginBottom: '30px'}} src={fileUrl} />} */}
+
+
+              <span className="text-neutral-500 dark:text-neutral-400 text-sm">
                 File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV,
                 OGG, GLB, GLTF. Max size: 100 MB
               </span>
+
+
               <div className="mt-5 ">
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-300 dark:border-neutral-6000 border-dashed rounded-xl">
                   <div className="space-y-1 text-center">
-                    <svg
+                    {  !fileInput &&  <svg
                       className="mx-auto h-12 w-12 text-neutral-400"
                       stroke="currentColor"
                       fill="none"
                       viewBox="0 0 48 48"
                       aria-hidden="true"
-                    > */}
-                      {/* <path
+                    > 
+                      <path
                         d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       ></path>
-                    </svg>
+                    </svg>}
                     <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
                       <label
                         htmlFor="file-upload"
                         className="relative cursor-pointer  rounded-md font-medium text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
                       >
-                        <span>Upload a file</span>
+                        {/* <span  onClick={(e) => 
+                          // e.target.defaultPrevented()
+                          fileInput?.current?.click()
+                          
+                          } >Upload a file</span> */}
+
+                          {uploadingFile && 
+                          <div className="tenor-gif-embed" data-postid="22743155" data-share-method="host" data-aspect-ratio="0.990625" data-width="100%"><a href="https://tenor.com/view/hug-gif-22743155">Hug Sticker</a>from <a href="https://tenor.com/search/hug-stickers">Hug Stickers</a></div> 
+                          
+                          // <script type="text/javascript" async src="https://tenor.com/embed.js"></script> 
+                          
+                          }
+
                         <input
+                         ref={fileInput}
                           id="file-upload"
                           name="file-upload"
                           type="file"
                           className="sr-only"
+                          value={formInput.file}
+                          onChange={(e) => onUploadImageToIPFS(e)}
                         />
                       </label>
-                      <p className="pl-1">or drag and drop</p>
+                      { !fileInput && <p className="pl-1">or drag and drop</p>}
                     </div>
                     <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                      PNG, JPG, GIF up to 10MB
+                      {/* PNG, JPG, GIF up to 10MB */}
                     </p>
+                    {/* <a 
+                                
+                                onClick={() => fileInput?.current?.click()} >
+                                    
+                                    {`${fileUrl ? 'Change File' : 'Cover image for your NFT'}`}
+                            </a> */}
+
+
+                           {  fileUrl &&  <img className="rounded mt-4" width="350" style={{marginBottom: '30px'}} src={fileUrl} />}
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
 
             {/* ---- */}
-            <FormItem label="Title">
+            {/* <FormItem label="Title">
               <Input 
                 defaultValue="" 
                 onChange={
@@ -332,8 +472,8 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                   }
                 }
               />
-            </FormItem>
-            <FormItem label="Company">
+            </FormItem> */}
+            {/* <FormItem label="Company">
               <Input 
                 defaultValue="" 
                 onChange={
@@ -344,7 +484,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                   })
                   }
                 }
-              />
+              /> */}
 
             {/* <select
                 id="company"
@@ -366,7 +506,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                 })}
                 
               </select> */}
-            </FormItem>
+            {/* </FormItem> */}
             <FormItem label="Job Family">
               {/* <Input 
                 defaultValue="" 
@@ -423,7 +563,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }}
               />
             </FormItem> */}
-            <FormItem label="Base Salary ($)">
+            {/* <FormItem label="Base Salary ($)">
               <Input 
                 type='number'
                 defaultValue="" 
@@ -436,8 +576,8 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                   }
                 }
               />
-            </FormItem>
-            <FormItem label="Equity ($)">
+            </FormItem> */}
+            {/* <FormItem label="Equity ($)">
               <Input 
                type='number'
                 defaultValue="" 
@@ -450,11 +590,11 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                   }
                 }
               />
-            </FormItem>
+            </FormItem> */}
 
-            <h3 className="text-lg sm:text-2xl font-semibold">
+            {/* <h3 className="text-lg sm:text-2xl font-semibold">
               Work Experience and Location
-            </h3>
+            </h3> */}
             <FormItem label="Location">
               {/* <Input 
                 defaultValue="" 
@@ -505,6 +645,22 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                   }
                 }
               />
+
+            </FormItem>
+
+            <FormItem label="Describe what you can do with the skill you are minting">
+              <Textarea 
+                defaultValue="" 
+      
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      skillValueAdd: e.target.value,
+                  })
+                  }
+                }
+              />
             </FormItem>
 
             {/* ---- */}
@@ -538,71 +694,9 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
             <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
 
             <div>
-              <Label>Choose PFP</Label>
-              <div className="text-neutral-500 dark:text-neutral-400 text-sm">
-                Choose an cover PFP for your TC NFT
-              </div>
-              <RadioGroup value={selected} onChange={setSelected}>
-                <RadioGroup.Label className="sr-only">
-                  {/* Server size */}
-                </RadioGroup.Label>
-                <div className="flex overflow-auto py-2 space-x-4 customScrollBar">
-                  {PFPs.map((pfp, index) => (
-                    <RadioGroup.Option
-                      key={index}
-                      value={pfp}
-                      className={({ active, checked }) =>
-                        `${
-                          active
-                            ? "ring-2 ring-offset-2 ring-offset-sky-300 ring-white ring-opacity-60"
-                            : ""
-                        }
-                  ${
-                    checked
-                      ? "bg-teal-600 text-white"
-                      : "hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                  }
-                    relative flex-shrink-0 w-44 rounded-xl border border-neutral-200 dark:border-neutral-700 px-6 py-5 cursor-pointer flex focus:outline-none `
-                      }
-                    >
-                      {({ active, checked }) => (
-                        <>
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center">
-                              <div className="text-sm">
-                                <div className="flex items-center justify-between">
-                                  <RadioGroup.Description
-                                    as="div"
-                                    className={"rounded-full w-16"}
-                                  >
-                                    <NcImage
-                                      containerClassName="aspect-w-1 aspect-h-1 rounded-full overflow-hidden"
-                                      src={pfp.featuredImage}
-                                    />
-                                  </RadioGroup.Description>
-                                  {checked && (
-                                    <div className="flex-shrink-0 text-white">
-                                      <CheckIcon className="w-6 h-6" />
-                                    </div>
-                                  )}
-                                </div>
-                                <RadioGroup.Label
-                                  as="p"
-                                  className={`font-semibold mt-3  ${
-                                    checked ? "text-white" : ""
-                                  }`}
-                                >
-                                  {pfp.name}
-                                </RadioGroup.Label>
-                              </div>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </RadioGroup.Option>
-                  ))}
-                </div>
-              </RadioGroup>
+              {/* <Label>Choose the skillset you want to mint</Label> */}
+          
+        
             </div>
 
             {/* ---- */}
@@ -646,23 +740,50 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
               />
             </FormItem>
 
-            <MySwitch
+            {/* <MySwitch
               enabled
               label="Unlock once purchased"
               desc="Content will be unlocked after successful transaction"
-            />
+            /> */}
 
             {/* ---- */}
-            <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 ">
-              <ButtonPrimary className="flex-1"
+            <h3 className="text-lg sm:text-2xl font-semibold mt-10">
+              {/* <ButtonPrimary className="flex-1"
                  onClick={() => listNFTForSale()}
-              >Mint & Sell NFT</ButtonPrimary>
+              >Mint & Sell NFT</ButtonPrimary> */}
+
+            {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => listNFTForSale()} >Mint & Sell Skill NFT</a> */}
+            <div></div>
+
+            <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}   onClick={() => listNFTForSale()}> 
+            Mint & Sell Your Skill NFT
+               
+                
+            </a>
+
               {/* <ButtonSecondary className="flex-1">Preview item</ButtonSecondary> */}
-            </div>
+            </h3>
           </div>
+          <div className="text-neutral-500 dark:text-neutral-400 text-sm">
+                {/* Choose an cover PFP for your TC NFT */}
+                {/* Want to propose a? 
+                email propose@futureprotocol.co */}
+
+                Want to be an artist?
+                email hello@futureprotocol.co
+                
+              </div>
+              <div className="text-neutral-500 dark:text-neutral-400 text-sm">
+                {/* Choose an cover PFP for your TC NFT */}
+           
+          
+                
+              </div>
         </div>
       </div>
-      { mintSuccess && <Confetti
+
+    { 
+        mintSuccess && <Confetti
         width={width}
         height={height}
       /> }

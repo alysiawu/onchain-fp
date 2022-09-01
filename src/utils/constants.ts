@@ -180,3 +180,56 @@ export const PFPs = [
       },
   ];
   
+
+
+  export const SkillBadges = [
+    // {
+    //     id: '28',
+    //     name: "Websan Club Season 0",
+    //     featuredImgs: 'https://websan.mypinata.cloud/ipfs/bafybeidgfsv72vrcr2ynjz2ldgaij3ih3vg4xgwf6d2m22pmombninxrzq/Group%2028.PNG?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmRleGVzIjpbImQ2MzRkYThmMzk1MWM4ZDgwM2U5MTMxYTE2YjI5ZGMzIl0sImFjY291bnRJZCI6ImUxMjVlOTAwLWE3OGQtNDY3Yi1hM2ZiLTBjMDEwZTZjZjM0ZiIsImlhdCI6MTY2MDQ1NTc1NCwiZXhwIjoxNjYwNDU5MzU0fQ.WElu-IWQXcYYsTp0eKKO0DYNYLBowY08voKfjuJ9Ae8'
+    // },
+    {
+      name: "Skill Badge",
+      featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeidtmjloksbbxoq47qorupty22dj3acmwki4qjkmvcdiyog47jursa',
+    },
+    {
+      name: "Skill Badge",
+      featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeievpyewulaowslz2iaqv52hoe4vicedho6mwqj6ifixqcu44gvvkm',
+    },
+    {
+      name: "Skill Badge",
+      featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeic44h4idep36zmlnovsky7lsclwwfwj6m42gz43ch7ap5e3xyw5wy',
+    },
+    {
+        name: "Skill Badge",
+        featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeihpbbz5wi6yuutbwqf5ctk7pes4hnkqchza3mvtmq3tixcraluy6i',
+    },
+    {
+        name: "Skill Badge",
+        featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeidtmjloksbbxoq47qorupty22dj3acmwki4qjkmvcdiyog47jursa',
+      },
+    {
+        name: "Skill Badge",
+        featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeievpyewulaowslz2iaqv52hoe4vicedho6mwqj6ifixqcu44gvvkm',
+    },
+    {
+        name: "Skill Badge",
+        featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeic44h4idep36zmlnovsky7lsclwwfwj6m42gz43ch7ap5e3xyw5wy',
+      },
+      {
+        id: '37',
+        name: "Skill Badge",
+        featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeih2x4ypsj5wnjwsoacctp4wb24roem7xxumwlxx7yonmekfof4q2i',
+      },
+      {
+        id: '28',
+        name: "Skill Badge",
+        featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeidkedxv7wdtlpua5iptbokh5x3auoiqsuednh6bqwefrubin5pvx4',
+      },
+      {
+        id: '37',
+        name: "Skill Badge",
+        featuredImage: 'https://websan.mypinata.cloud/ipfs/bafybeih2x4ypsj5wnjwsoacctp4wb24roem7xxumwlxx7yonmekfof4q2i',
+      },
+  ];
+  

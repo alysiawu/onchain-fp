@@ -47,7 +47,7 @@ export interface PageUploadItemProps {
 //   url: 'https://ipfs.infura.io:5001/api/v0'
 // })
 
-const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
+const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
   // const navigate = useNavigate()
 
   const {
@@ -58,7 +58,7 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
     signInWithGoogle
   } = useFirebaseContext()
 
-  trackEvent('PostJobPage_Visted', {
+  trackEvent('PostReferralPage_Visted', {
     email, 
     uid,
   })
@@ -72,8 +72,9 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [formInput, updateFormInput] = useState({ 
     chain: 'polygon',
     title: '', 
-    primaryRole: '', 
-    companyWebsite: '',
+    primaryRole: 'engineering', 
+    company: '',
+    h1b: 'yes',
     name: '',
      //TODO dropdown
     jobFamily: '', 
@@ -93,7 +94,8 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
     title: false, 
     email: false,
     primaryRole: false, 
-    companyWebsite: false,
+    company: false,
+    h1b: false,
     name: false,
     jobDescription: false,
     video: false,
@@ -122,7 +124,7 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
   //   const { 
   //     title, 
   //     primaryRole, 
-  //     companyWebsite,
+  //     company,
   //      //TODO dropdown
   //     jobFamily, 
   //     //TODO dropdown
@@ -212,10 +214,10 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
 
 
 
-  const submitAJob = async () => {
+  const submitReferralBounty = async () => {
     // console.log('formInput', formInput)
 
-    trackEvent('JobForm_Submiting', {
+    trackEvent('PostReferralPage_Submitting', {
      
       uid,
       ...formInput
@@ -224,7 +226,8 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
     const { 
       title, 
       primaryRole, 
-      companyWebsite,
+      company,
+      h1b,
       name,
       location,
       jobDescription,
@@ -237,50 +240,79 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
 
       // image,
     } = formInput
+    console.log('---formInput', formInput)
+
+    // if (!company) {
+    //     updateErrorInput({
+    //       ...errorInput,
+    //       company: true
+    //     })
+    //     return
+    //   } else {
+    //     updateErrorInput({
+    //       ...errorInput,
+    //       company: false
+    //     })
+    //   }
 
 
-    if (!title) {
-      trackEvent('JobFormTitle_Missing', {
+    // if (!h1b) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     h1b: true
+    //   })
+    //   return
+    // } else {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     h1b: false
+    //   })
+    // }
+
+
+    // if (!title) {
+    //   trackEvent('PostReferralTitle_Missing', {
      
-        uid,
-        ...formInput
-      })
+    //     uid,
+    //     ...formInput
+    //   })
 
-      updateErrorInput({
-        ...errorInput,
-        title: true
-      })
-      return
-    }
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     title: true
+    //   })
+    //   return
+    // }
     
-    if (!primaryRole) {
-      updateErrorInput({
-        ...errorInput,
-        primaryRole: true
-      })
-      return
-    }
-    if (!jobDescription) {
-      updateErrorInput({
-        ...errorInput,
-        jobDescription: true
-      })
-      return
-    }
+    // // h1b
+    // if (!primaryRole) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     primaryRole: true
+    //   })
+    //   return
+    // }
+    // if (!jobDescription) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     jobDescription: true
+    //   })
+    //   return
+    // }
     if (!location) {
         updateErrorInput({
           ...errorInput,
           location: true
         })
         return
-      }
+    }
 
       // if (!video) {
       //   updateErrorInput({
       //       ...errorInput,
       //       video: true
       //     })
-      //     trackEvent('JobFormVideo_Missing', {
+      //     trackEvent('PostReferralVideo_Missing', {
      
       //       uid,
       //       ...formInput
@@ -298,24 +330,24 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
     // }
 
 
-    if (!typeofPosition) {
-      updateErrorInput({
-        ...errorInput,
-        typeofPosition: true
-      })
-      return
-    }
+    // if (!typeofPosition) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     typeofPosition: true
+    //   })
+    //   return
+    // }
 
-    if (!name) {
-      updateErrorInput({
-        ...errorInput,
-        name: true
-      })
-      return
-    }
+    // if (!name) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     name: true
+    //   })
+    //   return
+    // }
 
     // if (!email) {
-    //   trackEvent('JobFormEmail_Missing', {
+    //   trackEvent('PostReferralEmail_Missing', {
      
     //     uid,
     //     ...formInput
@@ -329,26 +361,15 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
     // }
 
 
-    if (!bountyAmount) {
-      updateErrorInput({
-        ...errorInput,
-        bountyAmount: true
-      })
-    }
+    // if (!bountyAmount) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     bountyAmount: true
+    //   })
+    // }
 
 
-    if (!companyWebsite) {
-      updateErrorInput({
-        ...errorInput,
-        companyWebsite: true
-      })
-      return
-    } else {
-      updateErrorInput({
-        ...errorInput,
-        companyWebsite: false
-      })
-    }
+ 
 
 
     const db = getDatabase();
@@ -362,20 +383,30 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
     //   // updateStarCount(postElement, data);
     // });
 
-    const writeUserData = (title: string, jobDescription: string, video: string, bountyAmount: string, location: string, primaryRole: string,  typeofPosition: string,
-      
+    const writeUserData = (
+        title: string, 
+        jobDescription: string, 
+        video: string, 
+        bountyAmount: string, 
+        location: string, 
+        primaryRole: string, 
+         typeofPosition: string,
+         h1b: string,
+         company: string,
       email: string,
       name: string,
       ) => {
-      const userId = `${title.trim()}${primaryRole}`
+          console.log('---primaryRole', primaryRole)
+      const userId = `${title.trim()}-${primaryRole}-${name}`
 
-      set(ref(db, 'jobs/' + userId), {
+      set(ref(db, 'referralOppos/' + userId), {
         title,
         jobDescription,
-     
+        company,
         location,
         // Linkedin,
         primaryRole,
+        h1b,
         typeofPosition,
         video,
         bountyAmount,
@@ -394,11 +425,15 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
       primaryRole,
     //   Linkedin,
       typeofPosition,
+      h1b,
+      company,
       email,
       name,
       
     )
-    trackEvent('JobForm_Success', {
+
+    console.log('ppp')
+    trackEvent('PostReferralPage_Success', {
      
       uid,
       ...formInput
@@ -418,7 +453,7 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Hiring is the most important thing you do.</title>
+        <title>Refer2Earn</title>
       </Helmet>
 
       {!mintSuccess && 
@@ -428,7 +463,8 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
-              Hiring is the most important thing you do. 
+              {/* Hiring is the most important thing you do.  */}
+              Refer2Earn
               {/* Build your first skill NFT */}
             </h2>
             <h2 className="text-3xl sm:text-4xl font-semibold">
@@ -440,9 +476,9 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
               
-              let us help you find your next great hire.
+              {/* Let us help you find your next great hire.
 
-              Activate our exclusive private talents network within Web三DAO, and TalentNationDAO, to get inbounds for your tech candidates. questions? email support: hello@futureprotocol.co
+              Activate our exclusive private talents network within Web三DAO, and TalentNationDAO, to get inbounds for your tech candidates. questions? email support: hello@futureprotocol.co */}
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
@@ -497,7 +533,78 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
             </div> */}
 
             {/* ---- */}
-            <FormItem label="Job title *">
+            <FormItem label="Company *">
+              <Input 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                className={errorInput.company ? 'error' : ''}
+                defaultValue=""
+                placeholder=""
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      company: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+            <FormItem label="H1B *">
+
+            <select  
+                id="h1b"
+                name="h1b"
+                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
+                // value={formInput.location}
+                onClick={(e) => {
+                    updateFormInput({
+                      ...formInput,
+                      h1b: (e.target as HTMLInputElement).value,
+                  })
+                
+                }}
+              >
+                {[
+               
+             
+                {
+                  name: 'Yes',
+                  id: 'yes'
+              },
+              {
+                name: 'No',
+                id: 'no'
+            },
+            
+            ].map(jf => {
+                  return <option
+                    key={jf.id}
+                  >{
+                    jf.name}</option>
+                })}
+                
+              </select>
+
+              {/* <Input 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                className={errorInput.h1b ? 'error' : ''}
+                defaultValue=""
+                placeholder=""
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      h1b: e.target.value,
+                  })
+                  }
+                }
+              /> */}
+            </FormItem>
+            <FormItem label="Position *">
               <Input 
                 // style={{
                 //   border: '0.5px solid red'
@@ -515,25 +622,8 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
             </FormItem>
-            <FormItem label="Company Website *">
-              <Input 
-                // style={{
-                //   border: '0.5px solid red'
-                // }}
-                className={errorInput.companyWebsite ? 'error' : ''}
-                defaultValue=""
-                placeholder=""
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      companyWebsite: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem>
-            <FormItem label="Primary role *">
+    
+            <FormItem label="Function *">
               {/* <Input 
                 className={errorInput.primaryRole ? 'error' : ''}
                 defaultValue="" 
@@ -560,17 +650,15 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }}
               >
                 {[
+               
+             
                 {
-                    name: 'Customer Support',
-                    id: 'Customer'
+                    name: 'Engineering',
+                    id: 'Engineering'
                 },
                 {
                     name: 'Design',
                     id: 'Design'
-                },
-                {
-                    name: 'Engineering',
-                    id: 'Engineering'
                 },
                 {
                     name: 'Marketing',
@@ -584,6 +672,10 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
                   name: 'Sales',
                   id: 'Sales'
               },
+              {
+                name: 'Customer Support',
+                id: 'Customer'
+            },
               {
                 name: 'Other',
                 id: 'Other'
@@ -599,8 +691,8 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
               
             </FormItem>
       
-            <FormItem label="Type of position*">
-              {/* <Input 
+            <FormItem label="Location*">
+              <Input 
                 className={errorInput.typeofPosition ? 'error' : ''}
                type='text'
                 defaultValue="" 
@@ -612,8 +704,8 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
                   })
                   }
                 }
-              /> */}
-            <select
+              />
+            {/* <select
                 id="typeofPosition"
                 name="typeofPosition"
                 className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
@@ -654,7 +746,7 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
                     jf.name}</option>
                 })}
                 
-              </select>
+              </select> */}
 
               
             </FormItem>
@@ -700,7 +792,7 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
             <h3 className="text-lg sm:text-2xl font-semibold">
               {/* Work Experience and Location */}
             </h3>
-            <FormItem label="Job location">
+            <FormItem label="Remote">
              {/* <Input 
                 defaultValue="" 
  
@@ -750,7 +842,7 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
               </select> 
 
            </FormItem>
-            <FormItem label="Job Description *">
+            {/* <FormItem label="Job Description (Optional)">
               <Textarea 
                 className={errorInput.jobDescription ? 'error' : ''}
                 defaultValue="" 
@@ -764,38 +856,38 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
                   }
                 }
               />
-            </FormItem>
+            </FormItem> */}
 
-            <FormItem label="Video intro of the role (optional)">
+            {/* <FormItem label="Video intro of the role (optional)">
            
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400"> */}
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
-              Grab the embed url like 
-              https://www.youtube.com/embed/eQ2TaqzClPk or https://www.loom.com/share/e66669841b264c4ca83e7013e96e0f0c
+              {/* Grab the embed url like 
+              https://www.youtube.com/embed/eQ2TaqzClPk or https://www.loom.com/share/e66669841b264c4ca83e7013e96e0f0c */}
 
-            </span>
+            {/* </span> */}
 
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            {/* <span className="block mt-3 text-neutral-500 dark:text-neutral-400"> */}
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
               
-              Research revealed that website visitors prefer to learn information and details via video.
+              {/* Research revealed that website visitors prefer to learn information and details via video. */}
 
-            </span>
+            {/* </span> */}
 
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            {/* <span className="block mt-3 text-neutral-500 dark:text-neutral-400"> */}
             
-Specifically within Recruitment Marketing, job postings that include video garner 12% more views than postings without, according to CareerBuilder.
+{/* Specifically within Recruitment Marketing, job postings that include video garner 12% more views than postings without, according to CareerBuilder. */}
 
-            </span>
+            {/* </span>
 
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400"> */}
             
-Videos within job descriptions can also help drive a 34% higher application rate, the CareerBuilder survey found.
-            </span>
+{/* Videos within job descriptions can also help drive a 34% higher application rate, the CareerBuilder survey found. */}
+            {/* </span> */}
 
-              <Input 
+              {/* <Input 
                 className={errorInput.video ? 'error' : ''}
                 defaultValue="" 
                 // type='text'
@@ -808,7 +900,7 @@ Videos within job descriptions can also help drive a 34% higher application rate
                   }
                 }
               />
-            </FormItem>
+            </FormItem> */}
             {/* https://www.loom.com/share/0104e2bb56c44739af9073a21f9e3d43 */}
             {/* {formInput.video}  */}
 
@@ -845,7 +937,20 @@ Videos within job descriptions can also help drive a 34% higher application rate
               
               }
 
-
+            <FormItem label="Name *">
+              <Input 
+                className={errorInput.name ? 'error' : ''}
+                defaultValue="" 
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      name: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
 
             <FormItem label="Email *">
               <Input 
@@ -863,21 +968,8 @@ Videos within job descriptions can also help drive a 34% higher application rate
             </FormItem>
 
 
-            <FormItem label="Name *">
-              <Input 
-                className={errorInput.name ? 'error' : ''}
-                defaultValue="" 
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      name: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem>
-            <FormItem label="Bounty Amount upon pass first round interview (UDS) *">
+        
+            <FormItem label="Referral Bonus (if your company offer any, we are asking just for information gathering)">
               <Input 
                 className={errorInput.name ? 'error' : ''}
                 defaultValue="" 
@@ -968,7 +1060,7 @@ Videos within job descriptions can also help drive a 34% higher application rate
               >Done</a> */}
 
 <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
-  submitAJob()
+  submitReferralBounty()
 }} >Done</a>
 
               {/* <ButtonSecondary className="flex-1">Preview item</ButtonSecondary> */}
@@ -1015,23 +1107,36 @@ Videos within job descriptions can also help drive a 34% higher application rate
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
-                Thanks for contacting us! We will get in touch with you shortly.
+                Thanks for providing referral! We will matched candiates to your email.
               </h3>
-
+              <h3 className="text-lg sm:text-2xl font-semibold">
+                Interesting in owning and managing your on chain professional identity?
+              </h3>
+              <h3 className="text-lg sm:text-2xl font-semibold">
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
+              </h3>
+              <div></div>
+              <h3 className="text-lg sm:text-2xl font-semibold">
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/claim'} >Claim your pseudonym</a>
+              </h3>
+              <div></div>
               {/* <h3 className="text-lg sm:text-2xl font-semibold"> */}
               {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}> 
               
-           
+           /claim
+
+            
+              
                 
                 </a> */}
-                ✨ Share on twitter  here
+                ✨ Share on twitter here
                 <span style={{paddingTop: '10px'}}>
 
                     <TwitterShareButton
                     style={{background: 'none', margin: '1rem', marginTop: '10px'}}
-                      title={"Hiring, Personalized at https://www.futureprotocol.co"}
-                      url={'https://www.futureprotocol.co/post-referral-bounty'}
-                      hashtags={["futureprotocol", "talentnation", 'hiringpersonalized']}
+                      title={`I can refer for this postion at ${formInput.title} at ${formInput.company}`}
+                      url={'https://www.futureprotocol.co/referral'}
+                      hashtags={["futureprotocol", "talentnation", 'referral2earn', 'professionalidentity', 'missiondrivencompany']}
                     >
                       <TwitterIcon size={32} round />
                 
@@ -1123,4 +1228,4 @@ function CheckIcon(props: any) {
   );
 }
 
-export default PostJob;
+export default PostReferral;

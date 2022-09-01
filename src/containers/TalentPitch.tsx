@@ -3,9 +3,9 @@ import React, { FC, useState } from "react";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 
-import Web3Modal from 'web3modal'
-import { useNavigate } from 'react-router-dom';
-import { ethers } from 'ethers'
+// import Web3Modal from 'web3modal'
+// import { useNavigate } from 'react-router-dom';
+// import { ethers } from 'ethers'
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
@@ -19,7 +19,7 @@ import {
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
 import loading from 'images/loading.gif'
-import marketplaceAbi from '../artifacts/marketplace.json'
+// import marketplaceAbi from '../artifacts/marketplace.json'
 
 // import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
@@ -686,7 +686,7 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
             {/* ---- */}
             <MySwitch 
             
-              label="I agree to receive news and updatese"
+              label="I agree to receive news and updates"
               desc=""
               enabled 
             />
@@ -704,7 +704,7 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
                  onClick={() => listNFTForSale()}
               >Done</a> */}
 
-<a style={{background: '#39ff14', padding: '10px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} onClick={() => {
+<a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
   submitAsTalent()
 }} >Done</a>
 
@@ -760,7 +760,7 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39ff14', padding: '12px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3>
 
 
@@ -770,7 +770,7 @@ const TalentPitch: FC<PageUploadItemProps> = ({ className = "" }) => {
           
 
           {/* <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39ff14', padding: '12px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
               
               <TwitterShareButton
                 style={{background: 'none', margin: '1rem', marginTop: '10px'}}

@@ -1,74 +1,45 @@
-// import Label from "components/Label/Label";
+import Label from "components/Label/Label";
 import React, { FC, useState } from "react";
 import { getDatabase, ref, set, onValue } from "firebase/database";
-
-// import Web3Modal from 'web3modal'
-// import { useNavigate } from 'react-router-dom';
-// import { ethers } from 'ethers'
+import { TwitterShareButton, TwitterIcon } from "react-share";
+import Web3Modal from 'web3modal'
+import { useNavigate } from 'react-router-dom';
+import { ethers } from 'ethers'
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import {
   marketplace as marketplaceAddress, 
   authorization,
-//   JobFamilies,
-//   Companies,
-//   Locations,
+  JobFamilies,
+  Companies,
+  Locations,
   PFPs
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
 import loading from 'images/loading.gif'
-// import marketplaceAbi from '../artifacts/marketplace.json'
+import marketplaceAbi from '../artifacts/marketplace.json'
 
-// import ButtonPrimary from "shared/Button/ButtonPrimary";
+import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 // import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
 import FormItem from "components/FormItem";
-// import { RadioGroup } from "@headlessui/react";
+import { RadioGroup } from "@headlessui/react";
 // import { nftsImgs } from "contains/fakeData";
 import MySwitch from "components/MySwitch";
 // import ButtonSecondary from "shared/Button/ButtonSecondary";
 import NcImage from "shared/NcImage/NcImage";
-// import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
+import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
 import NcModal from "shared/NcModal/NcModal";
 import { useFirebaseContext } from "contexts/firebaseContext";
+import Textarea from "shared/Textarea/Textarea";
 import { trackEvent } from "utils/tracking";
-import { TwitterIcon, TwitterShareButton } from "react-share";
-// import { input } from "@testing-library/user-event/dist/types/utils";
+
 
 export interface PageUploadItemProps {
   className?: string;
 }
-
-// https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png
-// const plans = [
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/Qmad4u7F4Z6j1zMaqLHGH7ierJ8yZ2GY5ayJK4xAVqVmvu?filename=10.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmQyaoEyL2idHSgRyJ1AaQ5FHC6jTeTkWnRFnsqNkMPrVh?filename=14.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmPzE1FfPw9FqDLhz3ZbNoM8Bxrx7jihTG3wwrDMfviGMa?filename=42.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmSA3e7swDUDHnL22JUnQg74ZXAv68fsC3PQ82cwLq8t78?filename=38.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmeirssBsSUGZt53M3SZNVv73VcLkhErQ9x9bwE6RtpPPX?filename=31.png',
-//   },
-// ];
-
 
 
 // https://ipfs.infura.io:5001/api/v0/add?pin=false
@@ -76,9 +47,9 @@ export interface PageUploadItemProps {
 //   url: 'https://ipfs.infura.io:5001/api/v0'
 // })
 
-const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
+const PostReferralBounty: FC<PageUploadItemProps> = ({ className = "" }) => {
   // const navigate = useNavigate()
-  const db = getDatabase()
+
   const {
     email, 
     photoUrl,
@@ -86,14 +57,12 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
     uid,
     signInWithGoogle
   } = useFirebaseContext()
-  
 
-  trackEvent('TalentOnboardPage_Visited', {
+  trackEvent('PostReferralBountyPage_Visted', {
     email, 
     uid,
   })
   
-
   const [showMintingModal, setShowMintingModal] = useState(false)
   const [showMintSuccessModal, setShowMintSuccessModal] = useState(false)
   const [mintSuccess, setMintSuccess] = useState(false)
@@ -102,33 +71,36 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [selected, setSelected] = useState(PFPs[1]);
   const [formInput, updateFormInput] = useState({ 
     chain: 'polygon',
-    name: '', 
-    phone: '', 
+    title: '', 
+    primaryRole: '', 
+    companyWebsite: '',
+    name: '',
      //TODO dropdown
     jobFamily: '', 
     //TODO dropdown
-    location: '',
-    email,
-    interviewerIntro: '',
-    hourlyRate: '',
-    calendlyLink: '',
+    location: 'remote',
+    email: email || '',
+    jobDescription: '',
+    video: '',
+    bountyAmount: '',
+
     Linkedin: '',
-    avatarString: '',
-    linkToResume: '',
+    typeofPosition: 'fulltime',
     price: '', 
   })
 
   const [errorInput, updateErrorInput] = useState({ 
-    name: false, 
-    phone: false, 
+    title: false, 
     email: false,
+    primaryRole: false, 
+    companyWebsite: false,
+    name: false,
+    jobDescription: false,
+    video: false,
+    location: false,
+    bountyAmount: false,
     Linkedin: false,
-    avatarString: false,
-    avatarStringErrorMsg: '',
-    linkToResume: false,
-    interviewerIntro: false,
-    hourlyRate: false,
-    calendlyLink: false
+    typeofPosition: false,
   })
 
 
@@ -146,50 +118,53 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
   }
 
   
-  async function uploadMetadataToIPFS() {
-    const { 
-      name, 
-      phone, 
-       //TODO dropdown
-      jobFamily, 
-      //TODO dropdown
-      location,
-      email,
-      Linkedin,
-      avatarString,
-      linkToResume,
-      price,
+  // async function uploadMetadataToIPFS() {
+  //   const { 
+  //     title, 
+  //     primaryRole, 
+  //     companyWebsite,
+  //      //TODO dropdown
+  //     jobFamily, 
+  //     //TODO dropdown
+  //     location,
+  //     jobDescription,
+  //     video,
+  //     bountyAmount,
+  //     Linkedin,
+  //     typeofPosition,
+  //     price,
 
-      // image,
-    } = formInput
-    console.log('---formInput', formInput)
-    if (!name || !phone || !email) return
-    /* first, upload to IPFS */
-    const data = JSON.stringify({
-      name, 
-      phone, 
-       //TODO dropdown
-      jobFamily, 
-      //TODO dropdown
-      location,
-      email,
-      Linkedin,
-      avatarString,
-      linkToResume,
-      price,
-      image: selected.featuredImage
-    })
-    try {
-      const added = client && await client.add(data)
-      const url = added && `https://ipfs.infura.io/ipfs/${added.path}`
-      /* after file is uploaded to IPFS, return the URL to use it in the transaction */
+  //     // image,
+  //   } = formInput
+  //   console.log('---formInput', formInput)
+  //   if (!title || !primaryRole || !jobDescription) return
+  //   /* first, upload to IPFS */
+  //   const data = JSON.stringify({
+  //     title, 
+  //     primaryRole, 
+  //      //TODO dropdown
+  //     jobFamily, 
+  //     //TODO dropdown
+ 
+  //     jobDescription,
+  //     video,
+  //     location,
+  //     Linkedin,
+  //     typeofPosition,
+  //     price,
+  //     image: selected.featuredImage
+  //   })
+  //   try {
+  //     const added = client && await client.add(data)
+  //     const url = added && `https://ipfs.infura.io/ipfs/${added.path}`
+  //     /* after file is uploaded to IPFS, return the URL to use it in the transaction */
 
-      setMetadataIpfsUrl(url)
-      return url
-    } catch (error) {
-      console.log('Error uploading file: ', error)
-    }  
-  }
+  //     setMetadataIpfsUrl(url)
+  //     return url
+  //   } catch (error) {
+  //     console.log('Error uploading file: ', error)
+  //   }  
+  // }
 
   const renderMintSuccessContent  = () => {
     return (
@@ -235,90 +210,102 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
     )
   }
 
-  const checkIsAvarAvail = (avatarString: string) => {
-
-    // ref(db, 'users/' + avatarString), {
-    //     name,
-    //     email,
-    //     Linkedin,
-    //     phone,
-    //     linkToResume,
-    //     interviewerIntro,
-    //     hourlyRate,
-    //     calendlyLink,
-    //     avatarString,
-    //   }
-
-    const userRef = ref(db, 'users/' + avatarString);
-
-    console.log('--userRef', userRef)
-
-    onValue(userRef, (snapshot) => {
-        console.log('--snapshot', snapshot, snapshot.exists())
-
-        // if (snapshot.exists()) {
-        var data = snapshot.val();
-        console.log('--data', data)
-        if (data) {
-            updateErrorInput({
-                ...errorInput,
-                avatarString: true,
-                avatarStringErrorMsg: 'pseudonym taken'
-            })
-        } else {
-            updateErrorInput({
-                ...errorInput,
-                avatarString: false,
-                avatarStringErrorMsg: ''
-            })
-        }
-        
-        
-
-        // set(ref(db, 'talents/' + avatarString), {
-        //     ...data,
-        //     intro,
-        //     // name,
-        //     // email,
-        //     linkToSystemDesign,
-        //     // phone,
-        //     linkToCoding,
-        // });
-      // setUsername(data.firstName + " " + data.lastName);
-      // TODO
-      // setUsername(data.email)
-    // }
-  });
 
 
+  const submitReferralBounty = async () => {
+    // console.log('formInput', formInput)
 
-}
-
-  const talentProfileSubmit = async () => {
+    trackEvent('PostReferralBountyPage_Submitting', {
+     
+      uid,
+      ...formInput
+    })
 
     const { 
-      name, 
-      phone, 
-      interviewerIntro,
-      hourlyRate,
-      calendlyLink,
-      // location,
-      email,
+      title, 
+      primaryRole, 
+      companyWebsite,
+      name,
+      location,
+      jobDescription,
+      video,
+      bountyAmount,
       Linkedin,
-      avatarString,
-      linkToResume,
+      email,
+      typeofPosition,
       // price,
 
       // image,
     } = formInput
+    console.log('---formInput', formInput)
 
-    localStorage.setItem('talentProfile', JSON.stringify(formInput))
-    localStorage.setItem('avatarString', avatarString)
 
-    trackEvent('TalentOnboardPage_Submitting', {
-      uid,
-      ...formInput
-    })
+    if (!title) {
+      trackEvent('PostReferralBountyTitle_Missing', {
+     
+        uid,
+        ...formInput
+      })
+
+      updateErrorInput({
+        ...errorInput,
+        title: true
+      })
+      return
+    }
+    
+    if (!primaryRole) {
+      updateErrorInput({
+        ...errorInput,
+        primaryRole: true
+      })
+      return
+    }
+    if (!jobDescription) {
+      updateErrorInput({
+        ...errorInput,
+        jobDescription: true
+      })
+      return
+    }
+    if (!location) {
+        updateErrorInput({
+          ...errorInput,
+          location: true
+        })
+        return
+      }
+
+      // if (!video) {
+      //   updateErrorInput({
+      //       ...errorInput,
+      //       video: true
+      //     })
+      //     trackEvent('PostReferralBountyVideo_Missing', {
+     
+      //       uid,
+      //       ...formInput
+      //     })
+
+      //     return
+
+      // }
+    // if (!Linkedin) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     Linkedin: true
+    //   })
+    //   return
+    // }
+
+
+    if (!typeofPosition) {
+      updateErrorInput({
+        ...errorInput,
+        typeofPosition: true
+      })
+      return
+    }
 
     if (!name) {
       updateErrorInput({
@@ -328,70 +315,44 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       return
     }
 
-    // if (!phone) {
+    // if (!email) {
+    //   trackEvent('PostReferralBountyEmail_Missing', {
+     
+    //     uid,
+    //     ...formInput
+    //   })
+
     //   updateErrorInput({
     //     ...errorInput,
-    //     phone: true
+    //     email: true
     //   })
     //   return
     // }
-    if (!email) {
+
+
+    if (!bountyAmount) {
       updateErrorInput({
         ...errorInput,
-        email: true
+        bountyAmount: true
       })
-      return
     }
-    if (!Linkedin) {
+
+
+    if (!companyWebsite) {
       updateErrorInput({
         ...errorInput,
-        Linkedin: true
+        companyWebsite: true
       })
       return
-    }
-
-    if (!avatarString) {
-        updateErrorInput({
-            ...errorInput,
-            avatarString: true
-          })
-          return
-    }
-
-    if (!linkToResume) {
+    } else {
       updateErrorInput({
         ...errorInput,
-        linkToResume: true
+        companyWebsite: false
       })
-      return
     }
 
-    // if (!interviewerIntro) {
-    //   updateErrorInput({
-    //     ...errorInput,
-    //     interviewerIntro: true
-    //   })
-    //   return
-    // }
-    // if (!calendlyLink) {
-    //     updateErrorInput({
-    //       ...errorInput,
-    //       calendlyLink: true
-    //     })
-    //     return
-    //   }
 
-    //   if (!hourlyRate) {
-    //     updateErrorInput({
-    //       ...errorInput,
-    //       hourlyRate: true
-    //     })
-    //     return
-    //   }
-    // 
-    // const db = getDatabase();
-
-
+    const db = getDatabase();
     // console.log('database', db)
     // READ DB
     // const starCountRef = ref(db, 'users/' + 1);
@@ -402,60 +363,54 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
     //   // updateStarCount(postElement, data);
     // });
 
-
-    const writeUserData = (
-      name: string, email: string, phone: string, Linkedin: string, linkToResume: string,
-
-      interviewerIntro: string,
-      calendlyLink: string,
-      hourlyRate: string,
-      avatarString: string
+    const writeUserData = (title: string, jobDescription: string, video: string, bountyAmount: string, location: string, primaryRole: string,  typeofPosition: string,
+      
+      email: string,
+      name: string,
       ) => {
+      const userId = `${title.trim()}${primaryRole}`
 
-      const userId = `${avatarString.trim()}`
-
-      set(ref(db, 'users/' + userId), {
+      set(ref(db, 'referralBounty/' + userId), {
+        title,
+        jobDescription,
+     
+        location,
+        // Linkedin,
+        primaryRole,
+        typeofPosition,
+        video,
+        bountyAmount,
         name,
-        email,
-        Linkedin,
-        phone,
-        linkToResume,
-        interviewerIntro,
-        hourlyRate,
-        calendlyLink,
-        avatarString,
+        email
+
       });
     }
 
     await writeUserData(
-      name,
+      title,
+      jobDescription,
+      video,
+      bountyAmount,
+      location,
+      primaryRole,
+    //   Linkedin,
+      typeofPosition,
       email,
-      phone,
-      Linkedin,
-      linkToResume,
-      interviewerIntro,
-      hourlyRate,
-      calendlyLink,
-      avatarString
+      name,
+      
     )
-
-
-    trackEvent('TalentOnboardPage_Success', {
+    trackEvent('PostReferralBountyPage_Success', {
+     
       uid,
       ...formInput
     })
 
+    
     setMintSuccess(true)
 
 
   }
-
-  const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
-
-// const name = localStorage.getItem('fp_displayName')
-// const loginemail = localStorage.getItem('fp_email')
-
-// const [avatarString, setAvatarString] = useState('eeeeee')
+//   https://cryptocurrencyjobs.co/post-a-job/
 
 // const dropdownPositon = 'down'
   return (
@@ -464,7 +419,7 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Onramp your professional identity to web3</title>
+        <title>Hiring is the most important thing you do.</title>
       </Helmet>
 
       {!mintSuccess && 
@@ -474,50 +429,30 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
-              Onramp Your Professional Identity to Web 3.0
-           
+              Hiring is the most important thing you do. 
+              {/* Build your first skill NFT */}
+            </h2>
+            <h2 className="text-3xl sm:text-4xl font-semibold">
+              {/* Turn your Salary info NFT, and earn passive income selling it */}
+              {/* $0 now, $299 after 08/28/22 */}
               {/* Build your first skill NFT */}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
-                * are required
+              
+              Let us help you find your next great hire.
+
+              Activate our exclusive private talents network within Web三DAO, and TalentNationDAO, to get inbounds for your tech candidates. questions? email support: hello@futureprotocol.co
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
             {/* <div> */}
               <h3 className="text-lg sm:text-2xl font-semibold">
-                {/* Company & Title Information */}
+          
+                Tell us about the position
               </h3>
-              <div className="w-32 lg:w-44 flex-shrink-0 mt-12 sm:mt-0">
-                <NcImage
-                    src={`https://api.multiavatar.com/${formInput.avatarString}.svg`}
-                    containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
-                />
-                </div>
-
-                <FormItem label="Choose your pseudonym  *">
-                    <Input 
-                        className={errorInput.avatarString ? 'error' : ''}
-                        type='text'
-                            defaultValue="" 
-                            onChange={
-                            (e) => {
-                                checkIsAvarAvail(e.target.value)
-
-                                updateFormInput({
-                                ...formInput,
-                                avatarString: e.target.value,
-                            })
-                            }
-                        }
-                    />
-                    <span style={{color: 'red'}}>
-                        {errorInput.avatarStringErrorMsg}
-                    </span>
-                    </FormItem>
-
               {/* <span className="text-neutral-500 dark:text-neutral-400 text-sm">
                 File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV,
                 OGG, GLB, GLTF. Max size: 100 MB
@@ -561,60 +496,170 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
                 </div>
               </div>
             </div> */}
-           
+
             {/* ---- */}
-
-            <h3 className="text-lg sm:text-2xl font-semibold">
-                {/* Company & Title Information */}
-                ㊙️ We won't share with any company without your permission ㊙️
-
-              </h3>
-            <FormItem label="Name *">
+            <FormItem label="Job title *">
               <Input 
                 // style={{
                 //   border: '0.5px solid red'
                 // }}
-                className={errorInput.name ? 'error' : ''}
-                defaultValue={''}
+                className={errorInput.title ? 'error' : ''}
+                defaultValue=""
+                placeholder=""
                 onChange={
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      name: e.target.value,
+                      title: e.target.value,
                   })
                   }
                 }
               />
             </FormItem>
-            {/* <FormItem label="Phone Number *">
+            <FormItem label="Company Website *">
               <Input 
-                className={errorInput.phone ? 'error' : ''}
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                className={errorInput.companyWebsite ? 'error' : ''}
+                defaultValue=""
+                placeholder=""
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      companyWebsite: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+            <FormItem label="Primary role *">
+              {/* <Input 
+                className={errorInput.primaryRole ? 'error' : ''}
                 defaultValue="" 
                 onChange={
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      phone: e.target.value,
+                      primaryRole: e.target.value,
                   })
                   }
                 }
-              />
-            </FormItem> */}
+              /> */}
+            <select  
+                id="primaryRole"
+                name="primaryRole"
+                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
+                // value={formInput.location}
+                onClick={(e) => {
+                    updateFormInput({
+                      ...formInput,
+                      primaryRole: (e.target as HTMLInputElement).value,
+                  })
+                
+                }}
+              >
+                {[
+               
+             
+                {
+                    name: 'Engineering',
+                    id: 'Engineering'
+                },
+                {
+                    name: 'Design',
+                    id: 'Design'
+                },
+                {
+                    name: 'Marketing',
+                    id: 'Marketing'
+                },
+                {
+                    name: 'Operation',
+                    id: 'Operation'
+                },
+                {
+                  name: 'Sales',
+                  id: 'Sales'
+              },
+              {
+                name: 'Customer Support',
+                id: 'Customer'
+            },
+              {
+                name: 'Other',
+                id: 'Other'
+            },
+            ].map(jf => {
+                  return <option
+                    key={jf.id}
+                  >{
+                    jf.name}</option>
+                })}
+                
+              </select>
+              
+            </FormItem>
       
-            <FormItem label="Link to Resume *">
-              <Input 
-                className={errorInput.linkToResume ? 'error' : ''}
+            <FormItem label="Type of position*">
+              {/* <Input 
+                className={errorInput.typeofPosition ? 'error' : ''}
                type='text'
                 defaultValue="" 
                 onChange={
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      linkToResume: e.target.value,
+                      typeofPosition: e.target.value,
                   })
                   }
                 }
-              />
+              /> */}
+            <select
+                id="typeofPosition"
+                name="typeofPosition"
+                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
+                // value={formInput.location}
+                onClick={(e) => {
+                    updateFormInput({
+                      ...formInput,
+                      typeofPosition: (e.target as HTMLInputElement).value,
+                  })
+                
+                }}
+              >
+                {[
+                {
+                    name: 'Full time',
+                    id: 'fulltime'
+                },
+                {
+                    name: 'Part time',
+                    id: 'parttime'
+                },
+                {
+                    name: 'Contract',
+                    id: 'Contract'
+                },
+                {
+                    name: 'Freelance',
+                    id: 'Freelance'
+                },
+                {
+                    name: 'Internship',
+                    id: 'Internship'
+                },
+            ].map(jf => {
+                  return <option
+                    key={jf.id}
+                  >{
+                    jf.name}</option>
+                })}
+                
+              </select>
+
+              
             </FormItem>
             {/* <FormItem label="Job Family">
               <NcDropDown
@@ -631,12 +676,14 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
                 onClick={(item) => {
                   updateFormInput({
                     ...formInput,
-                    jobFamily: item.name,
+                    jobFamily: item.title,
                 })
                 }}
               />
             </FormItem> */}
-            <FormItem label="Linkedin *">
+
+{/* 
+            <FormItem label="Job Description *">
               <Input 
                 className={errorInput.Linkedin ? 'error' : ''}
                 type='text'
@@ -651,15 +698,13 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
             </FormItem>
-
-        
-           
+            */}
 
             <h3 className="text-lg sm:text-2xl font-semibold">
               {/* Work Experience and Location */}
             </h3>
-            {/* <FormItem label="Location"> */}
-              {/* <Input 
+            <FormItem label="Job location">
+             {/* <Input 
                 defaultValue="" 
  
                 onChange={
@@ -672,7 +717,7 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               /> */}
 
-              {/* <select
+              <select
                 id="location"
                 name="location"
                 className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
@@ -685,21 +730,130 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
                 
                 }}
               >
-                {Locations.map(jf => {
+                {[
+                    {
+                        name: 'On Site',
+                        id: 'onsite'
+                    },
+                    {
+                        name: 'Remote',
+                        id: 'Remote'
+                    },
+                    {
+                        name: 'Hybrid',
+                        id: 'Hybrid'
+                    }
+                ].map(jf => {
                   return <option
                     key={jf.id}
                   >{
                     jf.name}</option>
                 })}
                 
-              </select> */}
+              </select> 
 
-            {/* </FormItem> */}
+           </FormItem>
+            <FormItem label="Job Description *">
+              <Textarea 
+                className={errorInput.jobDescription ? 'error' : ''}
+                defaultValue="" 
+                // type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      jobDescription: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="Video intro of the role (optional)">
+           
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+              Grab the embed url like 
+              https://www.youtube.com/embed/eQ2TaqzClPk or https://www.loom.com/share/e66669841b264c4ca83e7013e96e0f0c
+
+            </span>
+
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+              
+              Research revealed that website visitors prefer to learn information and details via video.
+
+            </span>
+
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            
+Specifically within Recruitment Marketing, job postings that include video garner 12% more views than postings without, according to CareerBuilder.
+
+            </span>
+
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            
+Videos within job descriptions can also help drive a 34% higher application rate, the CareerBuilder survey found.
+            </span>
+
+              <Input 
+                className={errorInput.video ? 'error' : ''}
+                defaultValue="" 
+                // type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      video: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+            {/* https://www.loom.com/share/0104e2bb56c44739af9073a21f9e3d43 */}
+            {/* {formInput.video}  */}
+
+            {/* <iframe src='https://www.loom.com/share/0104e2bb56c44739af9073a21f9e3d43' /> */}
+            { formInput.video &&  
+            
+            // <div 
+            
+            // style={{ position: 'relative', paddingBottom: '133.33333333333331%', height: 0}}
+            
+            // >
+              
+             <iframe 
+            // src="https://www.loom.com/embed/0104e2bb56c44739af9073a21f9e3d43" 
+            src={formInput.video.replace('share', 'embed')}
+            frameBorder="0" 
+            // webkitallowfullscreen 
+            // mozallowfullscreen 
+            // allowfullscreen 
+            
+            style={{
+              // position: 'absolute',
+            //  top: 0,
+            //   left: 0,
+               width: '800px',
+                height: '900px'
+              }}
+            >
+              
+              
+              </iframe>
+              
+              // </div>
+              
+              }
+
+
+
             <FormItem label="Email *">
               <Input 
                 className={errorInput.email ? 'error' : ''}
-                defaultValue={''} 
-                type='text'
+                defaultValue="" 
                 onChange={
                   (e) => {
                     updateFormInput({
@@ -711,57 +865,36 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
               />
             </FormItem>
 
-            {/* <FormItem label="Link to a 2 min Loom Video tell us your experience in technical interviewing, e.g. the leetcode algorithmns you like the most, system design question you enjoyed the most*">
+
+            <FormItem label="Name *">
               <Input 
-                className={errorInput.interviewerIntro ? 'error' : ''}
+                className={errorInput.name ? 'error' : ''}
                 defaultValue="" 
-                type='text'
                 onChange={
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      interviewerIntro: e.target.value,
+                      name: e.target.value,
                   })
                   }
                 }
               />
-            </FormItem> */}
-
-            {/* <FormItem label="Calendly Link *">
+            </FormItem>
+            <FormItem label="Bounty Amount upon pass first round interview ($)">
               <Input 
-                className={errorInput.calendlyLink ? 'error' : ''}
-                defaultValue="" 
-                type='text'
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      calendlyLink: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem> */}
-
-
-            {/* <FormItem label="HourlyRate *">
-              <Input 
-                className={errorInput.hourlyRate ? 'error' : ''}
+                className={errorInput.name ? 'error' : ''}
                 defaultValue="" 
                 type='number'
                 onChange={
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      hourlyRate: e.target.value,
+                      bountyAmount: e.target.value,
                   })
                   }
                 }
               />
-            </FormItem> */}
-
-
-            
+            </FormItem>
             {/* ---- */}
             {/* <FormItem
               label="External link"
@@ -838,7 +971,7 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
               >Done</a> */}
 
 <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
-  talentProfileSubmit()
+  submitReferralBounty()
 }} >Done</a>
 
               {/* <ButtonSecondary className="flex-1">Preview item</ButtonSecondary> */}
@@ -885,37 +1018,34 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
-                {/* Thanks for contacting us! We will get in touch with you shortly. */}
-
-
-
+                Thanks for submitting a referral bounty! We will get in touch with you shortly.
               </h3>
 
-              <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={`/${formInput.avatarString}`} >Check out your profile here</a>
-              </h3>
+              {/* <h3 className="text-lg sm:text-2xl font-semibold"> */}
+              {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}> 
+              
+           
+                
+                </a> */}
+                ✨ Share on twitter  here to show you are mission driven company!
+                <span style={{paddingTop: '10px'}}>
 
-              <h3 className="text-lg sm:text-2xl font-semibold">
-
-              </h3>
-
-              <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
-              </h3>
-
-      
-                <div style={{marginTop: '30px'}}>
-                ✨ Share on twitter here
                     <TwitterShareButton
                     style={{background: 'none', margin: '1rem', marginTop: '10px'}}
-                      title={`I claimed my pseudonym  ${formInput.avatarString} at https://www.futureprotocol.co/claim` }
-                      url={`https://www.futureprotocol.co/${formInput.avatarString}`}
-                      hashtags={["futureprotocol", "talentnation", "futureofprofessionalidentity", "decentralizedtechscreening", "decentralizedtechinterview", ]}
+                      title={"I posted a referral bounty at https://www.futureprotocol.co"}
+                      url={'https://www.futureprotocol.co/post-referral-bounty'}
+                      hashtags={["futureprotocol", "talentnation", 'hiringpersonalized', 'missiondrivencompany']}
                     >
                       <TwitterIcon size={32} round />
                 
                     </TwitterShareButton>
-                </div>
+                </span>
+               
+              {/* </h3> */}
+
+              {/* <h3 className="text-lg sm:text-2xl font-semibold">
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              </h3> */}
 
 
              
@@ -927,9 +1057,9 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
               ✨ Stand out by pitching yourself to your dream company ?
             </h3>
 
-          <h3 className="text-lg sm:text-2xl font-semibold">
+            <h3 className="text-lg sm:text-2xl font-semibold">
               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
-              </h3> */}
+            </h3> */}
           </div>
 
        
@@ -996,4 +1126,4 @@ function CheckIcon(props: any) {
   );
 }
 
-export default TalentStart;
+export default PostReferralBounty;

@@ -13,9 +13,9 @@ export interface SocialsListProps {
 
 const socialsDemo: SocialType[] = [
   // { name: "Facebook", icon: facebook, href: "#" },
-  { name: "Twitter", icon: twitter, href: "#" },
-  { name: "Youtube", icon: youtube, href: "#" },
-  { name: "Telegram", icon: telegram, href: "#" },
+  { name: "Twitter", icon: twitter, href: "https://twitter.com/future_protocol" },
+  // { name: "Youtube", icon: youtube, href: "#" },
+  // { name: "Telegram", icon: telegram, href: "#" },
 ];
 
 const SocialsList: FC<SocialsListProps> = ({

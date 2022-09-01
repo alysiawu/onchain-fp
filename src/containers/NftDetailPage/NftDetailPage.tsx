@@ -159,27 +159,27 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm">
             <div className="flex items-center ">
-              <Avatar sizeClass="h-9 w-9" radius="rounded-full" />
+              {/* <Avatar sizeClass="h-9 w-9" radius="rounded-full" /> */}
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
-                <span className="text-sm">Creator</span>
+                <span className="text-sm">Seller</span>
                 <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
                   <span>{seller}</span>
-                  <VerifyIcon iconClass="w-4 h-4" />
+                  {/* <VerifyIcon iconClass="w-4 h-4" /> */}
                 </span>
               </span>
             </div>
             <div className="hidden sm:block h-6 border-l border-neutral-200 dark:border-neutral-700"></div>
             <div className="flex items-center">
-              <Avatar
+              {/* <Avatar
                 imgUrl={image}
                 sizeClass="h-9 w-9"
                 radius="rounded-full"
-              />
+              /> */}
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
-                <span className="text-sm">Compensation Data</span>
+                {/* <span className="text-sm">Compensation Data</span> */}
                 <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
-                  <span>{"Close the pay gap"}</span>
-                  <VerifyIcon iconClass="w-4 h-4" />
+                  <span>{"Talentverse"}</span>
+                  {/* <VerifyIcon iconClass="w-4 h-4" /> */}
                 </span>
               </span>
             </div>
@@ -191,10 +191,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           {/* <TimeCountDown /> */}
         {/* </div> */}
         {currentAccount === owner && <div className="text-3xl xl:text-4xl font-semibold text-green-500">
-            <>Base Salary ${metaData.base}</>
+            <>${metaData.base}</>
         </div>}
           <div className="text-3xl xl:text-4xl font-semibold text-green-500">
-              {currentAccount === owner && <>Equity ${metaData.equity}</>}  
+              {currentAccount === owner && <>${metaData.equity}</>}  
           </div>
           <div className="text-3xl xl:text-4xl font-semibold text-green-500">
               {currentAccount === owner && <>Years of Experience {metaData.yearOfExperience}</>}  
@@ -243,8 +243,8 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
         {/* {currentAccount === nft?.owner } */}
           <div className="mt-8 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-
-            <ButtonPrimary 
+          <h3 className="text-lg sm:text-2xl font-semibold">
+          <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} 
             // href={"/connect-wallet"} 
             onClick={async () => {
               if (currentAccount === owner) {
@@ -259,7 +259,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             }
             
             className="flex-1">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              {/* <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M18.04 13.55C17.62 13.96 17.38 14.55 17.44 15.18C17.53 16.26 18.52 17.05 19.6 17.05H21.5V18.24C21.5 20.31 19.81 22 17.74 22H6.26C4.19 22 2.5 20.31 2.5 18.24V11.51C2.5 9.44001 4.19 7.75 6.26 7.75H17.74C19.81 7.75 21.5 9.44001 21.5 11.51V12.95H19.48C18.92 12.95 18.41 13.17 18.04 13.55Z"
                   stroke="currentColor"
@@ -288,10 +288,11 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-              </svg>
+              </svg> */}
 
-              <span className="ml-2.5">{currentAccount === owner ? 'Sell TC info' : 'Unlock TC '}</span>
-            </ButtonPrimary>
+              <span className="ml-2.5">{currentAccount === owner ? 'SELL NOW' : 'BUY NOW'}</span>
+            </a>
+            </h3>
             {/* <ButtonSecondary href={"/connect-wallet"} className="flex-1">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
@@ -354,10 +355,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 containerClassName="aspect-w-11 aspect-h-12 rounded-3xl overflow-hidden"
               />
               {/* META TYPE */}
-              <ItemTypeVideoIcon className="absolute left-3 top-3  w-8 h-8 md:w-10 md:h-10" />
+              {/* <ItemTypeVideoIcon className="absolute left-3 top-3  w-8 h-8 md:w-10 md:h-10" /> */}
 
               {/* META FAVORITES */}
-              <LikeButton className="absolute right-3 top-3 " />
+              {/* <LikeButton className="absolute right-3 top-3 " /> */}
             </div>
 
             <AccordionInfo nft={nft} />
@@ -374,10 +375,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       {!isPreviewMode && (
         <div className="container py-24 lg:py-32">
           {/* SECTION 1 */}
-          <div className="relative py-24 lg:py-28">
+          {/* <div className="relative py-24 lg:py-28">
             <BackgroundSection />
             <SectionSliderCategories />
-          </div>
+          </div> */}
 
           {/* SECTION */}
           <SectionBecomeAnAuthor className="pt-24 lg:pt-32" />

@@ -64,7 +64,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, nft, owner }) => {
           />
           
         </div>
-        {Math.random() > 0.5 ? (
+        {/* {Math.random() > 0.5 ? (
           <ItemTypeVideoIcon className="absolute top-3 left-3 !w-9 !h-9" />
         ) : (
           <ItemTypeImageIcon className="absolute top-3 left-3 !w-9 !h-9" />
@@ -72,27 +72,44 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, nft, owner }) => {
         <LikeButton
           liked={isLiked}
           className="absolute top-3 right-3 z-10 !h-9"
-        />
+        /> */}
         <div className="absolute top-3 inset-x-3 flex"></div>
       </div>
 
       <div className="p-4 py-5 space-y-3">
-        <div className="flex justify-between">
-          {renderAvatars()}
-          {nft && nft.metaData.company} 
+      {nft &&  nft.metaData.company && <div className="flex justify-between">
+          {/* {renderAvatars()} */}
+          {nft.metaData.company} 
           {/* {nft && nft.metaData.jobFamily} */}
           {/* <span className="text-neutral-700 dark:text-neutral-400 text-xs">
             {Math.floor(Math.random() * 90) + 10} in stock
           </span> */}
-        </div>
-        <h2 className={`text-lg font-medium`}>
+        </div> }
+        {nft &&  nft.metaData.jobFamily && <div className="flex justify-between">
+
+          {nft.metaData.jobFamily}  {nft.metaData.yearOfExperience && <> - {nft.metaData.yearOfExperience} years of experience</>}
+       
+        </div> }
+      
+  
+        {nft && nft.metaData.title &&  <h2 className={`text-lg font-medium`}>
         {/* Blockchain Engineer@Magic Eden Salary Data */}
-        {nft && nft.metaData.title} Salary Data 
+        {nft.metaData.title} 
+     
         {/* { owned && nft?.metaData.base}
         { owned && nft?.metaData.equity} */}
         
         {/* #{Math.floor(Math.random() * 1000) + 1000} */}
-        </h2>
+        </h2> }
+        {nft && nft.metaData.skillValueAdd &&  <h2 className={`text-lg font-medium`}>
+        {/* Blockchain Engineer@Magic Eden Salary Data */}
+        {nft.metaData.skillValueAdd} 
+     
+        {/* { owned && nft?.metaData.base}
+        { owned && nft?.metaData.equity} */}
+        
+        {/* #{Math.floor(Math.random() * 1000) + 1000} */}
+        </h2> }
 
         <div className="w-2d4 w-full border-b border-neutral-100 dark:border-neutral-700"></div>
 

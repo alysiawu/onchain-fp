@@ -36,6 +36,15 @@ import PageHome2 from "containers/PageHome/PageHome2";
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
 import InterviewerOnboarding from "containers/InterviewerOnboarding";
 import TalentProfilePage from "containers/AuthorPage/TalentProfilePage";
+import Claim from "containers/Claim";
+import Why from "containers/Why";
+import PostReferralBounty from "containers/PostReferralBounty";
+import Home from "containers/PageHome/Home0830";
+import SearchPro from "containers/SearchPro";
+import SearchProPage from "containers/SearchPro";
+import PostReferral from "containers/Referral";
+import ReferralOppos from "containers/ReferralOppos";
+import ReferralRequest from "containers/RequestReferral";
 
 export const pages: Page[] = [
   // { path: "/", exact: true, component: PageHome2 },
@@ -71,22 +80,32 @@ const App = () => {
       <SiteHeader />
       <Routes>
         <Route path="/" element={<PageHome2 />} />
+        <Route path="/beta" element={<Home />} />
         <Route path="/#" element={<PageHome2 />} />
         <Route path="/jobs" element={<JobsSearch />} />
+        <Route path="/our-why" element={<Why />} />
         <Route path="/interviewer-onboarding" element={<InterviewerOnboarding />} />
-
-
-        <Route path="/post-job" element={<PostJob />} />
+        <Route path="/search-pro" element={<SearchProPage />} />
+        <Route path="/referral-oppos" element={<ReferralOppos />} />
+        <Route path="/referral-req" element={<ReferralRequest />} />
+        
+        <Route path="/post-referral-bounty" element={<PostReferralBounty />} />
+        <Route path="/prb" element={<PostReferralBounty />} />
+        
+        <Route path="/referral" element={<PostReferral />} />
         <Route path="/quick-apply" element={<QuickApplyTalent />} />
         <Route path="/talent-pitch" element={<TalentPitch />} />
         <Route path="/get-started" element={<TalentStart />} />
         <Route path="/:avatarString" element={<TalentProfilePage />} />
+        
 
         <Route path="/profile" element={<AuthorPage />} />
 
+        <Route path="/claim" element={<Claim />} />
 
 
-        <Route path="/sucess-talent" element={<QuickApplyTalent />} />
+
+        <Route path="/success-talent" element={<QuickApplyTalent />} />
         <Route path="/create-onchain-idenity" element={<CreateNFTLock />} />
 
 

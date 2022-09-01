@@ -9,6 +9,8 @@ import { placeholderAvatar } from "utils/constants";
 export default function AvatarDropdown() {
   const { currentAccount, connectWallet } = useAccountContext()
 
+  const avatarString = localStorage.getItem('avatarString')
+
 
   return (
     <div className="AvatarDropdown">
@@ -19,7 +21,8 @@ export default function AvatarDropdown() {
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <Avatar
-                imgUrl={placeholderAvatar}
+                // imgUrl={placeholderAvatar}
+                imgUrl={`https://api.multiavatar.com/${avatarString|| 'rrr'}.svg`}
                 sizeClass="w-8 h-8 sm:w-9 sm:h-9"
               />
             </Popover.Button>
@@ -81,11 +84,11 @@ export default function AvatarDropdown() {
                     </Link>
 
                     {/* ------------------ 2 --------------------- */}
-                    <Link
+                    {/* <Link
                       to={"/profile"}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                    >
-                      <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
+                    > */}
+                      {/* <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
                         <svg
                           width="24"
                           height="24"
@@ -115,14 +118,14 @@ export default function AvatarDropdown() {
                             strokeLinejoin="round"
                           />
                         </svg>
-                      </div>
-                      <div className="ml-4">
+                      </div> */}
+                      {/* <div className="ml-4">
                         <p className="text-sm font-medium ">{"My Items"}</p>
-                      </div>
-                    </Link>
+                      </div> */}
+                    {/* </Link> */}
 
                     {/* ------------------ 2 --------------------- */}
-                    <Link
+                    {/* <Link
                       to={"/account"}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
@@ -165,15 +168,15 @@ export default function AvatarDropdown() {
                             strokeLinejoin="round"
                           />
                         </svg>
-                      </div>
-                      <div className="ml-4">
+                      </div> */}
+                      {/* <div className="ml-4">
                         <p className="text-sm font-medium ">{"Edit profile"}</p>
-                      </div>
-                    </Link>
+                      </div> */}
+                    {/* </Link> */}
 
                     <div className="w-full border-b border-neutral-200 dark:border-neutral-700" />
                     {/* ------------------ 2 --------------------- */}
-                    <Link
+                    {/* <Link
                       to={"/##"}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
@@ -232,7 +235,7 @@ export default function AvatarDropdown() {
                       <div className="ml-4">
                         <p className="text-sm font-medium ">{"Help"}</p>
                       </div>
-                    </Link>
+                    </Link> */}
 
                     {/* ------------------ 2 --------------------- */}
                     <Link

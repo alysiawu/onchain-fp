@@ -118,8 +118,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
         <Logo />
         <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-sm">
           <span>
-            Discover the most outstanding articles on all topics of life. Write
-            your stories and share them
+          At Future Protocol, we bring your professional identity on chain and showoff your expertise and knowledge, and guide you on web3 learning journey. 
           </span>
 
           <div className="flex justify-between items-center mt-4">
@@ -133,12 +132,12 @@ const NavMobile: React.FC<NavMobileProps> = ({
           <ButtonClose onClick={onClickClose} />
         </span>
       </div>
-      <ul className="flex flex-col py-6 px-2 space-y-1">
+      {/* <ul className="flex flex-col py-6 px-2 space-y-1">
         {data.map(_renderItem)}
-      </ul>
+      </ul> */}
       <div className="flex items-center justify-between py-6 px-5 space-x-2">
         <ButtonPrimary href={"/create"} className="!px-10">
-          Create
+          Create Skill NFT
         </ButtonPrimary>
         <ButtonSecondary href={"/connect-wallet"} className="flex-1">
           Connect Wallet

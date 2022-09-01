@@ -18,14 +18,14 @@ import {
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
 import loading from 'images/loading.gif'
-import marketplaceAbi from '../artifacts/marketplace.json'
+// import marketplaceAbi from '../artifacts/marketplace.json'
 
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 // import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
 import FormItem from "components/FormItem";
-import { RadioGroup } from "@headlessui/react";
+// import { RadioGroup } from "@headlessui/react";
 // import { nftsImgs } from "contains/fakeData";
 import MySwitch from "components/MySwitch";
 // import ButtonSecondary from "shared/Button/ButtonSecondary";
@@ -632,7 +632,7 @@ const QuickApplyTalent: FC<PageUploadItemProps> = ({ className = "" }) => {
             {/* ---- */}
             <MySwitch 
             
-              label="I agree to receive news and updatese"
+              label="I agree to receive news and updates"
               desc=""
               enabled 
             />
@@ -650,7 +650,7 @@ const QuickApplyTalent: FC<PageUploadItemProps> = ({ className = "" }) => {
                  onClick={() => listNFTForSale()}
               >Done</a> */}
 
-<a style={{background: '#39ff14', padding: '10px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} onClick={() => {
+<a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
   submitAsTalent()
 }} >Done</a>
 
@@ -701,12 +701,16 @@ const QuickApplyTalent: FC<PageUploadItemProps> = ({ className = "" }) => {
                 Thanks for contacting us! We will get in touch with you shortly.
               </h3>
 
-              <h3 className="text-lg sm:text-2xl font-semibold">
 
+              <h3 className="text-lg sm:text-2xl font-semibold">
+                Interesting in owning and managing your on chain professional identity?
+              </h3>
+              <h3 className="text-lg sm:text-2xl font-semibold">
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39ff14', padding: '12px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3>
 
               ✨ Share on twitter  here
@@ -734,7 +738,7 @@ const QuickApplyTalent: FC<PageUploadItemProps> = ({ className = "" }) => {
             </h3>
 
           <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39ff14', padding: '12px', 'boxShadow': '0 0 50px #39ff14', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
               </h3>
           </div>
 

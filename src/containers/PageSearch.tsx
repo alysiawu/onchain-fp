@@ -2,10 +2,10 @@ import React, { FC, useState, useEffect } from "react";
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import { Helmet } from "react-helmet";
-import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import Pagination from "shared/Pagination/Pagination";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
-import SectionSliderCollections from "components/SectionSliderCollections";
+// import BackgroundSection from "components/BackgroundSection/BackgroundSection";
+// import Pagination from "shared/Pagination/Pagination";
+// import ButtonPrimary from "shared/Button/ButtonPrimary";
+// import SectionSliderCollections from "components/SectionSliderCollections";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import HeaderFilterSearchPage from "components/HeaderFilterSearchPage";
 import Input from "shared/Input/Input";
@@ -35,7 +35,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
       const signer = provider.getSigner()
       const contract = new ethers.Contract(marketplaceAddress, marketplaceAbi.abi, signer)
       const data = await contract.fetchMarketItems()
-      console.log('===data', data)
+      // console.log('===data', data)
     /*
     *  map over nfts returned from smart contract and format 
     *  them as well as fetch their token metadata
@@ -46,7 +46,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
     }))
 
     setNfts(nfts as any)
-    console.log('===nfts', nfts)
+    // console.log('===nfts', nfts)
     setLoadingState(false) 
   }
 
@@ -58,15 +58,15 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageSearch  ${className}`} data-nc-id="PageSearch">
       <Helmet>
-        <title>Earn Passive Income by turning your data info into NFT</title>
+        <title>Your pass to the talentverse</title>
       </Helmet>
 
       <div
         className={`nc-HeadBackgroundCommon h-24 2xl:h-28 top-0 left-0 right-0 w-full bg-primary-50 dark:bg-neutral-800/20 `}
         data-nc-id="HeadBackgroundCommon"
       />
-      <div className="container">
-        <header className="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7">
+      {/* <div className="container"> */}
+        {/* <header className="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7">
           <form className="relative w-full " method="post">
             <label
               htmlFor="search-input"
@@ -113,13 +113,13 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
               </span>
             </label>
           </form>
-        </header>
-      </div>
+        </header> */}
+      {/* </div> */}
 
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28">
         <main>
           {/* FILTER */}
-          <HeaderFilterSearchPage />
+          {/* <HeaderFilterSearchPage /> */}
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
@@ -130,16 +130,16 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
 
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
-            <ButtonPrimary loading>Show me more</ButtonPrimary>
+            {/* <Pagination /> */}
+            {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
           </div>
         </main>
 
         {/* === SECTION 5 === */}
-        <div className="relative py-16 lg:py-28">
-          <BackgroundSection />
-          <SectionSliderCollections />
-        </div>
+        {/* <div className="relative py-16 lg:py-28"> */}
+          {/* <BackgroundSection /> */}
+          {/* <SectionSliderCollections /> */}
+        {/* </div> */}
 
         {/* SUBCRIBES */}
         <SectionBecomeAnAuthor />

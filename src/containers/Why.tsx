@@ -1,3 +1,4 @@
+
 // import Label from "components/Label/Label";
 import React, { FC, useState } from "react";
 import { getDatabase, ref, set, onValue } from "firebase/database";
@@ -35,6 +36,7 @@ import NcModal from "shared/NcModal/NcModal";
 import { useFirebaseContext } from "contexts/firebaseContext";
 import { trackEvent } from "utils/tracking";
 import { TwitterIcon, TwitterShareButton } from "react-share";
+import Textarea from "shared/Textarea/Textarea";
 // import { input } from "@testing-library/user-event/dist/types/utils";
 
 export interface PageUploadItemProps {
@@ -76,7 +78,7 @@ export interface PageUploadItemProps {
 //   url: 'https://ipfs.infura.io:5001/api/v0'
 // })
 
-const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
+const Why: FC<PageUploadItemProps> = ({ className = "" }) => {
   // const navigate = useNavigate()
   const db = getDatabase()
   const {
@@ -88,7 +90,7 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
   } = useFirebaseContext()
   
 
-  trackEvent('TalentOnboardPage_Visited', {
+  trackEvent('TalentOnboardingClaimPage_Visited', {
     email, 
     uid,
   })
@@ -113,6 +115,15 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
     hourlyRate: '',
     calendlyLink: '',
     Linkedin: '',
+    skillsets: '',
+    primarySkill: '',
+    superpower: '',
+    industryInterest: '',
+    openToGatedSpace: 'yes',
+    education: '',
+    twoTruthOnelie: '',
+    visaSponsor: 'no',
+    openToRecruitersPitch: 'yes',
     avatarString: '',
     linkToResume: '',
     price: '', 
@@ -123,6 +134,15 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
     phone: false, 
     email: false,
     Linkedin: false,
+    skillsets: false,
+    primarySkill: false,
+    superpower: false,
+    industryInterest: false,
+    openToGatedSpace: false,
+    education: false,
+    twoTruthOnelie: false,
+    visaSponsor: false,
+    openToRecruitersPitch: false,
     avatarString: false,
     avatarStringErrorMsg: '',
     linkToResume: false,
@@ -156,6 +176,15 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       location,
       email,
       Linkedin,
+      skillsets,
+      primarySkill,
+      superpower,
+      openToGatedSpace,
+      education,
+      industryInterest,
+      twoTruthOnelie,
+      visaSponsor,
+      openToRecruitersPitch,
       avatarString,
       linkToResume,
       price,
@@ -174,6 +203,15 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       location,
       email,
       Linkedin,
+      skillsets,
+      primarySkill,
+      superpower,
+      industryInterest,
+      openToGatedSpace,
+      education,
+      twoTruthOnelie,
+      visaSponsor,
+      openToRecruitersPitch,
       avatarString,
       linkToResume,
       price,
@@ -183,7 +221,6 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       const added = client && await client.add(data)
       const url = added && `https://ipfs.infura.io/ipfs/${added.path}`
       /* after file is uploaded to IPFS, return the URL to use it in the transaction */
-
       setMetadataIpfsUrl(url)
       return url
     } catch (error) {
@@ -235,64 +272,53 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
     )
   }
 
-  const checkIsAvarAvail = (avatarString: string) => {
+//   const checkIsAvarAvail = (avatarString: string) => {
 
-    // ref(db, 'users/' + avatarString), {
-    //     name,
-    //     email,
-    //     Linkedin,
-    //     phone,
-    //     linkToResume,
-    //     interviewerIntro,
-    //     hourlyRate,
-    //     calendlyLink,
-    //     avatarString,
-    //   }
+ 
+//     const userRef = ref(db, 'users/' + avatarString);
 
-    const userRef = ref(db, 'users/' + avatarString);
+//     console.log('--userRef', userRef)
 
-    console.log('--userRef', userRef)
+//     onValue(userRef, (snapshot) => {
+//         console.log('--snapshot', snapshot, snapshot.exists())
 
-    onValue(userRef, (snapshot) => {
-        console.log('--snapshot', snapshot, snapshot.exists())
-
-        // if (snapshot.exists()) {
-        var data = snapshot.val();
-        console.log('--data', data)
-        if (data) {
-            updateErrorInput({
-                ...errorInput,
-                avatarString: true,
-                avatarStringErrorMsg: 'pseudonym taken'
-            })
-        } else {
-            updateErrorInput({
-                ...errorInput,
-                avatarString: false,
-                avatarStringErrorMsg: ''
-            })
-        }
+//         // if (snapshot.exists()) {
+//         var data = snapshot.val();
+//         console.log('--data', data)
+//         if (data) {
+//             updateErrorInput({
+//                 ...errorInput,
+//                 avatarString: true,
+//                 avatarStringErrorMsg: 'pseudonym taken'
+//             })
+//         } else {
+//             updateErrorInput({
+//                 ...errorInput,
+//                 avatarString: false,
+//                 avatarStringErrorMsg: ''
+//             })
+//         }
         
         
 
-        // set(ref(db, 'talents/' + avatarString), {
-        //     ...data,
-        //     intro,
-        //     // name,
-        //     // email,
-        //     linkToSystemDesign,
-        //     // phone,
-        //     linkToCoding,
-        // });
-      // setUsername(data.firstName + " " + data.lastName);
-      // TODO
-      // setUsername(data.email)
-    // }
-  });
+//         // set(ref(db, 'talents/' + avatarString), {
+//         //     ...data,
+//         //     intro,
+//         //     // name,
+//         //     // email,
+//         //     linkToSystemDesign,
+//         //     // phone,
+//         //     linkToCoding,
+//         // });
+//       // setUsername(data.firstName + " " + data.lastName);
+//       // TODO
+//       // setUsername(data.email)
+//     // }
+//   });
 
 
 
-}
+// }
 
   const talentProfileSubmit = async () => {
 
@@ -305,6 +331,15 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       // location,
       email,
       Linkedin,
+      skillsets,
+      primarySkill,
+      superpower,
+      industryInterest,
+      openToGatedSpace,
+      education,
+      twoTruthOnelie,
+      visaSponsor,
+      openToRecruitersPitch,
       avatarString,
       linkToResume,
       // price,
@@ -315,7 +350,7 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
     localStorage.setItem('talentProfile', JSON.stringify(formInput))
     localStorage.setItem('avatarString', avatarString)
 
-    trackEvent('TalentOnboardPage_Submitting', {
+    trackEvent('TalentOnboardingClaimPage_Submitting', {
       uid,
       ...formInput
     })
@@ -350,12 +385,54 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       return
     }
 
+    
+
+    if (!skillsets) {
+        updateErrorInput({
+          ...errorInput,
+          skillsets: true
+        })
+        return
+      }
+  if (!primarySkill) {
+    
+    updateErrorInput({
+        ...errorInput,
+        primarySkill: true
+      })
+      return
+  }
+
+  if (!education) {
+    updateErrorInput({
+        ...errorInput,
+        education: true
+    })
+    return
+  }
+
+  if (!superpower) {
+    updateErrorInput({
+        ...errorInput,
+        superpower: true
+      })
+      return
+  }
+
+  if (!twoTruthOnelie) {
+    updateErrorInput({
+        ...errorInput,
+        twoTruthOnelie: true
+      })
+      return
+    }
+
     if (!avatarString) {
         updateErrorInput({
             ...errorInput,
-            avatarString: true
-          })
-          return
+          avatarString: true
+        })
+        return
     }
 
     if (!linkToResume) {
@@ -366,50 +443,24 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       return
     }
 
-    // if (!interviewerIntro) {
-    //   updateErrorInput({
-    //     ...errorInput,
-    //     interviewerIntro: true
-    //   })
-    //   return
-    // }
-    // if (!calendlyLink) {
-    //     updateErrorInput({
-    //       ...errorInput,
-    //       calendlyLink: true
-    //     })
-    //     return
-    //   }
-
-    //   if (!hourlyRate) {
-    //     updateErrorInput({
-    //       ...errorInput,
-    //       hourlyRate: true
-    //     })
-    //     return
-    //   }
-    // 
-    // const db = getDatabase();
-
-
-    // console.log('database', db)
-    // READ DB
-    // const starCountRef = ref(db, 'users/' + 1);
-
-    // onValue(starCountRef, (snapshot) => {
-    //   const data = snapshot.val();
-    //   console.log('------data', data)
-    //   // updateStarCount(postElement, data);
-    // });
-
-
     const writeUserData = (
-      name: string, email: string, phone: string, Linkedin: string, linkToResume: string,
+      name: string, email: string, phone: string, Linkedin: string, 
+      
+      skillsets: string,
+      primarySkill: string,
+      superpower: string,
+      industryInterest: string,
+      openToGatedSpace: string,
+      education: string,
+      twoTruthOnelie: string,
+      linkToResume: string,
 
       interviewerIntro: string,
       calendlyLink: string,
       hourlyRate: string,
-      avatarString: string
+      avatarString: string,
+      visaSponsor: string,
+      openToRecruitersPitch: string,
       ) => {
 
       const userId = `${avatarString.trim()}`
@@ -418,12 +469,22 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
         name,
         email,
         Linkedin,
+        skillsets,
+        primarySkill,
+        superpower,
+        industryInterest,
+        openToGatedSpace,
+        education,
+        twoTruthOnelie,
+
         phone,
         linkToResume,
         interviewerIntro,
         hourlyRate,
         calendlyLink,
         avatarString,
+        visaSponsor,
+        openToRecruitersPitch
       });
     }
 
@@ -432,25 +493,31 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
       email,
       phone,
       Linkedin,
+      skillsets,
+      primarySkill,
+      superpower,
+      industryInterest,
+      openToGatedSpace,
+      education,
+      twoTruthOnelie,
       linkToResume,
       interviewerIntro,
       hourlyRate,
       calendlyLink,
-      avatarString
+      avatarString,
+      visaSponsor,
+      openToRecruitersPitch
     )
-
-
-    trackEvent('TalentOnboardPage_Success', {
+    trackEvent('TalentOnboardingClaimPage_Success', {
       uid,
       ...formInput
     })
 
     setMintSuccess(true)
 
-
   }
 
-  const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
+//   const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
 
 // const name = localStorage.getItem('fp_displayName')
 // const loginemail = localStorage.getItem('fp_email')
@@ -474,14 +541,88 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
-              Onramp Your Professional Identity to Web 3.0
-           
+              {/* Onramp Your Professional Identity to Web
+              
+              3.0, claim you
+              r pass to proof of expertise metaverse. */}
+            Community
               {/* Build your first skill NFT */}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
-                * are required
+                {/* * are required */}
+              
+                ☯️ We are building a community of people that believe in life-long learning and humility
+                
+                {/* 🧠 Learning, is our way of living
+                🥷🏼  Knowledge is nothing if you don’t use it
+                🦶🏼 Keep on advancing
+                🌲 Keep on growing */}
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-semibold" style={{marginTop: '20px'}}>
+                Learning
+            </h2>
+
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                🧠 Learning, is our way of living
+            </span>
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                🥷🏼  Knowledge is nothing if you don’t use it
+            </span>
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                🦶🏼 Keep on advancing
+            </span>
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                🌲 Keep on growing
+            </span>
+
+            <h2 className="text-3xl sm:text-4xl font-semibold" style={{marginTop: '20px'}}>
+                Growth
+            </h2>
+
+            <h2 className="text-3xl sm:text-4xl font-semibold" style={{marginTop: '20px'}}>
+               
+               
+                {/* 👨🏼‍🌾 People that are happy and help each other */}
+              
+              {/* Build your first skill NFT */}
+            </h2>
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                💸 Getting paid fairly
+            </span>
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                {/* 🌏 Borderless */}
+            </span>
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                ☄️ Building the New Frontier
+            </span>
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                🌏 Borderless
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
@@ -490,33 +631,8 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
               <h3 className="text-lg sm:text-2xl font-semibold">
                 {/* Company & Title Information */}
               </h3>
-              <div className="w-32 lg:w-44 flex-shrink-0 mt-12 sm:mt-0">
-                <NcImage
-                    src={`https://api.multiavatar.com/${formInput.avatarString}.svg`}
-                    containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
-                />
-                </div>
+            
 
-                <FormItem label="Choose your pseudonym  *">
-                    <Input 
-                        className={errorInput.avatarString ? 'error' : ''}
-                        type='text'
-                            defaultValue="" 
-                            onChange={
-                            (e) => {
-                                checkIsAvarAvail(e.target.value)
-
-                                updateFormInput({
-                                ...formInput,
-                                avatarString: e.target.value,
-                            })
-                            }
-                        }
-                    />
-                    <span style={{color: 'red'}}>
-                        {errorInput.avatarStringErrorMsg}
-                    </span>
-                    </FormItem>
 
               {/* <span className="text-neutral-500 dark:text-neutral-400 text-sm">
                 File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV,
@@ -564,11 +680,89 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
            
             {/* ---- */}
 
-            <h3 className="text-lg sm:text-2xl font-semibold">
+            <h2 className="text-lg sm:text-4xl font-semibold">
                 {/* Company & Title Information */}
-                ㊙️ We won't share with any company without your permission ㊙️
+                {/* ㊙️ We won't share with any company without your permission ㊙️ */}
+                What is Professional Identity?
+            </h2>
 
+            <span className="text-lg block mt-3 text-neutral-500 dark:text-neutral-400  ">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                1/ Through education, work, and life experiences, we
+                developed skills, knowledge, work behaviors, 
+                values, ethics, and goals that will lead us towards
+               
+                <span className='font-semibold' style={{fontWeight: '800'}}> purposeful and fulfilling work.</span> 
+            </span>
+            <span className="text-lg  block mt-3 text-neutral-500 dark:text-neutral-400 ">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                2/ Knowing and being comfortable with our professional identity throughout our career development builds confidence and enthusiasm.
+
+            </span>
+            <span className="text-lg  block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                3/ We will be more apt to reach out to the network or apply for a job because we recognize our 
+
+
+                <span className='font-semibold' style={{fontWeight: '800'}}> professional value.</span> 
+            </span>
+            <span className="text-lg  block mt-3 text-neutral-800 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                4/ And that employment is a form of <span className='font-semibold' style={{fontWeight: '800'}}>community engagement.</span> 
+            </span>
+
+            <span className="text-lg  block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                5/ When we understand that our professional identity satisfies the requirements of a specific job, but can also be   <span style={{fontWeight: '800'}}>transferable to other types of community engagement, </span>   we realize that across fields and work environments, employees and employers are
+
+            </span>
+            <span className="text-lg  block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                6/ <span style={{fontWeight: '800'}}>A team who shares the common goal </span>  of providing a product or service to benefit others.
+
+            </span>
+            <span className="text-lg  block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                7/ Having clarity about our current professional identity will
+                enable us to advance our career by quickly identifying
+                other skills needed to meet short-term and future goals and the demands of a changing workforce and decentralized future of work.
+
+            </span>
+               <h3 className="text-lg  text-lg sm:text-2xl font-semibold">
+                {/* Company & Title Information */}
+                {/* ㊙️ We won't share with any company without your permission ㊙️ */}
+                    Discover Professional Identity for the Future of Work, and claim your pass to proof of expertise metaverse at <a style={{color: 'pink', borderBottom: '1px solid pink'}} href='/claim'>here</a> or below 👇 
+                 
               </h3>
+              <span className="text-lg  block mt-3 text-neutral-500 dark:text-neutral-400">
+              {/* You can set preferred display name, create your profile URL and
+              manage other personal settings. */}
+                {/* * are required */}
+                #futureofwork #metaverse #decentralizedidentity #web3
+
+            </span>
+            <h3 className="text-lg  text-lg sm:text-2xl font-semibold">
+                {/* Company & Title Information */}
+                {/* ㊙️ We won't share with any company without your permission ㊙️ */}
+                Join as an early fren and get priority access to our refer2earn decentralized bounty program <a style={{color: 'pink', borderBottom: '1px solid pink'}} href='https://checkout.stripe.com/pay/cs_live_a1bdpJmCSUxhEBx66LmCWqgxXidVkAsiNJppgwO3Ozt3iVc6JH5ovqZx7E#fidkdWxOYHwnPyd1blppbHNgWjA0SVVgfWtEYjRIa3FyanByVEpNaXdRbHVkT0oxVGIxMlZJMXZddDVvYD1sczdtV3VfcGpvfWpSTjZkSUlgUnZzR0FMSkpXRnBgV2ZPMXc2fWJ0bUJPN29dNTU9UmZDUXJpMScpJ3VpbGtuQH11anZgYUxhJz8nMG5EM3RdYDBUNmdEMEFSY1xcJyknd2BjYHd3YHdKd2xibGsnPydtcXF1dj8qKnJycityYGc2d2Bmd3BscXYrfXx%2FKid4JSUl'>here</a>
+                 
+            </h3>
+              
+              
             <FormItem label="Name *">
               <Input 
                 // style={{
@@ -586,6 +780,131 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
             </FormItem>
+            <FormItem label="Primary Skill which you get paid for *">
+              <Input 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                className={errorInput.primarySkill ? 'error' : ''}
+                defaultValue={''}
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      primarySkill: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="List of skillsets, separate by comma *">
+              <Input 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                className={errorInput.skillsets ? 'error' : ''}
+                defaultValue={''}
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      skillsets: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="List all your educations, separate by semicolon *">
+              <Input 
+                className={errorInput.education ? 'error' : ''}
+                defaultValue={''} 
+                type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      education: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="Verticals, domains that interest you.  *">
+                <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+                e.g. fitness, mental health, DEFI, SocialFI, fintech, edtech, productivity, events, gaming, metaverse, climate tech, AL/ML, dev tools etc
+                </span>
+              <Input 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                className={errorInput.industryInterest? 'error' : ''}
+                defaultValue={''}
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      industryInterest: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+            <FormItem label="Your superpower at work *">
+                <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+                 {/* we want to know your secret power */}
+
+                 Your superpower is your contribution—the role that you’re put on this Earth to fill. It’s what you do better than anyone else and tapping into it will not only help your team, but you’ll find your work more satisfying, too.
+                </span>
+              <Input 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                className={errorInput.superpower ? 'error' : ''}
+                defaultValue={''}
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      superpower: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+
+            <FormItem label="Two truth, one lie *">
+
+            Two Truths and a Lie
+
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+  
+                This is a game: 
+                 To play, everyone sits or stands in a circle. One by one, each person in the circle says three statements about him/herself. Two of these statements must be facts, or "truths," and one must be a lie. The other members then try to guess which statement is the lie.
+                </span>
+
+              <Textarea 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                className={errorInput.twoTruthOnelie ? 'error' : ''}
+                defaultValue={''}
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      twoTruthOnelie: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+            
+           
+            
             {/* <FormItem label="Phone Number *">
               <Input 
                 className={errorInput.phone ? 'error' : ''}
@@ -695,7 +1014,7 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
               </select> */}
 
             {/* </FormItem> */}
-            <FormItem label="Email *">
+            {/* <FormItem label="Email *">
               <Input 
                 className={errorInput.email ? 'error' : ''}
                 defaultValue={''} 
@@ -709,7 +1028,133 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
                   }
                 }
               />
+            </FormItem> */}
+
+
+            
+
+            <FormItem label="Visa Sponsor *">
+              {/* <Input 
+                className={errorInput.visaSponsor ? 'error' : ''}
+                defaultValue={''} 
+                type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      visaSponsor: e.target.value,
+                  })
+                  }
+                }
+              /> */}
+
+                <select
+                id="visaSponsor"
+                name="visaSponsor"
+                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
+                // value={formInput.location}
+                onClick={(e) => {
+                    updateFormInput({
+                      ...formInput,
+                      visaSponsor: (e.target as HTMLInputElement).value,
+                  })
+                
+                }}
+              >
+                {[{ 
+                    name: 'yes',
+                    id: 'ye'
+                }, { 
+                    name: 'no',
+                    id: 'no'
+                },
+            ].map(jf => {
+                  return <option
+                    key={jf.id}
+                  >{
+                    jf.name}</option>
+                })}
+                
+              </select>
+
             </FormItem>
+            <FormItem label="Open to recruiters pitching jobs? *">
+              {/* <Input 
+                className={errorInput.visaSponsor ? 'error' : ''}
+                defaultValue={''} 
+                type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      visaSponsor: e.target.value,
+                  })
+                  }
+                }
+              /> */}
+
+                <select
+                id="openToRecruitersPitch"
+                name="openToRecruitersPitch"
+                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
+                // value={formInput.location}
+                onClick={(e) => {
+                    updateFormInput({
+                      ...formInput,
+                      openToRecruitersPitch: (e.target as HTMLInputElement).value,
+                  })
+                
+                }}
+              >
+                {[{ 
+                    name: 'yes',
+                    id: 'ye'
+                }, { 
+                    name: 'no',
+                    id: 'no'
+                },
+            ].map(jf => {
+                  return <option
+                    key={jf.id}
+                  >{
+                    jf.name}</option>
+                })}
+                
+              </select>
+
+            </FormItem>
+
+            <FormItem label="Are you interested in creating a gated space to consulting, mentoring, teaching, selling content or simply to talk etc *">
+              <select
+                id="openToGatedSpace"
+                name="openToGatedSpace"
+                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
+                // value={formInput.location}
+                onClick={(e) => {
+                    updateFormInput({
+                      ...formInput,
+                      openToGatedSpace: (e.target as HTMLInputElement).value,
+                  })
+                
+                }}
+              >
+                {[{ 
+                    name: 'yes',
+                    id: 'ye'
+                }, { 
+                    name: 'no',
+                    id: 'no'
+                },
+            ].map(jf => {
+                  return <option
+                    key={jf.id}
+                  >{
+                    jf.name}</option>
+                })}
+                
+              </select>
+            </FormItem>
+
 
             {/* <FormItem label="Link to a 2 min Loom Video tell us your experience in technical interviewing, e.g. the leetcode algorithmns you like the most, system design question you enjoyed the most*">
               <Input 
@@ -837,9 +1282,9 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
                  onClick={() => listNFTForSale()}
               >Done</a> */}
 
-<a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
-  talentProfileSubmit()
-}} >Done</a>
+              <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
+                talentProfileSubmit()
+              }} >Done</a>
 
               {/* <ButtonSecondary className="flex-1">Preview item</ButtonSecondary> */}
             </div>
@@ -865,22 +1310,18 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
 
           
             <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
-          
-
-<div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
+            <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
 
 
-<h3 className="text-lg sm:text-2xl font-semibold">
+            <h3 className="text-lg sm:text-2xl font-semibold">
 
-              </h3>
-</div>
-<div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
-      
-</div>
-<div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
-  
-
-<h3 className="text-lg sm:text-2xl font-semibold">
+            </h3>
+            </div>
+            <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
+                
+            </div>
+            <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
+            <h3 className="text-lg sm:text-2xl font-semibold">
                 {/* Company & Title Information */}
               </h3>
 
@@ -891,9 +1332,9 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
 
               </h3>
 
-              <h3 className="text-lg sm:text-2xl font-semibold">
+              {/* <h3 className="text-lg sm:text-2xl font-semibold">
               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={`/${formInput.avatarString}`} >Check out your profile here</a>
-              </h3>
+              </h3> */}
 
               <h3 className="text-lg sm:text-2xl font-semibold">
 
@@ -905,7 +1346,7 @@ const TalentStart: FC<PageUploadItemProps> = ({ className = "" }) => {
 
       
                 <div style={{marginTop: '30px'}}>
-                ✨ Share on twitter here
+                ✨ Share on twitter here to enroll sweepstakes for $250 price
                     <TwitterShareButton
                     style={{background: 'none', margin: '1rem', marginTop: '10px'}}
                       title={`I claimed my pseudonym  ${formInput.avatarString} at https://www.futureprotocol.co/claim` }
@@ -996,4 +1437,4 @@ function CheckIcon(props: any) {
   );
 }
 
-export default TalentStart;
+export default Why;

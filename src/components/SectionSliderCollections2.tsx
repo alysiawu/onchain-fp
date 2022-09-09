@@ -8,6 +8,7 @@ import Nav from "shared/Nav/Nav";
 import NavItem2 from "./NavItem2";
 import Next from "shared/NextPrev/Next";
 import Prev from "shared/NextPrev/Prev";
+import { nftsImgs } from "contains/fakeData";
 
 export interface SectionSliderCollections2Props {
   className?: string;
@@ -64,6 +65,7 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
 
   const MyCollectionCard =
     cardStyle === "style1" ? CollectionCard : CollectionCard2;
+  // CollectionCard2;
 
   return (
     <div className={`nc-SectionSliderCollections2 ${className}`}>
@@ -73,7 +75,7 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
         isCenter
         desc=""
       >
-        Top List Collections.
+        Top Achievers
       </Heading>
       <Nav
         className="p-1 bg-white dark:bg-neutral-800 rounded-full shadow-lg"
@@ -138,6 +140,15 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
             <li className={`glide__slide`}>
               <MyCollectionCard
                 imgs={[
+                  nftsImgs[0],
+                  nftsImgs[1],
+                  nftsImgs[16],
+                  nftsImgs[15],
+                  nftsImgs[14],
+                  nftsImgs[13],
+                  nftsImgs[12],
+                  nftsImgs[2],
+                  nftsImgs[3],
                   "https://images.unsplash.com/photo-1557672172-298e090bd0f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                   "https://images.unsplash.com/photo-1599054802207-91d346adc120?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
                   "https://images.unsplash.com/photo-1581985673473-0784a7a44e39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
@@ -148,6 +159,10 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
             <li className={`glide__slide`}>
               <MyCollectionCard
                 imgs={[
+                  nftsImgs[4],
+                  nftsImgs[8],
+                  nftsImgs[6],
+                  nftsImgs[7],
                   "https://images.unsplash.com/photo-1618172193763-c511deb635ca?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
                   "https://images.unsplash.com/photo-1617791160505-6f00504e3519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
                   "https://images.unsplash.com/photo-1637611331620-51149c7ceb94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
@@ -159,6 +174,10 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
             <li className={`glide__slide`}>
               <MyCollectionCard
                 imgs={[
+                  nftsImgs[11],
+                  nftsImgs[12],
+                  nftsImgs[9],
+                  nftsImgs[13],
                   "https://images.unsplash.com/photo-1625521416008-78e00551375b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                   "https://images.unsplash.com/photo-1626282874430-c11ae32d2898?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
                   "https://images.unsplash.com/photo-1625527575307-13c5d315087b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",

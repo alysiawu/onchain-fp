@@ -1,4 +1,5 @@
 import Label from "components/Label/Label";
+import { v4 as uuidv4 } from 'uuid';
 import React, { FC, useState } from "react";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import { TwitterShareButton, TwitterIcon } from "react-share";
@@ -216,7 +217,7 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
 
   const submitReferralBounty = async () => {
     // console.log('formInput', formInput)
-
+    // const referralOppoId = uuidv4()
     trackEvent('PostReferralPage_Submitting', {
      
       uid,
@@ -397,9 +398,9 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
       name: string,
       ) => {
           console.log('---primaryRole', primaryRole)
-      const userId = `${title.trim()}-${primaryRole}-${name}`
-
-      set(ref(db, 'referralOppos/' + userId), {
+    //   const userId = `${title.trim()}-${primaryRole}-${name}`
+    const referralOppoId = uuidv4()
+      set(ref(db, 'referralOppos/' + referralOppoId), {
         title,
         jobDescription,
         company,
@@ -429,7 +430,6 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
       company,
       email,
       name,
-      
     )
 
     console.log('ppp')
@@ -453,7 +453,7 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Refer2Earn</title>
+        <title>Refer2Earn | Post a Referral Bounty</title>
       </Helmet>
 
       {!mintSuccess && 
@@ -464,7 +464,7 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
               {/* Hiring is the most important thing you do.  */}
-              Refer2Earn
+              Post a Referral Bounty
               {/* Build your first skill NFT */}
             </h2>
             <h2 className="text-3xl sm:text-4xl font-semibold">
@@ -485,7 +485,6 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
           <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
             {/* <div> */}
               <h3 className="text-lg sm:text-2xl font-semibold">
-          
                 Tell us about the position
               </h3>
               {/* <span className="text-neutral-500 dark:text-neutral-400 text-sm">

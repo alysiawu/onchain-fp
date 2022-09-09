@@ -76,19 +76,19 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       data-nc-id="PageConnectWallet"
     >
       <Helmet>
-        <title>Connect Wallet || Websan Network</title>
+        <title>Connect Wallet || Future Protocol</title>
       </Helmet>
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-3xl mx-auto space-y-8 sm:space-y-10">
           {/* HEADING */}
           <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl font-semibold">
-              Connect your wallet.
-            </h2>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              Connect with one of our available wallet providers or create a new
-              one.
-            </span>
+          <h2 className="text-3xl sm:text-4xl font-semibold">
+          Connect your wallet to Polygon Network (Harmoney and Celo coming soon!)
+        </h2>
+        
+        <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+          Connect with one of our available wallet providers
+        </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">

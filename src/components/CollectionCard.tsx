@@ -34,11 +34,11 @@ const CollectionCard: FC<CollectionCardProps> = ({
         </div>
         {/* TITLE */}
         <h2 className="font-semibold text-3xl mt-1.5 text-white">
-          Awesome collection
+          {/* Awesome collection */}
         </h2>
         {/* LISTS */}
         <div className="grid grid-cols-3 gap-4 mt-5">
-          <NcImage
+          {/* <NcImage
             containerClassName="w-full h-20 rounded-xl overflow-hidden"
             src={imgs[1]}
           />
@@ -49,7 +49,15 @@ const CollectionCard: FC<CollectionCardProps> = ({
           <NcImage
             containerClassName="w-full h-20 rounded-xl overflow-hidden"
             src={imgs[3]}
-          />
+          /> */}
+
+{/* <NcImage containerClassName="aspect-w-8 aspect-h-5" src={nftsImgs[4]} />
+        <div className="grid grid-cols-3 gap-1.5 mt-1.5"> */}
+          <NcImage containerClassName="w-full h-28" src={nftsImgs[6]} />
+          <NcImage containerClassName="w-full h-28" src={nftsImgs[5]} />
+          <NcImage containerClassName="w-full h-28" src={nftsImgs[8]} />
+        {/* </div> */}
+
         </div>
       </div>
       <Link to={"/page-collection"} className="absolute inset-0"></Link>

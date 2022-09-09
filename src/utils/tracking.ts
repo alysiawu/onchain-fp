@@ -56,7 +56,18 @@ type EventName = 'PostJobPage_Visted'
 | 'RequestReferralPage_Submitting'
 | 'RequestReferralPage_Success'
 
+| 'MobileNav_ClickRequest'
 
+
+| 'HiringManagerPage_Visted'
+
+
+| 'RoleBasedReferralRequestPage_Succes'
+
+| 'RoleBasedReferralRequestPage_Submitting'
+| 'RoleBasedReferralRequestPage_Success'
+
+| 'IndustryInsisdersPage_Visted'
 
 export const trackEvent = (eventName: EventName, metadata: any) => {
     if ((window as any).analytics) {

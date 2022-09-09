@@ -36,20 +36,18 @@ export const AccountContextProvider: React.FC<{ children: any}> = ({ children })
     const [currentAccount, setCurrentAccount] = useState<string | undefined>(undefined)
 
     const connectWallet = async () => {
-        console.log('herer')
+        // console.log('herer')
         const web3Modal = new Web3Modal();
         const connection = await web3Modal.connect();
         const provider = new ethers.providers.Web3Provider(connection);
         // const signer = provider.getSigner();
         const accounts = await provider.listAccounts()
         setCurrentAccount(accounts[0])
+        localStorage.setItem('currentWallet', accounts[0])
     }
     // const [_connectWallet, setConnectWallet] = useState(connectWallet)
-
-   
-    
       useEffect(() => { 
-        // getAccount() 
+        // connectWallet() 
       }, [])
 
 

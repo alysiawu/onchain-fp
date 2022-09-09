@@ -40,11 +40,19 @@ import Claim from "containers/Claim";
 import Why from "containers/Why";
 import PostReferralBounty from "containers/PostReferralBounty";
 import Home from "containers/PageHome/Home0830";
-import SearchPro from "containers/SearchPro";
+// import SearchPro from "containers/SearchPro";
 import SearchProPage from "containers/SearchPro";
 import PostReferral from "containers/Referral";
 import ReferralOppos from "containers/ReferralOppos";
 import ReferralRequest from "containers/RequestReferral";
+import HiringManagersPage from "containers/HiringManagersPage";
+import RoleBasedReferralRequest from "containers/RoleBasedReferralRequest";
+import IndustryInsidersPage from "containers/IndustryInsiders";
+import ExpertsPage from "containers/ExpertsPage";
+import ExpertDetailPage from "containers/ExpertDetailPage";
+import JobSeekersPage from "containers/JobSeekersPage";
+import PageHome3 from "containers/PageHome/PageHome3";
+// import Openings from "containers/Openings";
 
 export const pages: Page[] = [
   // { path: "/", exact: true, component: PageHome2 },
@@ -79,16 +87,32 @@ const App = () => {
       <ScrollToTop />
       <SiteHeader />
       <Routes>
-        <Route path="/" element={<PageHome2 />} />
+        <Route path="/" element={<PageHome3 />} />
         <Route path="/beta" element={<Home />} />
-        <Route path="/#" element={<PageHome2 />} />
+        <Route path="/#" element={<PageHome3 />} />
+        <Route path="/request-a-referral" element={<RoleBasedReferralRequest />} />
+        <Route path="/hiring-managers" element={<HiringManagersPage />} />
+        <Route path="/experts" element={<ExpertsPage />} />
+        <Route path="/talent" element={<JobSeekersPage />} />
+        {/* <Route path="/free-mint" element={<FreeMintPage />} /> */}
+        <Route path="/expert/:expertId/:index" element={<ExpertDetailPage />} />
+
+        <Route path="/person/:personId" element={<ExpertDetailPage />} />
+
+
+
+        <Route path="/industry-insiders" element={<IndustryInsidersPage />} />
+        <Route path="/referral-oppos" element={<ReferralOppos />} />
+
+
         <Route path="/jobs" element={<JobsSearch />} />
         <Route path="/our-why" element={<Why />} />
+        {/* <Route path="/openings" element={<Openings />} /> */}
         <Route path="/interviewer-onboarding" element={<InterviewerOnboarding />} />
         <Route path="/search-pro" element={<SearchProPage />} />
         <Route path="/referral-oppos" element={<ReferralOppos />} />
         <Route path="/referral-req" element={<ReferralRequest />} />
-        
+     
         <Route path="/post-referral-bounty" element={<PostReferralBounty />} />
         <Route path="/prb" element={<PostReferralBounty />} />
         

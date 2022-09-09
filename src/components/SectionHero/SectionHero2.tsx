@@ -18,10 +18,39 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
     >
       <div className="flex flex-col lg:flex-row lg:items-center">
         <div className="flex-shrink-0 lg:w-1/2 flex flex-col items-start space-y-8 sm:space-y-10 pb-14 lg:pb-36 xl:pb-60 xl:pr-14 lg:mr-10 xl:mr-0">
+          <h1 className="font-semibold text-6xl md:text-5xl xl:text-6xl !leading-[114%] ">
+            {/* Turn your priced information on chain into capital 💰, pseudonymously ㊙️ */}
+
+            {/* Future Protocol  */}
+           
+            
+            {/* about to put your jobs, professional identity, and reputation on-chain */}
+            {/* A wallet identity based pseudonymous compensation data marketplace to empower fair compensation and equity for decentralized future of work.  */}
+            {/* Mint help */}
+          </h1>
+           <h2 className="font-semibold text-4xl md:text-5xl xl:text-6xl !leading-[114%] ">
+            {/* Turn your priced information on chain into capital 💰, pseudonymously ㊙️ */}
+
+            {/* Build your professional reputation economy */}
+            {/* Build your professional identity & builder economy */}
+            {/* The first P2P marketplace to combat information asymmetry  */}
+            Mint <span style={{color: '#39f889'}}>help</span>
+            {/* in people and jobs */}
+            
+            {/* about to put your jobs, professional identity, and reputation on-chain */}
+            {/* A wallet identity based pseudonymous compensation data marketplace to empower fair compensation and equity for decentralized future of work.  */}
+
+          </h2>
           <h2 className="font-semibold text-4xl md:text-5xl xl:text-6xl !leading-[114%] ">
             {/* Turn your priced information on chain into capital 💰, pseudonymously ㊙️ */}
 
-            Future is about to put your jobs, professional identity, and reputation on-chain
+            {/* Build your professional reputation economy */}
+            {/* Build your professional identity & builder economy */}
+            {/* The first P2P marketplace to combat information asymmetry  */}
+           Win together
+            {/* in people and jobs */}
+            
+            {/* about to put your jobs, professional identity, and reputation on-chain */}
             {/* A wallet identity based pseudonymous compensation data marketplace to empower fair compensation and equity for decentralized future of work.  */}
 
           </h2>
@@ -58,14 +87,21 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
             {/* </span> */}
           {/* </ButtonPrimary> */}
         </div>
-        <div className="flex-grow">
-          <img className="w-full" src={devprofile} alt="hero" />
-        </div>
+        {/* <div className="flex-grow">
+          <img className="w-full"
+           src={'https://i.ibb.co/KhShZHg/Screen-Shot-2022-09-08-at-4-34-43-PM.png'} 
+           alt="hero" 
+           /> */}
+
+          {/* <a href="https://imgbb.com/"><img src=" alt="Screen-Shot-2022-09-08-at-4-34-43-PM" /></a> */}
+
+
+        {/* </div> */}
       </div>
 
-      <div className="z-10 mb-12 lg:mb-0 lg:-mt-20 xl:-mt-48 w-full">
+      {/* <div className="z-10 mb-12 lg:mb-0 lg:-mt-20 xl:-mt-48 w-full"> */}
         {/* <HeroSearchForm /> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 };

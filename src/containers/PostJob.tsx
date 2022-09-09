@@ -515,7 +515,7 @@ const PostJob: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
             </FormItem>
-            <FormItem label="Company Website *">
+            <FormItem label="Company *">
               <Input 
                 // style={{
                 //   border: '0.5px solid red'

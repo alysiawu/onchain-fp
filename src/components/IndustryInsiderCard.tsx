@@ -27,7 +27,12 @@ export interface CardNFTProps {
     email?: string,
     name?: string
     bountyAmount? :string
+    role?: string;
+    jobDescriptionLink?: string;
+    companyLink?: string;
+    profileImage?: string;
   },
+  index: number;
 //   nft?: {
 //     tokenId: string;
 //     image: string;
@@ -41,7 +46,7 @@ export interface CardNFTProps {
 
 
 
-const CardReferral: FC<CardNFTProps> = ({ className = "", isLiked, oppo }) => {
+const IndustryInsiderCard: FC<CardNFTProps> = ({ className = "", isLiked, oppo, index }) => {
     const navigate  = useNavigate()
 //   const renderAvatars = () => {
 //     return (
@@ -96,8 +101,9 @@ const clickQuickApply = () => {
       data-nc-id="CardNFT"
       style={{background: 'grey', boxShadow: '0 0 50px #39f889', padding: '1.5rem'}}
     >
-      <div className="relative flex-shrink-0 ">
-        <div className={`text-lg font-medium py-5`}>
+      <div className="relative flex-shrink-0  justify-center items-center text-center">
+        <div className={`text-lg font-medium py-5`} style={{height: '100px'}}>
+        {oppo?.role}
           {/* <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
             src={nft&& nft.image || nftsImgs[Math.floor(Math.random() * nftsImgs.length)]}
@@ -105,25 +111,96 @@ const clickQuickApply = () => {
           /> */}
 
             {/* {oppo?.company} */}
-
+          
+          
+           
 
             {/* <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
             src={nftsImgs[Math.floor(Math.random() * nftsImgs.length)]}
             className="object-cover group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           /> */}
-            {oppo?.company}
+            {/* {oppo?.company} */}
           
         </div>
+     
         <div>
 
-            {oppo?.title}
 
+        <div className={`flex-grow flex justify-center`}>
+            
+        </div>
+     
+        {/* <div className="w-11/12 max-w-[360px] transform -mt-32 relative z-10"> */}
+        <div className={`px-5 flex items-center space-x-4 relative `}>
+            
+          <div className={`flex-grow flex justify-center`}>
+              
+            <img src={`https://api.multiavatar.com/fepr${index}.svg`} alt="Hiring Manager Image"  style={{borderRadius: '200px'}} />
+          </div>
+          
+          {/* <ButtonPlayMusicRunningContainer
+            className="relative z-10"
+            nftId={DEMO_NFT_ID}
+            renderDefaultBtn={() => renderListenButtonDefault()}
+            renderPlayingBtn={() => renderListenButtonDefault("playing")}
+            renderLoadingBtn={() => renderListenButtonDefault("loading")}
+          /> */}
+        {/* </div> */}
+
+        {/* <Link
+          to={"/nft-detail"}
+          className="block p-5 mt-5 bg-white dark:bg-neutral-800 shadow-xl dark:shadow-2xl rounded-3xl rounded-tl-none"
+        >
+          <div className="flex items-center justify-between">
+            <h2 className={`text-lg font-semibold`}>NFT music #1132</h2>
+            {renderAvatars()}
+          </div>
+
+          <div className="w-full mt-1.5 flex justify-between items-end ">
+            <Prices
+              labelText="Price"
+              labelTextClassName="bg-white dark:bg-neutral-800 "
+            />
+            <span className="block text-neutral-500 dark:text-neutral-400 text-xs">
+              {Math.floor(Math.random() * 90) + 10} in stock
+            </span>
+          </div>
+        </Link> */}
+      </div>
+      
+  
+
+      <div className={`flex-grow flex justify-center`}>
+        
+      {oppo?.name}
+
+ 
+        </div>
+        <div className="relative  justify-center items-center text-center">
+      {oppo?.company}
+
+      </div>
+
+
+      <div className="relative justify-center items-center text-center">
+      {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Request to talk</a> */}
+
+      </div>
+
+      
+     
 
         </div>
         <div>
 
-        Bounty ${oppo?.bountyAmount}
+        {/* {oppo?.jobDescriptionLink} */}
+
+
+</div>
+        <div>
+
+        {/* Bounty ${oppo?.bountyAmount} */}
 
 
 </div>
@@ -131,14 +208,15 @@ const clickQuickApply = () => {
 
           
 
-            H1B: {oppo?.h1b === 'yes'?  '👍': '👀'}
+            {/* H1B: {oppo?.h1b === 'yes'?  '👍': '👀'} */}
  
 
         </div>
         <div>
 
 
-            Remote: {oppo?.location == 'remote' ?  '👍': '👀'}
+
+            {/* Remote: {oppo?.location == 'remote' ?  '👍': '👀'} */}
 
         </div>
 <div>
@@ -169,6 +247,7 @@ const clickQuickApply = () => {
 
       <div className="p-4 py-5 space-y-3">
         <div className="flex justify-between">
+            
           {/* {renderAvatars()} */}
           {/* {nft && nft.metaData.company}  */}
           {/* {nft && nft.metaData.jobFamily} */}
@@ -197,11 +276,16 @@ const clickQuickApply = () => {
           {/* <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400"> */}
             {/* <h3 className="text-lg sm:text-2xl font-semibold"> */}
            
-              <div className=" " style={{marginBottom: '2rem'}}>
+            {/* <div className={`flex-grow flex absolute bottom-5 left-55`}>
                
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Refer Candidate</a>
+              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Request to talk</a>
 
-             </div>
+             </div> */}
+
+             <div className="relative justify-center items-center text-center">
+      <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href='/request-a-referral' > Request to talk</a>
+
+      </div>
 
            
 
@@ -220,4 +304,4 @@ const clickQuickApply = () => {
   );
 };
 
-export default CardReferral;
+export default IndustryInsiderCard;

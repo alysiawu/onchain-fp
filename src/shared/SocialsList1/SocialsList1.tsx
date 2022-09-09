@@ -1,10 +1,10 @@
 import { SocialType } from "shared/SocialsShare/SocialsShare";
 import React, { FC } from "react";
-import facebook from "images/socials/facebook.svg";
-import vimeo from "images/socials/vimeo.svg";
+// import facebook from "images/socials/facebook.svg";
+// import vimeo from "images/socials/vimeo.svg";
 import twitter from "images/socials/twitter.svg";
-import telegram from "images/socials/telegram.svg";
-import youtube from "images/socials/youtube.svg";
+// import telegram from "images/socials/telegram.svg";
+// import youtube from "images/socials/youtube.svg";
 
 export interface SocialsList1Props {
   className?: string;
@@ -37,6 +37,7 @@ const SocialsList1: FC<SocialsList1Props> = ({ className = "space-y-3" }) => {
   return (
     <div className={`nc-SocialsList1 ${className}`} data-nc-id="SocialsList1">
       {socials.map(renderItem)}
+
     </div>
   );
 };

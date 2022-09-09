@@ -22,8 +22,8 @@ const SectionBecomeAnAuthor: FC<SectionBecomeAnAuthorProps> = ({
         <Logo className="w-28" />
         <h2 className="font-semibold text-3xl sm:text-4xl xl:text-6xl mt-6 sm:mt-10 !leading-[1.112] tracking-tight">
         {/* a protocol to help Talent building their first on chain professional identity with composable NFTs, or in a sense  */}
-        Build your first 
-        skills wallet
+        Build your first skill NFT
+       
 
           {/* Talent Nation by Future Protocol */}
         </h2>
@@ -35,7 +35,7 @@ const SectionBecomeAnAuthor: FC<SectionBecomeAnAuthorProps> = ({
             Create Salary NFT
           </ButtonPrimary> */}
 
-          <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord for updates</a>
+          <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} >CREATE</a>
           {/* <ButtonSecondary href="/search" className="">
             Discover more
           </ButtonSecondary> */}

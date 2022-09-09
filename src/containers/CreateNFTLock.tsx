@@ -1,5 +1,5 @@
 import Label from "components/Label/Label";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 import Web3Modal from 'web3modal'
 import { useNavigate } from 'react-router-dom';
@@ -10,13 +10,14 @@ import Confetti from 'react-confetti'
 import {
   marketplace as marketplaceAddress, 
   authorization,
-  JobFamilies,
+  AchievementCategories,
   Companies,
   Locations,
   PFPs,
   SkillBadges
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
+import metamaskImg from "images/metamask.webp";
 import polygon from "images/polygon-matic-logo.png"
 import loading from 'images/loading.gif'
 import marketplaceAbi from '../artifacts/marketplace.json'
@@ -36,6 +37,7 @@ import NcModal from "shared/NcModal/NcModal";
 
 import { WalletService } from "@unlock-protocol/unlock-js";
 import Textarea from "shared/Textarea/Textarea";
+import { useAccountContext } from "contexts/accountContext";
 
 const networks = {
   
@@ -73,14 +75,25 @@ const plans = [
   },
 ];
 
-
-
-// https://ipfs.infura.io:5001/api/v0/add?pin=false
+// https://websan.infura-ipfs.io/ipfs/
+// https://$custom-subdomain.ipfs.infura-ipfs.io/ipfs/$CID/path/to/something
+// https://infura-ipfs.io:5001/api/v0/add?pin=false
 // const client = ipfsHttpClient({ 
-//   url: 'https://ipfs.infura.io:5001/api/v0'
+//   url: 'https://infura-ipfs.io:5001/api/v0'
 // })
 
 const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
+
+  const plans = [
+    {
+      name: "Metamask",
+      img: metamaskImg,
+    },
+
+  ]
+  const [showModal, setShowModal] = useState(false);
+  const { connectWallet } = useAccountContext()
+  const [currentAccount, setCurrentAccount] = useState('')
   const navigate = useNavigate()
   const [fileUrl, setFileUrl] = useState<string>('')
   const [showMintingModal, setShowMintingModal] = useState(false)
@@ -106,11 +119,40 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     price: '', 
   })
 
+  console.log('--currentAccount', currentAccount)
+
+
+  useEffect(() => {
+    // if (!currentAccount) {
+      // connectWallet && connectWallet() 
+      // localStorage.getItem('currentWallet')
+    // }
+    if (!localStorage.getItem('currentWallet')) {
+      // reconnect
+      connectWallet && connectWallet() 
+    } else {
+      const w = localStorage.getItem('currentWallet') || ''
+      // ts-ignore
+      setCurrentAccount(w)
+    }
+
+
+    // if connected with wallet
+
+
+  }, [currentAccount])
+
+
+
 
   let client: IPFSHTTPClient | undefined;
   try {
     client = ipfsHttpClient({
-      url: "https://ipfs.infura.io:5001/api/v0",
+      // url: "https://websan.infura-ipfs.io",
+
+      url: 'https://infura-ipfs.io:5001',
+      // port: 5001,
+      // protocol: 'https',
       headers: {
         authorization,
       },
@@ -161,7 +203,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     })
     try {
       const added = client && await client.add(data)
-      const url = added && `https://ipfs.infura.io/ipfs/${added.path}`
+      const url = added && `https://websan.infura-ipfs.io/ipfs/${added.path}`
       /* after file is uploaded to IPFS, return the URL to use it in the transaction */
 
       setMetadataIpfsUrl(url)
@@ -177,7 +219,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-        ✨ Congrats! You Claimed a Skill NFT, this is the pass for your Web三DAO talentverse !✨ 
+        ✨ Congrats! You Claimed an Achievement NFT, this is the pass for your Web三DAO talentverse !✨ 
         </h3>
         {/* <span className="text-l flex mt-10">
           share to <img src={twitter} width='25' className='mr-5 ml-2' onClick={() => {
@@ -281,6 +323,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     // TODO 
     // navigate('/profile')
   }
+
   const fileInput = React.createRef<HTMLInputElement>();
 
   async function onUploadImageToIPFS(e: React.ChangeEvent<HTMLInputElement>) {
@@ -288,7 +331,10 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     let client: IPFSHTTPClient | undefined;
     try {
       client = ipfsHttpClient({
-        url: "https://ipfs.infura.io:5001/api/v0",
+        // url: "https://websan.infura-ipfs.io/ipfs/",
+        url: 'https://infura-ipfs.io:5001',
+        // port: 5001,
+        // protocol: 'https',
         headers: {
           authorization,
         },
@@ -304,7 +350,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
             progress: (prog) => console.log(`received: ${prog}`)
           }
         )
-        const url = `https://ipfs.infura.io/ipfs/${added.path}`
+        const url = `https://websan.infura-ipfs.io/ipfs/${added.path}`
         
         console.log('--url', url)
         
@@ -323,13 +369,108 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     
 
     // const client = ipfsHttpClient({ 
-    //   'https://ipfs.infura.io:5001/api/v0'
+    //   'https://infura-ipfs.io:5001/api/v0'
     // })
  
   }
 
 // const dropdownPositon = 'down'
+
+if (!currentAccount)  {
+
   return (
+    <div
+  className={`nc-PageConnectWallet ${className}`}
+  data-nc-id="PageConnectWallet"
+>
+  <Helmet>
+    <title>Connect Wallet || Future Protocol</title>
+  </Helmet>
+  <div className="container">
+    <div className="my-12 sm:lg:my-16 lg:my-24 max-w-3xl mx-auto space-y-8 sm:space-y-10">
+      {/* HEADING */}
+      <div className="max-w-2xl">
+        <h2 className="text-3xl sm:text-4xl font-semibold">
+          Connect your wallet to Polygon Network (Harmoney and Celo coming soon!)
+        </h2>
+        
+        <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+          Connect with one of our available wallet providers
+        </span>
+      </div>
+      <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
+      <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
+        <div className="space-y-3">
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              // onClick={() => setShowModal(true)}
+              onClick={() => connectWallet && connectWallet()}
+              typeof="button"
+              tabIndex={0}
+              className="relative rounded-xl hover:shadow-lg hover:bg-neutral-50 border 
+            border-neutral-200 dark:border-neutral-700 px-3 sm:px-5 py-4 cursor-pointer flex 
+            focus:outline-none focus:shadow-outline-blue focus:border-blue-500 dark:bg-neutral-800 
+            dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-200"
+            >
+              <div className="flex items-center w-full">
+                <NcImage
+                  src={plan.img}
+                  containerClassName="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 p-2 sm:p-3 bg-white rounded-full overflow-hidden shadow-lg"
+                />
+                <div
+                  className={`ml-4 sm:ml-8 font-semibold text-xl sm:text-2xl `}
+                >
+                  {plan.name}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ---- */}
+        <div className="pt-2 ">
+          <ButtonPrimary href={"/"} className="flex-1">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9.57 5.92993L3.5 11.9999L9.57 18.0699"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M20.5 12H3.67004"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+
+            <span className="ml-2">Go Back Home</span>
+          </ButtonPrimary>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <NcModal
+    renderTrigger={() => null}
+    isOpenProp={showModal}
+    renderContent={renderContent}
+    contentExtraClass="max-w-md"
+    onCloseModal={() => setShowModal(false)}
+    modalTitle="Connect Wallet"
+  />
+</div>
+
+  )
+  
+} else {
+   return (
     <div
       className={`nc-PageUploadItem ${className}`}
       data-nc-id="PageUploadItem"
@@ -344,7 +485,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
 
-              Build your first skill NFT 
+            Mint an achievement NFT
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400 flex">
               {/* You can set preferred display name, create your profile URL and
@@ -390,6 +531,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
 
 
               <span className="text-neutral-500 dark:text-neutral-400 text-sm">
+                This will be the coverage image of your NFT, it can be your anything that represents your achievement.
                 File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV,
                 OGG, GLB, GLTF. Max size: 100 MB
               </span>
@@ -507,7 +649,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                 
               </select> */}
             {/* </FormItem> */}
-            <FormItem label="Job Family">
+            <FormItem label="Category">
               {/* <Input 
                 defaultValue="" 
                 onChange={
@@ -533,7 +675,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                 
                 }}
               >
-                {JobFamilies.map(jf => {
+                {AchievementCategories.map(jf => {
                   return <option
                     key={jf.id}
                   >{
@@ -548,7 +690,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
               
                 // className={` ${containerClassName} `}
                 // iconClass={iconClass}
-                data={JobFamilies}
+                data={AchievementCategories}
                 panelMenusClass={""
                   // dropdownPositon === "up"
                   //   ? "origin-bottom-right bottom-0 "
@@ -595,7 +737,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
             {/* <h3 className="text-lg sm:text-2xl font-semibold">
               Work Experience and Location
             </h3> */}
-            <FormItem label="Location">
+            {/* <FormItem label="Location"> */}
               {/* <Input 
                 defaultValue="" 
  
@@ -609,7 +751,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               /> */}
 
-              <select
+              {/* <select
                 id="location"
                 name="location"
                 className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
@@ -631,8 +773,8 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                 
               </select>
 
-            </FormItem>
-            <FormItem label="Year of Experience">
+            </FormItem> */}
+            {/* <FormItem label="Year of Experience">
               <Input 
                 defaultValue="" 
                 type='number'
@@ -646,9 +788,9 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
 
-            </FormItem>
+            </FormItem> */}
 
-            <FormItem label="Describe what you can do with the skill you are minting">
+            <FormItem label="Description">
               <Textarea 
                 defaultValue="" 
       
@@ -756,7 +898,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
             <div></div>
 
             <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}   onClick={() => listNFTForSale()}> 
-            Mint & Sell Your Skill NFT
+            Mint 
                
                 
             </a>
@@ -813,6 +955,31 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
       }
     </div>
   );
+
+}
+
+// if (!currentAccount) return (
+//     <div
+//       className={`nc-PageUploadItem ${className}`}
+//       data-nc-id="PageUploadItem"
+//     >
+//   <Helmet>
+//     <title>Talent Nation by Future Protocol</title>
+//   </Helmet>
+//   <div className="container">
+//     <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
+
+
+
+//     </div>
+
+//     </div>
+
+//     </div>
+    
+//     )
+
+ 
 };
 
 function CheckIcon(props: any) {

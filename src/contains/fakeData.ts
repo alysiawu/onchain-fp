@@ -46,22 +46,52 @@ export const nftsCatImgs = [
 ];
 export const nftsLargeImgs = [nftsLarge1, nftsLarge2, nftsLarge3];
 export const nftsImgs = [
+  'https://i.postimg.cc/pySZwGCJ/1.png',
+  'https://i.postimg.cc/s1xm0dY2/2.png',
+'https://i.postimg.cc/8jrHNRnQ/3.png',
+
+'https://i.postimg.cc/WdL73dQD/4.png',
+'https://i.postimg.cc/QFQJWX3f/5.png',
+'https://i.postimg.cc/wR1ktLqN/6.png'
+
+//   'https://i.postimg.cc/MfQ0CjGr/badges.png',
+//   'https://i.postimg.cc/JDgcYQRk/profile.png',
+
+//   'https://i.postimg.cc/Fzx27X1d/Holographic-Stories-Highlight-Covers-Influencer.gif',
+// 'https://i.postimg.cc/P50Ff5KV/African-American-girl-using-Mac-Book-Pro-Future-Protocol.png',
+
+// 'https://i.postimg.cc/WztHbqRK/1k.png',
+// 'https://i.postimg.cc/2j21sbSY/how-it-works.png',
+// 'https://i.postimg.cc/T2g6bBB4/neon-pink-600x200.jpg',
+// 'https://i.postimg.cc/nrYgWfJV/PNG-image.jpg',
+// 'https://i.postimg.cc/d0yWXcRM/meet-kevin-solidiy.gif',
+// 'https://i.postimg.cc/BXMqf1f6/R.png',
+// 'https://i.postimg.cc/5j54pRP8/S.png',
+// 'https://i.postimg.cc/BnBDvqTc/IMG-2954-2.jpg',
+// 'https://i.postimg.cc/94d4Ttnp/73.png',
+// 'https://i.postimg.cc/gxRrFHmW/71.png',
+// 'https://i.postimg.cc/gxRrFHmW/72.png',
+// 'https://i.postimg.cc/tZ9szn0H/cred-badge.png',
+// 'https://i.postimg.cc/t1NT7Rsv/IMG-6875.png',
+// 'https://i.postimg.cc/k6wBYM9R/Screen-Shot-2022-08-22-at-1-27-43-PM.png',
+
+
 //   'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png',
 //  'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=3.png',
 //   'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=8.png',
 //   'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=9.png',
   // nfts5,
-  nfts6,
-  nfts7,
-  nfts8,
-  nfts9,
-  nfts10,
-  nfts11,
-  nfts12,
-  nfts13,
-  nfts14,
-  nfts15,
-  nfts16,
+  // nfts6,
+  // nfts7,
+  // nfts8,
+  // nfts9,
+  // nfts10,
+  // nfts11,
+  // nfts12,
+  // nfts13,
+  // nfts14,
+  // nfts15,
+  // nfts16,
 ];
 
 export const nftsAbstracts = [

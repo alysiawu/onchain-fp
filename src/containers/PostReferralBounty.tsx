@@ -5,6 +5,7 @@ import { TwitterShareButton, TwitterIcon } from "react-share";
 import Web3Modal from 'web3modal'
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers'
+import { v4 as uuidv4 } from 'uuid';
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
@@ -72,7 +73,7 @@ const PostReferralBounty: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [formInput, updateFormInput] = useState({ 
     chain: 'polygon',
     title: '', 
-    primaryRole: '', 
+    primaryRole: 'engineering', 
     companyWebsite: '',
     name: '',
      //TODO dropdown
@@ -350,7 +351,7 @@ const PostReferralBounty: FC<PageUploadItemProps> = ({ className = "" }) => {
         companyWebsite: false
       })
     }
-
+    console.log('llll')
 
     const db = getDatabase();
     // console.log('database', db)
@@ -363,14 +364,17 @@ const PostReferralBounty: FC<PageUploadItemProps> = ({ className = "" }) => {
     //   // updateStarCount(postElement, data);
     // });
 
-    const writeUserData = (title: string, jobDescription: string, video: string, bountyAmount: string, location: string, primaryRole: string,  typeofPosition: string,
+    const writeUserData = (
+      title: string, jobDescription: string, video: string, bountyAmount: string, location: string, primaryRole: string,  typeofPosition: string,
       
       email: string,
       name: string,
+      company: string,
       ) => {
-      const userId = `${title.trim()}${primaryRole}`
+      // const userId = `${title.trim()}${primaryRole}`
+      const referralId = uuidv4()
 
-      set(ref(db, 'referralBounty/' + userId), {
+      set(ref(db, 'referralOppos/' + referralId), {
         title,
         jobDescription,
      
@@ -381,7 +385,8 @@ const PostReferralBounty: FC<PageUploadItemProps> = ({ className = "" }) => {
         video,
         bountyAmount,
         name,
-        email
+        email,
+        company,
 
       });
     }
@@ -397,8 +402,10 @@ const PostReferralBounty: FC<PageUploadItemProps> = ({ className = "" }) => {
       typeofPosition,
       email,
       name,
+      companyWebsite
       
     )
+    console.log('llll')
     trackEvent('PostReferralBountyPage_Success', {
      
       uid,
@@ -516,7 +523,7 @@ const PostReferralBounty: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
             </FormItem>
-            <FormItem label="Company Website *">
+            <FormItem label="Company *">
               <Input 
                 // style={{
                 //   border: '0.5px solid red'
@@ -1018,7 +1025,7 @@ Videos within job descriptions can also help drive a 34% higher application rate
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
-                Thanks for submitting a referral bounty! We will get in touch with you shortly.
+                {/* Thanks for submitting a referral bounty! We will get in touch with you shortly. */}
               </h3>
 
               {/* <h3 className="text-lg sm:text-2xl font-semibold"> */}

@@ -6,22 +6,23 @@ import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { Link } from "react-router-dom";
+import { useFirebaseContext } from "contexts/firebaseContext";
 
 export interface PageSignUpProps {
   className?: string;
 }
 
 const loginSocials = [
-  {
-    name: "Continue with Facebook",
-    href: "#",
-    icon: facebookSvg,
-  },
-  {
-    name: "Continue with Twitter",
-    href: "#",
-    icon: twitterSvg,
-  },
+  // {
+  //   name: "Continue with Facebook",
+  //   href: "#",
+  //   icon: facebookSvg,
+  // },
+  // {
+  //   name: "Continue with Twitter",
+  //   href: "#",
+  //   icon: twitterSvg,
+  // },
   {
     name: "Continue with Google",
     href: "#",
@@ -30,10 +31,19 @@ const loginSocials = [
 ];
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
+  const {
+    email, 
+    photoUrl,
+    // displayName,
+    signInWithGoogle,
+    currentUser
+  } = useFirebaseContext()
+
+
   return (
     <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">
       <Helmet>
-        <title>Sign up || Ciscryp React Template</title>
+        <title>Sign up | Future Protocol</title>
       </Helmet>
       <div className="container mb-24 lg:mb-32">
         <h2 className="my-20 flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
@@ -46,6 +56,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 key={index}
                 href={item.href}
                 className=" flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
+                onClick={(e) => {
+                  e.preventDefault();
+                  signInWithGoogle && signInWithGoogle();
+                }}
               >
                 <img
                   className="flex-shrink-0"
@@ -56,17 +70,27 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                   {item.name}
                 </h3>
               </a>
+
+              
             ))}
+{/*             
+             <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={(e) => {
+                e.preventDefault();
+                signInWithGoogle && signInWithGoogle();
+              }} > Sign in with Google */}
+              
+              {/* <img style={{height: '20px',}} src="https://img.icons8.com/ios-filled/50/000000/google-logo.png" alt="google icon"/> */}
+              {/* <span> </span></a> */}
           </div>
           {/* OR */}
-          <div className="relative text-center">
+          {/* <div className="relative text-center">
             <span className="relative z-10 inline-block px-4 font-medium text-sm bg-white dark:text-neutral-400 dark:bg-neutral-900">
               OR
             </span>
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
-          </div>
+          </div> */}
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" action="#" method="post">
+          {/* <form className="grid grid-cols-1 gap-6" action="#" method="post">
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
@@ -84,7 +108,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               <Input type="password" className="mt-1" />
             </label>
             <ButtonPrimary type="submit">Continue</ButtonPrimary>
-          </form>
+          </form> */}
 
           {/* ==== */}
           <span className="block text-center text-neutral-700 dark:text-neutral-300">

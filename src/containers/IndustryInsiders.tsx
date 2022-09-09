@@ -17,13 +17,16 @@ import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecom
 // import { marketplace as marketplaceAddress } from '../utils/constants'
 // import marketplaceAbi from '../artifacts/marketplace.json'
 // import { getNft } from '../utils/getNFT'
-import CardReferral from "components/CardReferral";
+// import CardReferral from "components/CardReferral";
 import { trackEvent } from "utils/tracking";
 import { useFirebaseContext } from "contexts/firebaseContext";
-import { Attachment } from "airtable/lib/attachment";
-import { Collaborator } from "airtable/lib/collaborator";
-import Input from "shared/Input/Input";
+// import { Attachment } from "airtable/lib/attachment";
+// import { Collaborator } from "airtable/lib/collaborator";
+// import Input from "shared/Input/Input";
 import Pagination from "shared/Pagination/Pagination";
+import HiringManagerCard from "components/HiringManagerCard";
+import IndustryInsiderCard from "components/IndustryInsiderCard";
+import ExpertCard from "components/ExpertCard";
 
 export interface PageSearchProps {
   className?: string;
@@ -31,42 +34,16 @@ export interface PageSearchProps {
 
 var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appfZedSta1s4n06f');
 
-const ReferralOppos: FC<PageSearchProps> = ({ className = "" }) => {
-  const [nfts, setNfts] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
+const IndustryInsidersPage: FC<PageSearchProps> = ({ className = "" }) => {
+//   const [nfts, setNfts] = useState([])
+//   const [searchTerm, setSearchTerm] = useState('')
   const [oppos, setOppos] = useState([])
   const [loadingState, setLoadingState] = useState(false)
-  const [jobOpenings, setJobOpenings] = useState<{
+  const [hiringManagers, sethiringManagers] = useState<{
     title: string; company: string; location: string; h1b: string; email: string; name: string;
     uuid: string;
   } []>()
 
-//   async function loadNFTs() {
-//     setLoadingState(true) 
-//     /* create a generic provider and query for unsold market nfts */      
-//     const web3Modal = new Web3Modal({
-//         network: 'mainnet',
-//         cacheProvider: true,
-//       })
-//       const connection = await web3Modal.connect()
-//       const provider = new ethers.providers.Web3Provider(connection)
-//       const signer = provider.getSigner()
-//       const contract = new ethers.Contract(marketplaceAddress, marketplaceAbi.abi, signer)
-//       const data = await contract.fetchMarketItems()
-//       // console.log('===data', data)
-//     /*
-//     *  map over nfts returned from smart contract and format 
-//     *  them as well as fetch their token metadata
-//     */
-//     const nfts = await Promise.all(data.map(async (i: { tokenId: { toNumber: () => any; }; price: { toString: () => ethers.BigNumberish; }; seller: any; owner: any; }) => {
-//       const item = getNft(i)
-//       return item
-//     }))
-
-//     setNfts(nfts as any)
-//     // console.log('===nfts', nfts)
-//     setLoadingState(false) 
-//   }
 
 const {
     email, 
@@ -76,18 +53,19 @@ const {
     signInWithGoogle
   } = useFirebaseContext()
   
-    trackEvent('ReferralOpposPage_Visted', {
+    trackEvent('IndustryInsisdersPage_Visted', {
         email, 
         uid,
     })
 
 
-const getJobOpeningsFromAirtable = () => {
+const getHiringManagersFromAirtable = () => {
 
-    let data: { airtableId: string; title: string | number | boolean | Collaborator | readonly Collaborator[] | readonly string[] | readonly Attachment[] | undefined; company: string | number | boolean | Collaborator | readonly Collaborator[] | readonly string[] | readonly Attachment[] | undefined; uuid: string }[] = []
-    base('Web3 Jobs').select({
+    // @ts-ignore
+    let data: any[] = []
+    base('Industry Insiders').select({
       // Selecting the first 3 records in Grid view:
-      maxRecords: 5000,
+      maxRecords: 10000,
       view: "Grid view"
   }).eachPage(function page(records, fetchNextPage) {
       // This function (`page`) will get called for each page of records.
@@ -99,7 +77,12 @@ const getJobOpeningsFromAirtable = () => {
             data.push({
                 airtableId: record.id,
                 title: record.get('Title'),
+                name: record.get('Name'),
                 company: record.get('Company'),
+                profileImage: record.get('Profile Image'),
+                companyLink: record.get('Company Link'),
+                role: record.get('Role'),
+                jobDescriptionLink: record.get('Job Description Link'),
                 uuid: record.id,
                 // description: record.get('Description')
              
@@ -112,11 +95,11 @@ const getJobOpeningsFromAirtable = () => {
       // If there are more records, `page` will get called again.
       // If there are no more records, `done` will get called.
       fetchNextPage();
-    // console.log('-----data', data)
+    console.log('-----data', data)
     //   if (data) {
         //   @ts-ignore
-        setJobOpenings(data)
-        localStorage.setItem('jobOpenings', JSON.stringify(data))
+        sethiringManagers(data)
+        localStorage.setItem('hiringManagers', JSON.stringify(hiringManagers))
     //   }  
   }, function done(err) {
       if (err) { console.error(err); return; }
@@ -139,7 +122,7 @@ const getJobOpeningsFromAirtable = () => {
 
     const _data = Object.keys(data).map(k => {
         const val = data[k]
-        // console.log('--val', val)
+        console.log('--val', val)
         return {
             uuid: k,
             ...val
@@ -153,7 +136,7 @@ const getJobOpeningsFromAirtable = () => {
 
 
   const onSearch = ({ searchTerm} : {searchTerm: string}) => {
-    // console.log('---searchTerm', searchTerm)
+    console.log('---searchTerm', searchTerm)
     if (!searchTerm) {
       getReferralOppos()
     }
@@ -175,7 +158,7 @@ const getJobOpeningsFromAirtable = () => {
     console.log('---filtered', filtered)
     setOppos(filtered as unknown as any)
 
-    const filteredAirtable = jobOpenings && jobOpenings.filter((oppo: {
+    const filteredAirtable = hiringManagers && hiringManagers.filter((oppo: {
       title: string;
       company: string;
       location: string;
@@ -188,7 +171,7 @@ const getJobOpeningsFromAirtable = () => {
     
     })
 
-    setJobOpenings(filteredAirtable as unknown as any)
+    sethiringManagers(filteredAirtable as unknown as any)
     // return filtered
   }
 
@@ -196,16 +179,16 @@ const getJobOpeningsFromAirtable = () => {
   useEffect( () => {
   // Load onchain data
     //   loadNFTs()
-    getReferralOppos()
-    getJobOpeningsFromAirtable()
-    console.log('--getJobOpeningsFromAirtable', jobOpenings)
+    // getReferralOppos()
+    getHiringManagersFromAirtable()
+    console.log('--getHiringManagersFromAirtable', hiringManagers)
   }, [])
 
   if (!oppos) return (<></>)
   return (
     <div className={`nc-PageSearch  ${className}`} data-nc-id="PageSearch">
       <Helmet>
-        <title>Your pass to the talentverse</title>
+        <title>Talk directly to hiring manager!</title>
       </Helmet>
 
       <div
@@ -284,7 +267,7 @@ const getJobOpeningsFromAirtable = () => {
   </h2>
            
                <form action="#" className="relative">
-              <Input
+              {/* <Input
                 type="search"
                 placeholder="Search items"
                 className="pr-10 w-full"
@@ -294,21 +277,16 @@ const getJobOpeningsFromAirtable = () => {
                   setSearchTerm(e.target.value)
                 }}
                 onKeyPress={(e) => {
-                  // e.preventDefault()
+
                   onSearch({ searchTerm: e.target.value})
                 }}
 
-                // onMouseUp={
-                //   (e) => {
-                //     setTimeout( () => {
-                //       onSearch({ searchTerm: e.target.value})
-                //     }, 100)
-                   
-                //   }
-                // }
+            
 
-              />
-              <span className="absolute top-1/2 -translate-y-1/2 right-3 text-neutral-500">
+              /> */}
+
+
+              {/* <span className="absolute top-1/2 -translate-y-1/2 right-3 text-neutral-500">
                 <svg
                   className="h-5 w-5"
                   viewBox="0 0 24 24"
@@ -330,35 +308,34 @@ const getJobOpeningsFromAirtable = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </span>
+              </span> */}
               {/* <input type="submit" hidden value="" /> */}
                       {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Search</a> */}
             </form>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-        
-            {jobOpenings && jobOpenings.map((oppo, index) => (
-                <CardReferral key={index} oppo={oppo}/>
-            ))}
-          </div>
-
 
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-            {oppos && [...oppos].map((oppo, index) => (
+            {/* {oppos && [...oppos].map((oppo, index) => (
               <CardReferral key={index} oppo={oppo}/>
-            ))}
-            {/* {jobOpenings && jobOpenings.map((oppo, index) => (
-                <CardReferral key={index} oppo={oppo}/>
             ))} */}
+            {hiringManagers && hiringManagers.map((oppo, index) => (
+                <ExpertCard key={index} oppo={oppo} index={index}/>
+            ))}
           </div>
+
+          <div className="mv-10">
+               
+         
+             </div>
 
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
+            {/* <Pagination /> */}
             {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
              <div className="mv-10">
                
-               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Show more</a>
+               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Join our Community</a>
+               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="mailto:hello@futureprotocol.co" >Apply to be an expert</a>
              </div>
           </div>
         </main>
@@ -376,4 +353,4 @@ const getJobOpeningsFromAirtable = () => {
   );
 };
 
-export default ReferralOppos;
+export default IndustryInsidersPage;

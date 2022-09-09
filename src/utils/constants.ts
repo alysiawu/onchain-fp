@@ -42,6 +42,36 @@ export const JobFamilies = [
     }
 ]
 
+export const AchievementCategories = [
+    {
+        id: '1',
+        name: 'Skill',
+    },
+    {
+        id: '2',
+        name:   'Certificate',
+    },
+    
+    {
+        id: '3',
+        name:  'Self Improvement',
+    },
+    
+    {
+        id: '4',
+        name: 'Experience',
+    },
+    
+    {
+        id: '5',
+        name:  'Endorsement'
+    },
+    {
+        id: '6',
+        name:  'Others'
+    }
+]
+
 // https://companies.hello-we3.com/
 export const Companies = [
     {

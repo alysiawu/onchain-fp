@@ -12,7 +12,7 @@ export interface CollectionCard2Props {
 
 const CollectionCard2: FC<CollectionCard2Props> = ({
   className,
-  imgs = [nftsImgs[9], nftsImgs[10], nftsImgs[11], nftsImgs[8]],
+  imgs = [nftsImgs[1], nftsImgs[0], nftsImgs[2], nftsImgs[3]],
 }) => {
   return (
     <div className={`CollectionCard2 group relative ${className}`}>
@@ -27,7 +27,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
       <div className="relative mt-5 ">
         {/* TITLE */}
         <h2 className="font-semibold text-2xl group-hover:text-primary-500 transition-colors">
-          Awesome collection
+          {/* Awesome collection */}
         </h2>
         {/* AUTHOR */}
         <div className="mt-2 flex justify-between">
@@ -35,7 +35,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
             <Avatar sizeClass="h-6 w-6" />
             <div className="ml-2 text-sm truncate">
               <span className="font-normal hidden sm:inline-block">
-                Creator
+                Achiever
               </span>
               {` `}
               <span className="font-medium">{_getPersonNameRd()}</span>
@@ -43,11 +43,11 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
             <VerifyIcon iconClass="w-4 h-4" />
           </div>
           <span className="mb-0.5 ml-2 inline-flex justify-center items-center px-2 py-1.5 border-2 border-secondary-500 text-secondary-500 rounded-md text-xs !leading-none font-medium">
-            1.255 Items
+          {Math.floor(Math.random()*250)} Achievements NFTs
           </span>
         </div>
       </div>
-      <Link to={"/page-collection"} className="absolute inset-0 "></Link>
+      {/* <Link to={"/page-collection"} className="absolute inset-0 "></Link> */}
     </div>
   );
 };

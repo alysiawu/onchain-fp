@@ -32,7 +32,7 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
 
   return (
     <div className={`nc-SectionLargeSlider relative ${className}`}>
-      {[1].map((_, index) =>
+      {[1, 1, 1].map((_, index) =>
         indexActive === index ? (
           <CardLarge1
             key={index}

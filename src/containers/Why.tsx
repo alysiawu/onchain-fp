@@ -2,19 +2,12 @@
 // import Label from "components/Label/Label";
 import React, { FC, useState } from "react";
 import { getDatabase, ref, set, onValue } from "firebase/database";
-
-// import Web3Modal from 'web3modal'
-// import { useNavigate } from 'react-router-dom';
-// import { ethers } from 'ethers'
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import {
   marketplace as marketplaceAddress, 
   authorization,
-//   JobFamilies,
-//   Companies,
-//   Locations,
   PFPs
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
@@ -37,46 +30,10 @@ import { useFirebaseContext } from "contexts/firebaseContext";
 import { trackEvent } from "utils/tracking";
 import { TwitterIcon, TwitterShareButton } from "react-share";
 import Textarea from "shared/Textarea/Textarea";
-// import { input } from "@testing-library/user-event/dist/types/utils";
 
 export interface PageUploadItemProps {
   className?: string;
 }
-
-// https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png
-// const plans = [
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/Qmad4u7F4Z6j1zMaqLHGH7ierJ8yZ2GY5ayJK4xAVqVmvu?filename=10.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmQyaoEyL2idHSgRyJ1AaQ5FHC6jTeTkWnRFnsqNkMPrVh?filename=14.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmPzE1FfPw9FqDLhz3ZbNoM8Bxrx7jihTG3wwrDMfviGMa?filename=42.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmSA3e7swDUDHnL22JUnQg74ZXAv68fsC3PQ82cwLq8t78?filename=38.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmeirssBsSUGZt53M3SZNVv73VcLkhErQ9x9bwE6RtpPPX?filename=31.png',
-//   },
-// ];
-
-
-
-// https://ipfs.infura.io:5001/api/v0/add?pin=false
-// const client = ipfsHttpClient({ 
-//   url: 'https://ipfs.infura.io:5001/api/v0'
-// })
 
 const Why: FC<PageUploadItemProps> = ({ className = "" }) => {
   // const navigate = useNavigate()
@@ -531,7 +488,7 @@ const Why: FC<PageUploadItemProps> = ({ className = "" }) => {
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Onramp your professional identity to web3</title>
+        <title>Onramp your professional identity to web3 |  From cog in the wheel to owning your destiny! </title>
       </Helmet>
 
       {!mintSuccess && 
@@ -539,6 +496,22 @@ const Why: FC<PageUploadItemProps> = ({ className = "" }) => {
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
           {/* HEADING */}
           <div className="max-w-2xl">
+
+          <h2 className="text-6xl sm:text45xl font-semibold">
+              {/* Turn your Salary info NFT, and earn passive income selling it */}
+              {/* Onramp Your Professional Identity to Web
+              
+              3.0, claim you
+              r pass to proof of expertise metaverse. */}
+              From cog in the wheel to owning your destiny! 
+              {/* Build your first skill NFT */}
+            </h2>
+
+            <span className="block mt-10 text-neutral-500 dark:text-neutral-400">
+            </span>
+            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            </span>
+
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
               {/* Onramp Your Professional Identity to Web

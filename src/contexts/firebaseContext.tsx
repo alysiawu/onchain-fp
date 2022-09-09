@@ -53,6 +53,9 @@ export const AuthProvider = ({ children }: {children: any}) => {
     setPhotoUrl(photoUrl)
     setEmail(email)
     setUid(uid)
+
+
+    
     localStorage.setItem('fp_email', email)
     localStorage.setItem('fp_photoUrl', photoUrl)
     localStorage.setItem('fp_displayName', displayName)

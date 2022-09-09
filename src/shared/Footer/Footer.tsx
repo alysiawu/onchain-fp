@@ -93,7 +93,14 @@ const Footer: React.FC = () => {
           </div>
           <div className="col-span-2 flex items-center md:col-span-3">
             <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" />
+            
           </div>
+          
+        <div className="flex flex-col lg:flex-row lg:items-center">
+   
+   <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a>
+
+   </div>
         </div>
         {/* {widgetMenus.map(renderWidgetMenuItem)} */}
       </div>

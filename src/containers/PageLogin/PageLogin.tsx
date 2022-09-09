@@ -6,22 +6,23 @@ import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
 import { Link } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
+import { useFirebaseContext } from "contexts/firebaseContext";
 
 export interface PageLoginProps {
   className?: string;
 }
 
 const loginSocials = [
-  {
-    name: "Continue with Facebook",
-    href: "#",
-    icon: facebookSvg,
-  },
-  {
-    name: "Continue with Twitter",
-    href: "#",
-    icon: twitterSvg,
-  },
+  // {
+  //   name: "Continue with Facebook",
+  //   href: "#",
+  //   icon: facebookSvg,
+  // },
+  // {
+  //   name: "Continue with Twitter",
+  //   href: "#",
+  //   icon: twitterSvg,
+  // },
   {
     name: "Continue with Google",
     href: "#",
@@ -30,6 +31,14 @@ const loginSocials = [
 ];
 
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
+  const {
+    email, 
+    photoUrl,
+    // displayName,
+    signInWithGoogle,
+    currentUser
+  } = useFirebaseContext()
+  
   return (
     <div className={`nc-PageLogin ${className}`} data-nc-id="PageLogin">
       <Helmet>
@@ -46,6 +55,10 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 key={index}
                 href={item.href}
                 className="flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
+                onClick={(e) => {
+                  e.preventDefault();
+                  signInWithGoogle && signInWithGoogle();
+                }} 
               >
                 <img
                   className="flex-shrink-0"
@@ -59,14 +72,14 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
             ))}
           </div>
           {/* OR */}
-          <div className="relative text-center">
+          {/* <div className="relative text-center">
             <span className="relative z-10 inline-block px-4 font-medium text-sm bg-white dark:text-neutral-400 dark:bg-neutral-900">
               OR
             </span>
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
-          </div>
+          </div> */}
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" action="#" method="post">
+          {/* <form className="grid grid-cols-1 gap-6" action="#" method="post">
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
@@ -87,7 +100,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
               <Input type="password" className="mt-1" />
             </label>
             <ButtonPrimary type="submit">Continue</ButtonPrimary>
-          </form>
+          </form> */}
 
           {/* ==== */}
           <span className="block text-center text-neutral-700 dark:text-neutral-300">

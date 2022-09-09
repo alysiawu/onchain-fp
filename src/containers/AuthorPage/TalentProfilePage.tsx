@@ -131,7 +131,15 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
 
   useEffect(() => { 
     if (avatarString) {
-      const slug = avatarString?.slice(0, 1).toUpperCase() + avatarString?.slice(1) 
+      let slug
+      if (['Infochain', 'Ghost', 'Fantasy'].indexOf(avatarString) > -1) {
+        slug = avatarString?.slice(0, 1).toUpperCase() + avatarString?.slice(1) 
+      } else {
+        slug = avatarString
+      }
+     
+      // const slug = avatarString
+      console.log('slug', slug)
 
       const userRef = ref(db, 'users/' + slug);
   
@@ -432,7 +440,7 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
           <Tab.Group>
             <div className="flex flex-col lg:flex-row justify-between ">
               <Tab.List className="flex space-x-0 sm:space-x-2 overflow-x-auto ">
-                {categories.map((item) => (
+                {/* {categories.map((item) => (
                   <Tab key={item} as={Fragment}>
                     {({ selected }) => (
                       <button
@@ -446,7 +454,7 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
                       </button>
                     )}
                   </Tab>
-                ))}
+                ))} */}
               </Tab.List>
               {/* <div className="mt-5 lg:mt-0 flex items-end justify-end">
                 <ArchiveFilterListBox />
@@ -486,7 +494,7 @@ twoTruthOnelie: "1. */}
               {/* Do you have what it takes to join Talent Nation? */}
                 {/* Primary Skill */}
 
-                I will help you 
+                {/* I will help you  */}
               
               {/* Build your first skill NFT */}
             </h2>
@@ -495,26 +503,35 @@ twoTruthOnelie: "1. */}
               manage other personal settings. */}
                 {/* * are required */}
                 {/* {profileData?.skillsets} */}
-                Land your dream job in datascience
+                {/* Land your dream job in datascience */}
+                {/* {} */}
             </span>
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
               {/* Do you have what it takes to join Talent Nation? */}
-          Skillsets
-              
+          {/* Skillsets */}
+         {/* Super Powers */}
               {/* Build your first skill NFT */}
             </h2>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+            <div className="text-3xl sm:text-4xl font-semibold mt-10 mb-10" style={{margin: '20px'}}>
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
                 {/* * are required */}
-                {profileData?.skillsets}
-            </span>
+                {profileData?.skillsets?.split(',').map(skill => {
+                  return   <div className="text-3xl sm:text-4xl font-semibold mt-10 mb-10 p-10" style={{margin: '20px'}}>
+                    
+                  
+                    <span className="text-3xl sm:text-4xl font-semibold mt-10 mb-10 p-10">  {skill}</span>
+                  
+                  <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} >Bring skill on chain</a>
+                  </div>
+                })}
+            </div>
 
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
               {/* Do you have what it takes to join Talent Nation? */}
-            Super Power
+            {/* Super Power */}
               
               {/* Build your first skill NFT */}
             </h2>
@@ -522,7 +539,7 @@ twoTruthOnelie: "1. */}
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
                 {/* * are required */}
-                {profileData?.superpower}
+                {/* {profileData?.superpower} */}
             </span>
 
             <h2 className="text-3xl sm:text-4xl font-semibold">
@@ -557,7 +574,7 @@ twoTruthOnelie: "1. */}
 
 
             <div className="card">
-              <img src="https://i.postimg.cc/VN195gMn/Screen-Shot-2022-08-28-at-7-37-12-PM.png" className="avatar" />
+              {/* <img src="https://i.postimg.cc/VN195gMn/Screen-Shot-2022-08-28-at-7-37-12-PM.png" className="avatar" /> */}
               
           
             </div>
@@ -626,7 +643,7 @@ twoTruthOnelie: "1. */}
 
                 <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 ">
 
-                <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="https://book.stripe.com/28obMA7Hbbq22wEeUU" >Book Now</a>
+                <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="https://book.stripe.com/28obMA7Hbbq22wEeUU" >Request to talk to me</a>
                 {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="https://buy.stripe.com/eVa4k80eJeCe0ow5kl" >Book Now</a> */}
 
                

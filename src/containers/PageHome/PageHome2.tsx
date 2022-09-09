@@ -12,6 +12,9 @@ import { Helmet } from "react-helmet";
 import SectionHero2 from "components/SectionHero/SectionHero2";
 import dedicated from 'images/dedicated.gif'
 import building_future from 'images/building_future.gif'
+import SectionLargeSlider from "./SectionLargeSlider";
+import SectionSliderCardNftVideo from "components/SectionSliderCardNftVideo";
+import SectionSliderCollections2 from "components/SectionSliderCollections2";
 // import SectionGridFeatureNFT2 from "./SectionGridFeatureNFT2";
 // import SectionMagazine8 from "components/SectionMagazine8";
 // import SectionSliderCardNftVideo from "components/SectionSliderCardNftVideo";
@@ -36,28 +39,28 @@ function PageHome() {
 
       {/* SECTION LAERGE SLIDER */}
    
-      <div className="bg-neutral-100/70 dark:bg-black/20 py-20 lg:py-32">
-        <div className="container">
+      {/* <div className="bg-neutral-100/70 dark:bg-black/20 py-20 lg:py-32">
+        <div className="container"> */}
        
         {/* WE’RE DEDICATED TO BUILDING 
         A FACELESS NETWORK FOR FOLKS JUMP INTO WEB3 AND RIVE INDIVIDUAL SOLVERIGNTY, FUTURE OF IDENTITY AND BUILDER ECONOMY ... METAVER   */}
-        </div>
-      </div>
+        {/* </div>
+      </div> */}
 
-      <div className="flex-grow">
+      {/* <div className="flex-grow">
           <img className="w-full" src={dedicated} alt="hero" />
-        </div>
+        </div> */}
 
-      <div className="bg-neutral-100/70 dark:bg-black/20 py-20 lg:py-32">
-        <div className="container">
-        <div className="relative py-20 lg:py-24">
-          <BackgroundSection />
-          <SectionBecomeAnAuthor />
-        </div>
+      {/* <div className="bg-neutral-100/70 dark:bg-black/20 py-20 lg:py-32"> */}
+        {/* <div className="container"> */}
+        {/* <div className="relative py-20 lg:py-24"> */}
+          {/* <BackgroundSection /> */}
+          {/* <SectionBecomeAnAuthor /> */}
+        {/* </div> */}
         {/* WE’RE DEDICATED TO BUILDING 
         A FACELESS NETWORK FOR FOLKS JUMP INTO WEB3 AND RIVE INDIVIDUAL SOLVERIGNTY, FUTURE OF IDENTITY AND BUILDER ECONOMY ... METAVER   */}
-        </div>
-      </div>
+        {/* </div> */}
+      {/* </div> */}
       {/* <div className="bg-neutral-100/70 dark:bg-black/20 py-20 lg:py-32">
         <div className="container"> */}
    
@@ -86,7 +89,7 @@ function PageHome() {
         {/* <div className="relative py-20 lg:py-28">
           <BackgroundSection />
           <SectionSliderCollections2 cardStyle="style2" />
-        </div> 
+        </div>  */}
 
         {/* SECTION */}
         {/* <SectionSubscribe2 /> */}
@@ -104,17 +107,12 @@ function PageHome() {
 
         {/* SECTION */}
 
-        <div className="flex-grow">
+        {/* <div className="flex-grow">
           <img className="w-full" src={building_future} alt="hero" />
      
 
-        </div>
+        </div> */}
 
-        <div className="flex flex-col lg:flex-row lg:items-center">
-   
-        <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a>
-
-        </div>
 
        
         <div className="relative py-20 lg:py-28">
@@ -126,7 +124,8 @@ function PageHome() {
           BUILDING
           THE
           FUTURE */}
-      Skip the interview by building your on-chain professional reputation?
+      {/* Skip the interview by building your on-chain professional reputation? */}
+          Own your job search and your career
 
             {/* Talent Nation by Future Protocol */}
           </h2>

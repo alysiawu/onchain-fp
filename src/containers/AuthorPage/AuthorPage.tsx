@@ -39,8 +39,9 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   const [loadingState, setLoadingState] = useState(false)
 
   let [categories] = useState([
-    "Collectibles",
-    "Created",
+    "Minted",
+    "Collected",
+
     // "Liked",
     // "Following",
     // "Followers",
@@ -231,20 +232,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
               </div>
             </div>
             <Tab.Panels>
-              <Tab.Panel className="">
-                {/* LOOP ITEMS */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-                  {nftsCollected.map((nft, index) => (
-                    <CardNFT key={index} nft={nft} owner />
-                  ))}
-                </div>
-
-                {/* PAGINATION */}
-                <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  {/* <Pagination /> */}
-                  {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
-                </div>
-              </Tab.Panel>
+           
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
@@ -257,6 +245,20 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                   <Pagination />
                   <ButtonPrimary loading>Show me more</ButtonPrimary>
+                </div>
+              </Tab.Panel>
+              <Tab.Panel className="">
+                {/* LOOP ITEMS */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
+                  {nftsCollected.map((nft, index) => (
+                    <CardNFT key={index} nft={nft} owner />
+                  ))}
+                </div>
+
+                {/* PAGINATION */}
+                <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                  {/* <Pagination /> */}
+                  {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
                 </div>
               </Tab.Panel>
 

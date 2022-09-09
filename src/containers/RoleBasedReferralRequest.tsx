@@ -1,27 +1,26 @@
 import Label from "components/Label/Label";
 import React, { FC, useState } from "react";
-import { getDatabase, ref, set, onValue } from "firebase/database";
-import { v4 as uuidv4 } from 'uuid';
-
-import Web3Modal from 'web3modal'
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ethers } from 'ethers'
+// import { getDatabase, ref, set, onValue } from "firebase/database";
+import Airtable from 'airtable';
+// import Web3Modal from 'web3modal'
+// import { useNavigate } from 'react-router-dom';
+// import { ethers } from 'ethers'
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import {
   marketplace as marketplaceAddress, 
   authorization,
-  JobFamilies,
-  Companies,
-  Locations,
+//   JobFamilies,
+//   Companies,
+//   Locations,
   PFPs
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
 import loading from 'images/loading.gif'
 // import marketplaceAbi from '../artifacts/marketplace.json'
 
-import ButtonPrimary from "shared/Button/ButtonPrimary";
+// import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 // import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
@@ -30,8 +29,8 @@ import FormItem from "components/FormItem";
 // import { nftsImgs } from "contains/fakeData";
 import MySwitch from "components/MySwitch";
 // import ButtonSecondary from "shared/Button/ButtonSecondary";
-import NcImage from "shared/NcImage/NcImage";
-import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
+// import NcImage from "shared/NcImage/NcImage";
+// import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
 import NcModal from "shared/NcModal/NcModal";
 import { useFirebaseContext } from "contexts/firebaseContext";
 import { trackEvent } from "utils/tracking";
@@ -78,16 +77,11 @@ export interface PageUploadItemProps {
 //   url: 'https://ipfs.infura.io:5001/api/v0'
 // })
 
-const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
+
+
+const RoleBasedReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
   // const navigate = useNavigate()
-
-    const { state } = useLocation()
-
-    // const { state } = useLocation()
-    const [job, setJob] = useState<{ oppo: any}>(state as unknown as {oppo: any})
-    const { oppo } = job
-    console.log('--job', job)
-
+  var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appfZedSta1s4n06f');
   const {
     email, 
     photoUrl,
@@ -97,7 +91,7 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
   } = useFirebaseContext()
   
 
-  trackEvent('RequestReferralPage_Visted', {
+  trackEvent('QuickApplyPage_Visted', {
     email, 
     uid,
   })
@@ -111,17 +105,29 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [selected, setSelected] = useState(PFPs[1]);
   const [formInput, updateFormInput] = useState({ 
     chain: 'polygon',
-    name: '', 
-    phone: '', 
+
+
      //TODO dropdown
     jobFamily: '', 
     //TODO dropdown
     location: '',
-    email,
-    talentPitch: '',
-    Linkedin: '',
-    linkToResume: '',
+    // email,
+
+
     price: '', 
+// 
+    name: '', 
+    company: '',
+    role: '',
+    jdLink: '',
+    h1b: 'no',
+    linkToResume: '',
+    Linkedin: '',
+    whoVouch: '',
+    email: email || '',
+    phone: '', 
+    talentPitch: '',
+    featured: 'yes',
   })
 
   const [errorInput, updateErrorInput] = useState({ 
@@ -235,7 +241,7 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
     )
   }
 
-  const submitAsTalent = async () => {
+  const submitRoleBasedReferralRequest = async () => {
 
     const { 
       name, 
@@ -250,7 +256,7 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
       // image,
     } = formInput
 
-    trackEvent('RequestReferralPage_Submitting', {
+    trackEvent('RoleBasedReferralRequestPage_Submitting', {
       uid,
       ...formInput
     })
@@ -292,54 +298,94 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
       return
     }
 
-    // if (!talentPitch) {
-    //   updateErrorInput({
-    //     ...errorInput,
-    //     talentPitch: true
-    //   })
-    //   return
-    // }
+    if (!talentPitch) {
+      updateErrorInput({
+        ...errorInput,
+        talentPitch: true
+      })
+      return
+    }
     
-    const db = getDatabase();
-    // console.log('database', db)
-    // READ DB
-    // const starCountRef = ref(db, 'users/' + 1);
+    // base('Web3 Jobs').find(airtableId, function(err, record) {
+        // if (err) { console.error(err); return; }
+  
+        // const applicants = JSON.parse((record.get('Applicants') || "[]"))
+        
+        // applicants.push(webSanNFT)
+        console.log('--formInput', formInput)
+        base('Role based referral request').create([
+            {
+              "fields": {
+                  "Name": formInput.name,
+                  "Role": formInput.role,
+                  "Company": formInput.company,
+                  "TalentPitch": formInput.talentPitch,
+                  "JDLink": formInput.jdLink,
+                  "H1b": formInput.h1b ,
+                  "Resume": formInput.linkToResume,
+                  "Who can vouch for you": formInput.whoVouch,
+                  "Email": formInput.email,
+                  "Phone": formInput.phone,
+                //   "Who can vouch for you": formInput.whoVouch,
+                  "Featured": formInput.featured,
 
-    // onValue(starCountRef, (snapshot) => {
-    //   const data = snapshot.val();
-    //   console.log('------data', data)
-    //   // updateStarCount(postElement, data);
+              }
+            },
+            // {
+            //   "fields": {}
+            // }
+          ], function(err, records) {
+            if (err) {
+              console.error(err);
+              return;
+            }
+            records && records.forEach(function (record) {
+              console.log(record.getId());
+            });
+          });
+          
+
     // });
 
-    const writeUserData = (
-      name: string, email: string, phone: string, Linkedin: string, linkToResume: string,
-      talentPitch: string,
-      
 
-      ) => {
-    //   const userId = `${name.trim()}${oppo.company}${oppo.title}`
+    // const db = getDatabase();
+    // // console.log('database', db)
+    // // READ DB
+    // // const starCountRef = ref(db, 'users/' + 1);
 
-      set(ref(db, 'referralRequest/' + oppo.uuid), {
-        name,
-        email,
-        Linkedin,
-        phone,
-        linkToResume,
-        talentPitch,
-      });
-    }
+    // // onValue(starCountRef, (snapshot) => {
+    // //   const data = snapshot.val();
+    // //   console.log('------data', data)
+    // //   // updateStarCount(postElement, data);
+    // // });
 
-    await writeUserData(
-      name,
-      email,
-      phone,
-      Linkedin,
-      linkToResume,
-      talentPitch,
-    )
+    // const writeUserData = (
+    //   name: string, email: string, phone: string, Linkedin: string, linkToResume: string,
+    //   talentPitch: string
+    //   ) => {
+    //   const userId = `${name.trim()}${phone}`
+
+    //   set(ref(db, 'talents/' + userId), {
+    //     name,
+    //     email,
+    //     Linkedin,
+    //     phone,
+    //     linkToResume,
+    //     talentPitch,
+    //   });
+    // }
+
+    // await writeUserData(
+    //   name,
+    //   email,
+    //   phone,
+    //   Linkedin,
+    //   linkToResume,
+    //   talentPitch
+    // )
 
 
-    trackEvent('RequestReferralPage_Success', {
+    trackEvent('RoleBasedReferralRequestPage_Success', {
       uid,
       ...formInput
     })
@@ -357,7 +403,7 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Do you have what it takes to join Talent Nation?</title>
+        <title>Request an internal referral for a job</title>
       </Helmet>
 
       {!mintSuccess && 
@@ -365,37 +411,16 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
           {/* HEADING */}
           <div className="max-w-2xl">
-            <div className="sm:text-4xl font-semibold">
-              {/* Turn your Salary info NFT, and earn passive income selling it */}
-              {/* Do you have what it takes to join Talent Nation?
-               */}
-               
-              {/* Build your first skill NFT */}
-            </div>
-            <span className="sm:text-2xl block mt-3 mb-3 text-neutral-500 dark:text-neutral-400">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
-                Referral request
-            </span>
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
-              {/* Do you have what it takes to join Talent Nation?
-               */}
-               {oppo.title} @ {oppo.company} ${oppo.bountyAmount} Upon pass first round
-
+              {/* Do you have what it takes to join Talent Nation? */}
+              Request an internal referral for a job, we will match you with an industry insider to help you get the job you want!
               {/* Build your first skill NFT */}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
-              JD Link <a href={oppo.jobDescription} />
-                      {/* {oppo.jobDescription.indexOf('http') > -1 ? 'link' : {oppo.jobDescription}}  */}
-            </span>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              {/* You can set preferred display name, create your profile URL and
-              manage other personal settings. */}
                       * are required
-             
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
@@ -466,21 +491,95 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
             </FormItem>
-            <FormItem label="Phone Number *">
+            <FormItem label="Company *">
               <Input 
-                className={errorInput.phone ? 'error' : ''}
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                // className={errorInput.company ? 'error' : ''}
                 defaultValue="" 
                 onChange={
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      phone: e.target.value,
+                      company: e.target.value,
                   })
                   }
                 }
               />
             </FormItem>
-      
+
+            <FormItem label="Role *">
+              <Input 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                // className={errorInput.role ? 'error' : ''}
+                defaultValue="" 
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      role: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="Job Description Link *">
+              <Input 
+                // style={{
+                //   border: '0.5px solid red'
+                // }}
+                // className={errorInput.jdLink ? 'error' : ''}
+                defaultValue="" 
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      jdLink: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="Need visa support? *">
+              
+            <select
+                        id="location"
+                        name="location"
+                        className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
+                        // value={formInput.location}
+                        onClick={(e) => {
+                            updateFormInput({
+                            ...formInput,
+                            h1b: (e.target as HTMLInputElement).value,
+                        })
+                        
+                        }}
+                    >
+                {[
+                    {
+                        id: 'yes',
+                        name: 'Yes'
+                    },
+                    {
+                        id: 'no',
+                        name: 'No'
+                    }
+                ].map(jf => {
+                  return <option
+                    key={jf.id}
+                  >{
+                    jf.name}</option>
+                })}
+                
+              </select>
+            </FormItem>
+
+
             <FormItem label="Link to Resume *">
               <Input 
                 className={errorInput.linkToResume ? 'error' : ''}
@@ -496,6 +595,142 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
               />
             </FormItem>
+    
+            <FormItem label="Linkedin *">
+              <Input 
+                className={errorInput.Linkedin ? 'error' : ''}
+                type='text'
+                defaultValue="" 
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      Linkedin: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+            
+            <FormItem label="Who can be your reference, advocate (optional)">
+              <Input 
+                // className={errorInput.whoVouch ? 'error' : ''}
+                type='text'
+                defaultValue="" 
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      whoVouch: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="Email *">
+              <Input 
+                className={errorInput.email ? 'error' : ''}
+                defaultValue="" 
+                type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      email: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="Phone Number ">
+              <Input 
+                className={errorInput.phone ? 'error' : ''}
+                defaultValue="" 
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      phone: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+{/* 
+            <FormItem label="whoVouch *">
+              <Input 
+                className={errorInput.whoVouch ? 'error' : ''}
+                type='text'
+                defaultValue="" 
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      whoVouch: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem> */}
+      {/* story */}
+            <FormItem label="Your referrer's time is precious as well, tell us why you are right for the job, text and / or vide link, link to you porfolio, github, tell us your story *">
+              <Textarea 
+                className={errorInput.talentPitch ? 'error' : ''}
+                defaultValue="" 
+                // type='text'
+                onChange={
+                  (e) => {
+                    updateFormInput({
+                      ...formInput,
+                      talentPitch: e.target.value,
+                  })
+                  }
+                }
+              />
+            </FormItem>
+
+            <FormItem label="Feature in our talent blog which we share with our partner companies, this will help you get multiple offers">
+        
+
+  
+
+                 <select
+                        id="location"
+                        name="location"
+                        className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
+                        // value={formInput.location}
+                        onClick={(e) => {
+                            updateFormInput({
+                            ...formInput,
+                            featured: (e.target as HTMLInputElement).value,
+                        })
+                        
+                        }}
+                    >
+                {[
+                    {
+                        id: 'yes',
+                        name: 'Yes'
+                    },
+                    {
+                        id: 'no',
+                        name: 'No'
+                    }
+                ].map(jf => {
+                  return <option
+                    key={jf.id}
+                  >{
+                    jf.name}</option>
+                })}
+                
+              </select>
+
+            </FormItem>
+
+
+        
             {/* <FormItem label="Job Family">
               <NcDropDown
               
@@ -516,21 +751,7 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }}
               />
             </FormItem> */}
-            <FormItem label="Linkedin *">
-              <Input 
-                className={errorInput.Linkedin ? 'error' : ''}
-                type='text'
-                defaultValue="" 
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      Linkedin: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem>
+        
            
 
             <h3 className="text-lg sm:text-2xl font-semibold">
@@ -573,38 +794,9 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
               </select> */}
 
             {/* </FormItem> */}
-            <FormItem label="Email *">
-              <Input 
-                className={errorInput.email ? 'error' : ''}
-                defaultValue="" 
-                type='text'
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      email: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem>
+       
 
-            <FormItem label="Tell us why you should get the job via text or video  (optional)">
-              <Textarea 
-                className={errorInput.talentPitch ? 'error' : ''}
-                defaultValue="" 
-                // type='text'
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      talentPitch: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem>
-
+      
             {/* ---- */}
             {/* <FormItem
               label="External link"
@@ -681,8 +873,8 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
               >Done</a> */}
 
 <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
-  submitAsTalent()
-}} >Done</a>
+  submitRoleBasedReferralRequest()
+}} >Submit</a>
 
               {/* <ButtonSecondary className="flex-1">Preview item</ButtonSecondary> */}
             </div>
@@ -731,6 +923,20 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
                 Thanks for contacting us! We will get in touch with you shortly.
               </h3>
 
+              ✨ Share on twitter  here
+                <span style={{paddingTop: '10px'}}>
+
+                    <TwitterShareButton
+                    style={{background: 'none', margin: '1rem', marginTop: '10px'}}
+                      title={" https://www.futureprotocol.co"}
+                      url={'https://www.futureprotocol.co/request-a-referral'}
+                      hashtags={["futureprotocol", "talentnation", "rewritehiring", 'jobmarket', 'blockchain']}
+                    >
+                      <TwitterIcon size={32} round />
+                
+                    </TwitterShareButton>
+                </span>
+
 
               <h3 className="text-lg sm:text-2xl font-semibold">
                 Interesting in owning and managing your on chain professional identity?
@@ -742,20 +948,6 @@ const ReferralRequest: FC<PageUploadItemProps> = ({ className = "" }) => {
               <h3 className="text-lg sm:text-2xl font-semibold">
               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3>
-
-              ✨ Share on twitter  here
-                <span style={{paddingTop: '10px'}}>
-
-                    <TwitterShareButton
-                    style={{background: 'none', margin: '1rem', marginTop: '10px'}}
-                      title={"Pitch yourself and Skip the line to meet your future team at https://www.futureprotocol.co"}
-                      url={'https://www.futureprotocol.co/quick-apply'}
-                      hashtags={["futureprotocol", "talentnation", "rewritehowweinterview"]}
-                    >
-                      <TwitterIcon size={32} round />
-                
-                    </TwitterShareButton>
-                </span>
 
 
              
@@ -836,4 +1028,4 @@ function CheckIcon(props: any) {
   );
 }
 
-export default ReferralRequest;
+export default RoleBasedReferralRequest;

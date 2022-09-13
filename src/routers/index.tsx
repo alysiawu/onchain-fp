@@ -52,6 +52,7 @@ import ExpertsPage from "containers/ExpertsPage";
 import ExpertDetailPage from "containers/ExpertDetailPage";
 import JobSeekersPage from "containers/JobSeekersPage";
 import PageHome3 from "containers/PageHome/PageHome3";
+import Register from "containers/Register";
 // import Openings from "containers/Openings";
 
 export const pages: Page[] = [
@@ -87,13 +88,14 @@ const App = () => {
       <ScrollToTop />
       <SiteHeader />
       <Routes>
-        <Route path="/" element={<PageHome3 />} />
+        <Route path="/" element={<PageHome2 />} />
         <Route path="/beta" element={<Home />} />
-        <Route path="/#" element={<PageHome3 />} />
+        <Route path="/#" element={<PageHome2 />} />
         <Route path="/request-a-referral" element={<RoleBasedReferralRequest />} />
         <Route path="/hiring-managers" element={<HiringManagersPage />} />
         <Route path="/experts" element={<ExpertsPage />} />
         <Route path="/talent" element={<JobSeekersPage />} />
+        <Route path="/register" element={<Register />} />
         {/* <Route path="/free-mint" element={<FreeMintPage />} /> */}
         <Route path="/expert/:expertId/:index" element={<ExpertDetailPage />} />
 

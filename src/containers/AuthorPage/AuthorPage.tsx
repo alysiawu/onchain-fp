@@ -118,7 +118,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
       <Helmet>
-        <title>Get Paid for sharing your salary data via NFT, anonymously</title>
+        <title>All your NFTs, all in one place</title>
       </Helmet>
 
       {/* HEADER */}
@@ -311,10 +311,10 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
         </main>
 
         {/* === SECTION 5 === */}
-        <div className="relative py-16 lg:py-28">
+        {/* <div className="relative py-16 lg:py-28">
           <BackgroundSection />
           <SectionGridAuthorBox data={Array.from("11111111")} boxCard="box4" />
-        </div>
+        </div> */}
 
         {/* SUBCRIBES */}
         <SectionBecomeAnAuthor />

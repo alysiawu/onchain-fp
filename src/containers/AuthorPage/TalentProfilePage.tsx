@@ -20,11 +20,11 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import authorBanner from "images/nfts/authorBanner.png";
 // import { nftsImgs } from "contains/fakeData";
 // import NftMoreDropdown from "components/NftMoreDropdown";
-import ButtonDropDownShare from "components/ButtonDropDownShare";
-import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
+// import ButtonDropDownShare from "components/ButtonDropDownShare";
+// import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 // import SocialsList from "shared/SocialsList/SocialsList";
 // import FollowButton from "components/FollowButton";
-import VerifyIcon from "components/VerifyIcon";
+// import VerifyIcon from "components/VerifyIcon";
 import { Tab } from "@headlessui/react";
 import CardAuthorBox3 from "components/CardAuthorBox3/CardAuthorBox3";
 // import ArchiveFilterListBox from "components/ArchiveFilterListBox";
@@ -33,10 +33,13 @@ import CardAuthorBox3 from "components/CardAuthorBox3/CardAuthorBox3";
 // import { useAccountContext } from "contexts/accountContext";
 // import CardNFT2 from "components/CardNFT2";
 import CardSkillBadge from "components/CardSkillBage";
-import FormItem from "components/FormItem";
-import Input from "shared/Input/Input";
+// import FormItem from "components/FormItem";
+// import Input from "shared/Input/Input";
 import { useFirebaseContext } from "contexts/firebaseContext";
 import { trackEvent } from "utils/tracking";
+import { getNFTs } from 'utils/alchemy'
+import CardNFTDisplay from "components/CardNFTDisplay";
+import { useWeb3React } from "@web3-react/core";
 
 
 export interface AuthorPageProps {
@@ -46,8 +49,23 @@ export interface AuthorPageProps {
 // const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
 
 const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
+  var Airtable = require('airtable');
+  var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appfZedSta1s4n06f');
+
+  const {
+    library,
+    chainId,
+    account,
+    activate,
+    deactivate,
+    active
+  } = useWeb3React();
+
+  
+  const [nftData, setNFTData] = useState<any>()
     const [mintSuccess, setMintSuccess] = useState(false)
     const { width, height } = useWindowSize()
+    const [walletAddress, setWalletAddress] = useState('')
 
     const db = getDatabase()
     const {avatarString} = useParams()
@@ -121,12 +139,116 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
 
   }>()
 
-  const [errorInput, updateErrorInput] = useState({ 
-   hourRate: false,
-   consultOn: false,
-   zoomLink: false,
+  // const [errorInput, updateErrorInput] = useState({ 
+  //  hourRate: false,
+  //  consultOn: false,
+  //  zoomLink: false,
    
-  })
+  // })
+
+  const getWalletAddress = () => {
+
+
+      // base('NametoWallets').select({
+      //   view: 'Grid view',
+      // }, function(err: any, record: any) {
+      //   if (err) { console.error(err); return; }
+      //   console.log('Retrieved', record.id);
+      //   const wallet = record._rawJson.fields.Wallets
+      //   console.log('Retrieved', wallet);
+      //   setWalletAddress(wallet)
+      //   _getNFTs(wallet)
+      
+      // });
+
+      base('NametoWallets').select({
+        // Selecting the first 3 records in Grid view:
+        // maxRecords: 3,
+        view: "Grid view",
+        // filterByFormula: `Name%3Dalysia`
+    }).eachPage(function page(records: any[], fetchNextPage: () => void) {
+        // This function (`page`) will get called for each page of records.
+    
+        records.forEach(function(record) {
+            console.log('Retrieved', record.get('Name'), '--', record.get('Wallets'));
+            if (record.get('Name') === avatarString) {
+                // setExisted(true)
+                // setExistedWallets(record.get('Wallets'))
+                const wallets = record.get('Wallets')
+                setWalletAddress(wallets)
+                console.log('lllll', wallets)
+               
+
+            }
+        });
+    
+        // To fetch the next page of records, call `fetchNextPage`.
+        // If there are more records, `page` will get called again.
+        // If there are no more records, `done` will get called.
+        // fetchNextPage();
+
+        // console.log('existedWallets', existedWallets, existed)
+        // if (existed) {
+        //     navigate(`/${username}`)
+        // } else {
+            // console.log('-oooo-currentAccount', wallets)
+            //  base('NametoWallets').create([
+            //     {
+            //     "fields": {
+            //         "Name": avatarString,
+            //         "Wallets": walletAddress
+            //     }
+            //     }
+            // ], function(err: any, records: any[]) {
+            //     if (err) {
+            //     console.error(err);
+            //     return;
+            //     }
+            //     records.forEach(function(record) {
+            //     console.log(record.get('Name'));
+            //     });
+
+            //     // navigate(`/${username}`)
+            // });
+        // }
+
+
+    // @ts-ignore
+    }, function done(err) {
+        if (err) { console.error(err); return; }
+    });
+
+
+  }
+
+const _getNFTs = async (wallet: string) => {
+//       const web3Modal = new Web3Modal({
+//       network: 'mainnet',
+//       cacheProvider: true,
+//     })
+//     const connection = await web3Modal.connect()
+//     const provider = new ethers.providers.Web3Provider(connection)
+// // let provider = new ethers.providers.g;
+//   let history = await provider.getAvatar(wallet)
+//   console.log('history', history)
+
+  const _nftData = await getNFTs(wallet)
+  console.log('nftData', _nftData)
+  // @ts-ignore
+  setNFTData(_nftData)
+
+}
+
+
+useEffect(() => {
+  console.log('--walletAddress', walletAddress)
+  // const currentWallet = localStorage.getItem('currentWallet')
+  if (account) {
+
+    account && _getNFTs(account)
+  }
+  // walletAddress && _getNFTs(walletAddress)
+}, [account])
 
 
   useEffect(() => { 
@@ -156,13 +278,13 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
     }
   }, [avatarString])
 
-  let [categories] = useState([
-    "Gated Space",
+  // let [categories] = useState([
+  //   "Gated Space",
     // "Skills",
     // "Liked",
     // "Following",
     // "Followers",
-  ]);
+  // ]);
 
  
 
@@ -193,11 +315,12 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
     // Load onchain data
     // loadNFTs()
     // loadNFTsCreated()
+    getWalletAddress()
   }, [])
   
-  const gatedSpaceSumbit = async (avatarString: string) => {
+  // const gatedSpaceSumbit = async (avatarString: string) => {
 
-    const { 
+  //   const { 
     //   name, 
     //   phone, 
     //   interviewerIntro,
@@ -209,47 +332,47 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
     //   avatarString,
     //   linkToResume,
       // price,
-      hourRate,
-      consultOn,
-      zoomLink,
+      // hourRate,
+      // consultOn,
+      // zoomLink,
 
       // image,
-    } = formInput
+    // } = formInput
 
     // localStorage.setItem('talentProfile', JSON.stringify(formInput))
     // localStorage.setItem('avatarString', avatarString)
 
-    trackEvent('TalentProfileGatedSpace_Submitting', {
-      uid,
-      ...formInput
-    })
+    // trackEvent('TalentProfileGatedSpace_Submitting', {
+    //   uid,
+    //   ...formInput
+    // })
 
  
 
 
-    if (!consultOn) {
-        updateErrorInput({
-            ...errorInput,
-            consultOn: true
-          })
-          return
-    }
+    // if (!consultOn) {
+    //     updateErrorInput({
+    //         ...errorInput,
+    //         consultOn: true
+    //       })
+    //       return
+    // }
 
-    if (!hourRate) {
-      updateErrorInput({
-        ...errorInput,
-        hourRate: true
-      })
-      return
-    }
+    // if (!hourRate) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     hourRate: true
+    //   })
+    //   return
+    // }
 
-     if (!zoomLink) {
-      updateErrorInput({
-        ...errorInput,
-        zoomLink: true
-      })
-      return
-    }
+    //  if (!zoomLink) {
+    //   updateErrorInput({
+    //     ...errorInput,
+    //     zoomLink: true
+    //   })
+    //   return
+    // }
 
     // if (!interviewerIntro) {
     //   updateErrorInput({
@@ -288,22 +411,22 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
     // });
 
 
-    const writeUserData = (
+    // const writeUserData = (
     //   name: string, 
     //   email: string, phone: string, Linkedin: string, linkToResume: string,
 
     //   interviewerIntro: string,
     //   calendlyLink: string,
     //   hourlyRate: string,
-        avatarString: string,
-        hourRate: string,
-        zoomLink: string,
-        consultOn: string,
-      ) => {
+      //   avatarString: string,
+      //   hourRate: string,
+      //   zoomLink: string,
+      //   consultOn: string,
+      // ) => {
 
-      const userId = `${avatarString.trim()}`
+      // const userId = `${avatarString.trim()}`
 
-      set(ref(db, 'users/' + userId), {
+      // set(ref(db, 'users/' + userId), {
         // name,
         // email,
         // Linkedin,
@@ -313,33 +436,33 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
         // hourlyRate,
         // calendlyLink,
         // avatarString,
-      });
-    }
+    //   });
+    // }
 
-    await writeUserData(
-        avatarString,
-        hourRate,
-        zoomLink,
-        consultOn,
-    )
-
-
-    trackEvent('TalentProfileGatedSpace_Success', {
-      uid,
-      ...formInput
-    })
-
-    setMintSuccess(true)
+  //   await writeUserData(
+  //       avatarString,
+  //       hourRate,
+  //       zoomLink,
+  //       consultOn,
+  //   )
 
 
-  }
+  //   trackEvent('TalentProfileGatedSpace_Success', {
+  //     uid,
+  //     ...formInput
+  //   })
+
+  //   setMintSuccess(true)
+
+
+  // }
 
 
 
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
       <Helmet>
-        <title>Create your talent economy</title>
+        <title>All your NFTs all in one place</title>
       </Helmet>
 
       {/* HEADER */}
@@ -352,17 +475,22 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
           />
         </div>
         <div className="container -mt-10 lg:-mt-16">
+       
           <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">
             <div className="w-32 lg:w-44 flex-shrink-0 mt-12 sm:mt-0">
+             
               <NcImage
-                src={`https://api.multiavatar.com/Infochain.svg`}
+                src={`https://api.multiavatar.com/${avatarString}.svg`}
                 containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
               />
+              
             </div>
+         
             <div className="pt-5 md:pt-1 md:ml-6 xl:ml-14 flex-grow">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-flex items-center text-2xl sm:text-3xl lg:text-4xl font-semibold">
                   {/* <span>{currentAccount?.slice(0, 6)}</span> */}
+                  
                   {/* <VerifyIcon
                     className="ml-2"
                     iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8"
@@ -370,16 +498,21 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
                 </h2>
                 <div className="flex items-center text-sm font-medium space-x-2.5 mt-2.5 text-green-600 cursor-pointer">
                   <span className="text-neutral-700 dark:text-neutral-300">
+                  Avatar randomly generated based on the user name you chose  🥳
                     {/* Email {profileData && profileData?.email} */}
                     {/* 4.0xc4c16ac453sa645a...b21a{" "} */}
-                    {/* {currentAccount} */}                   
+                    {/* {currentAccount} */}    
+                    
                   </span>
                   <span className="text-neutral-700 dark:text-neutral-300">
                     {/* Name: {profileData && profileData?.name} */}
+                   
                   </span>
                   <span className="text-neutral-700 dark:text-neutral-300">   
                     {/* Phone: {profileData && profileData?.phone} */}
                     </span>
+
+                 
                   {/* <svg width="20" height="21" viewBox="0 0 20 21" fill="none">
                     <path
                       d="M18.05 9.19992L17.2333 12.6833C16.5333 15.6916 15.15 16.9083 12.55 16.6583C12.1333 16.6249 11.6833 16.5499 11.2 16.4333L9.79999 16.0999C6.32499 15.2749 5.24999 13.5583 6.06665 10.0749L6.88332 6.58326C7.04999 5.87492 7.24999 5.25826 7.49999 4.74992C8.47499 2.73326 10.1333 2.19159 12.9167 2.84993L14.3083 3.17493C17.8 3.99159 18.8667 5.71659 18.05 9.19992Z"
@@ -399,6 +532,7 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
                 </div>
 
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
+                  
                 {/* Resume: {profileData && profileData?.linkToResume} */}
                   {/* Punk #4786 / An OG Cryptopunk Collector, hoarder of NFTs.
                   Contributing to @ether_cards, an NFT Monetization Platform. */}
@@ -408,6 +542,7 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
                 {/* <SocialsList itemClass="block w-7 h-7" /> */}
               </div>
             </div>
+          
             <div className="absolute md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5 flex flex-row-reverse justify-end">
               {/* <NftMoreDropdown
                 actions={[
@@ -419,10 +554,23 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
                 ]}
                 containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
               /> */}
-              <ButtonDropDownShare
+              {/* <ButtonDropDownShare
                 className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer mx-2"
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
-              />
+              /> */}
+               {/* ✨ Share on twitter  here */}
+                <span style={{paddingTop: '10px'}}>
+
+                    <TwitterShareButton
+                    style={{background: 'none', margin: '1rem', marginTop: '10px'}}
+                      title={`Check out my NFTs at here`}
+                      url={`https://www.lewk.app/${avatarString}`}
+                      hashtags={["lewk", "nfts", "airdrops"]}
+                    >
+                      <TwitterIcon size={32} round />
+                
+                    </TwitterShareButton>
+                </span>
 
               {/* <FollowButton
                 isFollowing={false}
@@ -440,6 +588,7 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
           <Tab.Group>
             <div className="flex flex-col lg:flex-row justify-between ">
               <Tab.List className="flex space-x-0 sm:space-x-2 overflow-x-auto ">
+                
                 {/* {categories.map((item) => (
                   <Tab key={item} as={Fragment}>
                     {({ selected }) => (
@@ -464,11 +613,17 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
              
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
-                {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-                  {nftsCreated.map((nft, index) => (
-                    <CardNFT key={index} nft={nft}/>
-                  ))}
-                </div> */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
+              
+                     {nftData && nftData.map((nft: { description: any; title: any; media: any; rawMetadata: any; }, index: string) => {
+
+                      return (<CardNFTDisplay key={index} nft={nft}/>)
+                     
+                  
+                    })}
+
+
+                </div>
 
             {/* <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div> */}
             <div className="mt-10 md:mt-10 space-y-5 sm:space-y-6 md:sm:space-y-8">
@@ -643,7 +798,7 @@ twoTruthOnelie: "1. */}
 
                 <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 ">
 
-                <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="https://book.stripe.com/28obMA7Hbbq22wEeUU" >Request to talk to me</a>
+                {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="https://book.stripe.com/28obMA7Hbbq22wEeUU" >Request to talk to me</a> */}
                 {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="https://buy.stripe.com/eVa4k80eJeCe0ow5kl" >Book Now</a> */}
 
                
@@ -730,8 +885,8 @@ twoTruthOnelie: "1. */}
 
                 {/* PAGINATION */}
                 <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
+                  {/* <Pagination /> */}
+                  {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
                 </div>
               </Tab.Panel>
             </Tab.Panels>
@@ -745,7 +900,7 @@ twoTruthOnelie: "1. */}
         </div> */}
 
         {/* SUBCRIBES */}
-       {!mintSuccess && <SectionBecomeAnAuthor />   }
+       {/* {!mintSuccess && <SectionBecomeAnAuthor />   } */}
       </div>
 
    
@@ -817,30 +972,30 @@ twoTruthOnelie: "1. */}
              
           </div>
 
-          <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8" style={{marginTop: '200px'}}>
+          {/* <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8" style={{marginTop: '200px'}}> */}
          
-
+{/* 
          <h3 className="text-lg sm:text-2xl font-semibold">
            ✨ Proof-of-Human by adding a video intro
-         </h3>
+         </h3> */}
 
-       <h3 className="text-lg sm:text-2xl font-semibold">
+       {/* <h3 className="text-lg sm:text-2xl font-semibold">
            <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/quick-apply'}> Start Here</a>
-           </h3>
-       </div>
+           </h3> */}
+       {/* </div> */}
 
           
-          <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8" style={{marginTop: '200px'}}>
+          {/* <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8" style={{marginTop: '200px'}}> */}
          
 
-            <h3 className="text-lg sm:text-2xl font-semibold">
+            {/* <h3 className="text-lg sm:text-2xl font-semibold">
               ✨ Looking for engineering job?
-            </h3>
+            </h3> */}
 
-          <h3 className="text-lg sm:text-2xl font-semibold">
+          {/* <h3 className="text-lg sm:text-2xl font-semibold">
               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Complete your Proof-of-capability profile</a>
               </h3>
-          </div>
+          </div> */}
 
        
             </div>

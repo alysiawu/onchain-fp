@@ -24,7 +24,7 @@ function Home() {
   return (
     <div className="nc-PageHome relative overflow-hidden">
       <Helmet>
-        <title>Future Protocol: Empower the future of work one identity at time</title>
+        <title></title>
       </Helmet>
       {/* GLASSMOPHIN */}
       <BgGlassmorphism />

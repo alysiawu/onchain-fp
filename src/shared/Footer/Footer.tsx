@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
           
         <div className="flex flex-col lg:flex-row lg:items-center">
    
-   <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a>
+   <a style={{background: 'none', padding: '12px', width: '125px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#39f889'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a>
 
    </div>
         </div>

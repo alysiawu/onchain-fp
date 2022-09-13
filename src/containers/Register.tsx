@@ -2,7 +2,7 @@ import Label from "components/Label/Label";
 import React, { FC, useEffect, useState } from "react";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 import Web3Modal from 'web3modal'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ethers } from 'ethers'
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
@@ -11,12 +11,10 @@ import {
   marketplace as marketplaceAddress, 
   authorization,
   AchievementCategories,
-  // Companies,
-  // Locations,
-  // PFPs,
+
   SkillBadges
 } from '../utils/constants'
-import twitter from "images/socials/twitter.svg";
+// import twitter from "images/socials/twitter.svg";
 import metamaskImg from "images/metamask.webp";
 import polygon from "images/polygon-matic-logo.png"
 import loading from 'images/loading.gif'
@@ -38,42 +36,41 @@ import NcModal from "shared/NcModal/NcModal";
 // import { WalletService } from "@unlock-protocol/unlock-js";
 import Textarea from "shared/Textarea/Textarea";
 import { useAccountContext } from "contexts/accountContext";
+import { useFirebaseContext } from "contexts/firebaseContext";
+import { current } from "@reduxjs/toolkit";
 
-// const networks = {
-  
-// }
 
 export interface PageUploadItemProps {
   className?: string;
 }
 
 // https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png
-// const plans = [
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/Qmad4u7F4Z6j1zMaqLHGH7ierJ8yZ2GY5ayJK4xAVqVmvu?filename=10.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmQyaoEyL2idHSgRyJ1AaQ5FHC6jTeTkWnRFnsqNkMPrVh?filename=14.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmPzE1FfPw9FqDLhz3ZbNoM8Bxrx7jihTG3wwrDMfviGMa?filename=42.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmSA3e7swDUDHnL22JUnQg74ZXAv68fsC3PQ82cwLq8t78?filename=38.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmeirssBsSUGZt53M3SZNVv73VcLkhErQ9x9bwE6RtpPPX?filename=31.png',
-//   },
-// ];
+const plans = [
+  {
+    name: "Crypto Legend - Professor",
+    featuredImage: 'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png',
+  },
+  {
+    name: "Crypto Legend - Professor",
+    featuredImage: 'https://ipfs.io/ipfs/Qmad4u7F4Z6j1zMaqLHGH7ierJ8yZ2GY5ayJK4xAVqVmvu?filename=10.png',
+  },
+  {
+    name: "Crypto Legend - Professor",
+    featuredImage: 'https://ipfs.io/ipfs/QmQyaoEyL2idHSgRyJ1AaQ5FHC6jTeTkWnRFnsqNkMPrVh?filename=14.png',
+  },
+  {
+    name: "Crypto Legend - Professor",
+    featuredImage: 'https://ipfs.io/ipfs/QmPzE1FfPw9FqDLhz3ZbNoM8Bxrx7jihTG3wwrDMfviGMa?filename=42.png',
+  },
+  {
+    name: "Crypto Legend - Professor",
+    featuredImage: 'https://ipfs.io/ipfs/QmSA3e7swDUDHnL22JUnQg74ZXAv68fsC3PQ82cwLq8t78?filename=38.png',
+  },
+  {
+    name: "Crypto Legend - Professor",
+    featuredImage: 'https://ipfs.io/ipfs/QmeirssBsSUGZt53M3SZNVv73VcLkhErQ9x9bwE6RtpPPX?filename=31.png',
+  },
+];
 
 // https://websan.infura-ipfs.io/ipfs/
 // https://$custom-subdomain.ipfs.infura-ipfs.io/ipfs/$CID/path/to/something
@@ -82,18 +79,33 @@ export interface PageUploadItemProps {
 //   url: 'https://infura-ipfs.io:5001/api/v0'
 // })
 
-const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
+const Register: FC<PageUploadItemProps> = ({ className = "" }) => {
+    const {
+        email, 
+        photoUrl,
+        displayName,
+        signInWithGoogle,
+        currentUser
+      } = useFirebaseContext()
 
-  const plans = [
-    {
-      name: "Metamask",
-      img: metamaskImg,
-    },
+    const [ searchParams ] = useSearchParams()
 
-  ]
+    console.log('---username', searchParams.get('username'))
+    const _username = searchParams.get('username')
+
+    const [username, setUsername] = useState(_username)
+    const [existedWallets, setExistedWallets] = useState()
+const [existed, setExisted] = useState(false)
+  // const plans = [
+  //   {
+  //     name: "Metamask",
+  //     img: metamaskImg,
+  //   },
+
+  // ]
   const [showModal, setShowModal] = useState(false);
-  const { connectWallet } = useAccountContext()
-  const [currentAccount, setCurrentAccount] = useState('')
+  const { connectWallet, currentAccount, setCurrentAccount  } = useAccountContext()
+  // const [currentAccount, setCurrentAccount] = useState('')
   const navigate = useNavigate()
   const [fileUrl, setFileUrl] = useState<string>('')
   const [showMintingModal, setShowMintingModal] = useState(false)
@@ -133,7 +145,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     } else {
       const w = localStorage.getItem('currentWallet') || ''
       // ts-ignore
-      setCurrentAccount(w)
+      setCurrentAccount && setCurrentAccount(w)
     }
 
 
@@ -219,7 +231,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-        ✨ Congrats! You Claimed an Achievement NFT, this is the pass for your Web三DAO talentverse !✨ 
+        {/* ✨ Congrats! You Claimed an Achievement NFT, this is the pass for your Web三DAO talentverse !✨  */}
         </h3>
         {/* <span className="text-l flex mt-10">
           share to <img src={twitter} width='25' className='mr-5 ml-2' onClick={() => {
@@ -282,32 +294,32 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
 
 
 
-  async function listNFTForSale() {
-    setShowMintingModal(true)
-    const url = await uploadMetadataToIPFS()
-    const web3Modal = new Web3Modal()
-    const connection = await web3Modal.connect()
-    const provider = new ethers.providers.Web3Provider(connection)
-    const signer = provider.getSigner()
-    /* next, create the item */
-    const price = ethers.utils.parseUnits(formInput.price, 'ether')
-    let contract = new ethers.Contract(
-      marketplaceAddress, 
-      // PolygonNFTMarketplaceAddress,
-      marketplaceAbi.abi, 
-      signer
-    )
+  // async function listNFTForSale() {
+  //   setShowMintingModal(true)
+  //   const url = await uploadMetadataToIPFS()
+  //   const web3Modal = new Web3Modal()
+  //   const connection = await web3Modal.connect()
+  //   const provider = new ethers.providers.Web3Provider(connection)
+  //   const signer = provider.getSigner()
+  //   /* next, create the item */
+  //   const price = ethers.utils.parseUnits(formInput.price, 'ether')
+  //   let contract = new ethers.Contract(
+  //     marketplaceAddress, 
+  //     // PolygonNFTMarketplaceAddress,
+  //     marketplaceAbi.abi, 
+  //     signer
+  //   )
 
-    let listingPrice = await contract.getListingPrice()
+  //   let listingPrice = await contract.getListingPrice()
 
-    listingPrice = listingPrice.toString()
-    let transaction = await contract.createToken(url, price, { value: listingPrice })
-    // let transaction = await contract.createToken(url, price, '0x0000000000000000000000000000000000001010', 10, { value: listingPrice })
-    const res = await transaction.wait()
-      // console.log('--res', res, 'transaction', transaction)
-    setMintSuccess(true)
-    setShowMintingModal(false)
-    setShowMintSuccessModal(true)
+  //   listingPrice = listingPrice.toString()
+  //   let transaction = await contract.createToken(url, price, { value: listingPrice })
+  //   // let transaction = await contract.createToken(url, price, '0x0000000000000000000000000000000000001010', 10, { value: listingPrice })
+  //   const res = await transaction.wait()
+  //     // console.log('--res', res, 'transaction', transaction)
+  //   setMintSuccess(true)
+  //   setShowMintingModal(false)
+  //   setShowMintSuccessModal(true)
     // toast("Item successfully listed for sale 🎉 ")
     // await saveToDB({
     //   formInput,
@@ -322,49 +334,49 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     // })
     // TODO 
     // navigate('/profile')
-  }
+  // }
 
-  const fileInput = React.createRef<HTMLInputElement>();
+  // const fileInput = React.createRef<HTMLInputElement>();
 
-  async function onUploadImageToIPFS(e: React.ChangeEvent<HTMLInputElement>) {
+  // async function onUploadImageToIPFS(e: React.ChangeEvent<HTMLInputElement>) {
     
-    let client: IPFSHTTPClient | undefined;
-    try {
-      client = ipfsHttpClient({
-        // url: "https://websan.infura-ipfs.io/ipfs/",
-        url: 'https://infura-ipfs.io:5001',
-        // port: 5001,
-        // protocol: 'https',
-        headers: {
-          authorization,
-        },
-      });
+  //   let client: IPFSHTTPClient | undefined;
+  //   try {
+  //     client = ipfsHttpClient({
+  //       // url: "https://websan.infura-ipfs.io/ipfs/",
+  //       url: 'https://infura-ipfs.io:5001',
+  //       // port: 5001,
+  //       // protocol: 'https',
+  //       headers: {
+  //         authorization,
+  //       },
+  //     });
 
-      const file = e?.target?.files?.[0]
-      console.log('---file', file)
-      if (!file) return
-      try {
-        const added = await client.add(
-          file,
-          {
-            progress: (prog) => console.log(`received: ${prog}`)
-          }
-        )
-        const url = `https://websan.infura-ipfs.io/ipfs/${added.path}`
+  //     const file = e?.target?.files?.[0]
+  //     console.log('---file', file)
+  //     if (!file) return
+  //     try {
+  //       const added = await client.add(
+  //         file,
+  //         {
+  //           progress: (prog) => console.log(`received: ${prog}`)
+  //         }
+  //       )
+  //       const url = `https://websan.infura-ipfs.io/ipfs/${added.path}`
         
-        console.log('--url', url)
+  //       console.log('--url', url)
         
         
-        setFileUrl(url)
+  //       setFileUrl(url)
    
   
-      } catch (error) {
-        console.log('Error uploading file: ', error)
-      }  
-    } catch (error) {
-      console.error("IPFS error ", error);
-      client = undefined;
-    }
+  //     } catch (error) {
+  //       console.log('Error uploading file: ', error)
+  //     }  
+  //   } catch (error) {
+  //     console.error("IPFS error ", error);
+  //     client = undefined;
+  //   }
 
     
 
@@ -372,11 +384,120 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     //   'https://infura-ipfs.io:5001/api/v0'
     // })
  
-  }
+  // }
 
 // const dropdownPositon = 'down'
+// const getLinks = async () => {
+//     var Airtable = require('airtable');
+//     var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appfZedSta1s4n06f');
 
-if (!currentAccount)  {
+
+//     base('NametoWallets').find('recR18tUivvgOPgdg', function(err: any, record: any) {
+//         if (err) { console.error(err); return; }
+//         console.log('Retrieved', record.id);
+
+//     });
+// }
+
+useEffect(() => {
+  console.log('displayName && currentAccount && username', displayName, currentAccount , username)
+  if (displayName && currentAccount && username) {
+    navigate(`/${username}`)
+  }
+}, [displayName, currentAccount, username])
+
+// const updateLinks = async () => {
+
+// }
+
+const associateWallet = async (wallet: string) => {
+    var Airtable = require('airtable');
+    var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appfZedSta1s4n06f');
+
+    console.log('--usename', username)
+
+
+    base('NametoWallets').select({
+        // Selecting the first 3 records in Grid view:
+        // maxRecords: 3,
+        view: "Grid view",
+        // filterByFormula: `Name%3Dalysia`
+    }).eachPage(function page(records: any[], fetchNextPage: () => void) {
+        // This function (`page`) will get called for each page of records.
+    
+        records.forEach(function(record) {
+            console.log('Retrieved', record.get('Name'), '--', record.get('Wallets'));
+            if (record.get('Name') === username) {
+                setExisted(true)
+                setExistedWallets(record.get('Wallets'))
+                console.log('lllll', existed, existedWallets)
+
+            }
+        });
+    
+        // To fetch the next page of records, call `fetchNextPage`.
+        // If there are more records, `page` will get called again.
+        // If there are no more records, `done` will get called.
+        // fetchNextPage();
+
+        console.log('existedWallets', existedWallets, existed)
+        if (existed) {
+            navigate(`/${username}`)
+        } else {
+            console.log('-oooo-currentAccount', currentAccount)
+             base('NametoWallets').create([
+                {
+                "fields": {
+                    "Name": username,
+                    "Wallets": currentAccount
+                }
+                }
+            ], function(err: any, records: any[]) {
+                if (err) {
+                console.error(err);
+                return;
+                }
+                records.forEach(function(record) {
+                console.log(record.get('Name'));
+                });
+
+                navigate(`/${username}`)
+            });
+        }
+
+
+    // @ts-ignore
+    }, function done(err) {
+        if (err) { console.error(err); return; }
+    });
+
+    // if (existed) {
+       
+    // }
+
+    // base('NametoWallets').create([
+    //     {
+    //       "fields": {
+    //         "Name": username,
+    //         "Wallets": wallet
+    //       }
+    //     }
+    //   ], function(err: any, records: any[]) {
+    //     if (err) {
+    //       console.error(err);
+    //       return;
+    //     }
+    //     records.forEach(function(record) {
+    //       console.log(record.get('Name'));
+    //     });
+    //   });
+
+
+
+}
+
+
+if (false)  {
 
   return (
     <div
@@ -384,23 +505,23 @@ if (!currentAccount)  {
   data-nc-id="PageConnectWallet"
 >
   <Helmet>
-    <title>Connect Wallet || Lewk.app</title>
+    <title>Connect Wallet || Future Protocol</title>
   </Helmet>
   <div className="container">
     <div className="my-12 sm:lg:my-16 lg:my-24 max-w-3xl mx-auto space-y-8 sm:space-y-10">
       {/* HEADING */}
-      <div className="max-w-2xl">
-        <h2 className="text-3xl sm:text-4xl font-semibold">
-          Connect your wallet to Metamask
+      {/* <div className="max-w-2xl"> */}
+        {/* <h2 className="text-3xl sm:text-4xl font-semibold">
+          Connect your wallet to Polygon Network (Other chains coming soon!)
         </h2>
         
         <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
           Connect with one of our available wallet providers
-        </span>
-      </div>
+        </span> */}
+      {/* </div> */}
       <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
       <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
-        <div className="space-y-3">
+        {/* <div className="space-y-3">
           {plans.map((plan) => (
             <div
               key={plan.name}
@@ -426,7 +547,7 @@ if (!currentAccount)  {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* ---- */}
         <div className="pt-2 ">
@@ -474,71 +595,45 @@ if (!currentAccount)  {
     <div
       className={`nc-PageUploadItem ${className}`}
       data-nc-id="PageUploadItem"
+      style={{
+          height: '100vh'
+      }}
     >
       <Helmet>
-        <title>Home to all the NFTs you own | Lewk.app</title>
+        <title>Lewk.app</title>
       </Helmet>
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
           {/* HEADING */}
           <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl font-semibold">
-              {/* Turn your Salary info NFT, and earn passive income selling it */}
-
-            Mint an achievement NFT
-            </h2>
+        
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400 flex">
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
-              We are on
-              <img src={polygon} style={{height: '25px', display: 'flex'}} className="pl-2" />
+              {/* We are on
+              <img src={polygon} style={{height: '25px', display: 'flex'}} className="pl-2" /> */}
             </span>
           </div>
-          <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
+          {/* <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div> */}
           <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
             <div>
-              <h3 className="text-lg sm:text-2xl font-semibold mb-10">
-                {/* Company & Title Information */}
-                {/* <a 
-                    onClick={() => fileInput?.current?.click()} >   
-                        {`${fileUrl ? 'Change File' : 'Upload File'}`}
-                </a> */}
-
-                <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}
-                    onClick={() => fileInput?.current?.click()} >  
-                {`${fileUrl ? 'Change File' : 'Upload File'}`}</a>
-             
-
-              </h3>
-
-                  {/* <input 
-                                        ref={fileInput}
-                                        type="file" 
-                                        hidden 
-                                        // accept=".doc,.docx,.pdf" 
-                                        id="fileID"  
-                                        value={formInput.file}
-                                        // onChange={onUploadImageToIPFS}
-
-                                        onChange={(e) => onUploadImageToIPFS(e)}
-
-                                        
-                                        /> */}
+      
+               
                                 
 
 
                                    {/* {  fileUrl &&  <img className="rounded mt-4" width="350" style={{marginBottom: '30px'}} src={fileUrl} />} */}
 
 
-              <span className="text-neutral-500 dark:text-neutral-400 text-sm">
+              {/* <span className="text-neutral-500 dark:text-neutral-400 text-sm">
                 This will be the coverage image of your NFT, it can be your anything that represents your achievement.
                 File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV,
                 OGG, GLB, GLTF. Max size: 100 MB
-              </span>
+              </span> */}
 
 
               <div className="mt-5 ">
-                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-300 dark:border-neutral-6000 border-dashed rounded-xl">
+                {/* <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-300 dark:border-neutral-6000 border-dashed rounded-xl">
                   <div className="space-y-1 text-center">
                     {  !fileInput &&  <svg
                       className="mx-auto h-12 w-12 text-neutral-400"
@@ -558,21 +653,21 @@ if (!currentAccount)  {
                       <label
                         htmlFor="file-upload"
                         className="relative cursor-pointer  rounded-md font-medium text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
-                      >
+                      > */}
                         {/* <span  onClick={(e) => 
                           // e.target.defaultPrevented()
                           fileInput?.current?.click()
                           
                           } >Upload a file</span> */}
 
-                          {uploadingFile && 
-                          <div className="tenor-gif-embed" data-postid="22743155" data-share-method="host" data-aspect-ratio="0.990625" data-width="100%"><a href="https://tenor.com/view/hug-gif-22743155">Hug Sticker</a>from <a href="https://tenor.com/search/hug-stickers">Hug Stickers</a></div> 
+                          {/* {uploadingFile && 
+                          <div className="tenor-gif-embed" data-postid="22743155" data-share-method="host" data-aspect-ratio="0.990625" data-width="100%"><a href="https://tenor.com/view/hug-gif-22743155">Hug Sticker</a>from <a href="https://tenor.com/search/hug-stickers">Hug Stickers</a></div>  */}
                           
-                          // <script type="text/javascript" async src="https://tenor.com/embed.js"></script> 
+                          {/* <script type="text/javascript" async src="https://tenor.com/embed.js"></script> 
                           
-                          }
+                          } */}
 
-                        <input
+                        {/* <input
                          ref={fileInput}
                           id="file-upload"
                           name="file-upload"
@@ -581,12 +676,12 @@ if (!currentAccount)  {
                           value={formInput.file}
                           onChange={(e) => onUploadImageToIPFS(e)}
                         />
-                      </label>
-                      { !fileInput && <p className="pl-1">or drag and drop</p>}
-                    </div>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                      </label> */}
+                      {/* { !fileInput && <p className="pl-1">or drag and drop</p>} */}
+                    {/* </div> */}
+                    {/* <p className="text-xs text-neutral-500 dark:text-neutral-400"> */}
                       {/* PNG, JPG, GIF up to 10MB */}
-                    </p>
+                    {/* </p> */}
                     {/* <a 
                                 
                                 onClick={() => fileInput?.current?.click()} >
@@ -594,252 +689,112 @@ if (!currentAccount)  {
                                     {`${fileUrl ? 'Change File' : 'Cover image for your NFT'}`}
                             </a> */}
 
-
-                           {  fileUrl &&  <img className="rounded mt-4" width="350" style={{marginBottom: '30px'}} src={fileUrl} />}
-                  </div>
-                </div>
+{/* 
+                           {  fileUrl &&  <img className="rounded mt-4" width="350" style={{marginBottom: '30px'}} src={fileUrl} />} */}
+                  {/* </div>
+                </div> */}
               </div>
             </div>
 
             {/* ---- */}
-            {/* <FormItem label="Title">
-              <Input 
-                defaultValue="" 
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      title: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem> */}
-            {/* <FormItem label="Company">
-              <Input 
-                defaultValue="" 
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      company: e.target.value,
-                  })
-                  }
-                }
-              /> */}
+            <div className="relative py-5 lg:py-5 text-center">
+             
+                <h3 className="text-lg sm:text-2xl font-semibold mb-10 text-center">
+                    Welcome to Lewk.app
+                </h3>
 
-            {/* <select
-                id="company"
-                name="company"
-                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300 l:text-l rounded-md"
-                // value={formInput.company}
-                onClick={(e) => {
-                  
-                    updateFormInput({
-                      ...formInput,
-                      company: (e.target as HTMLInputElement).value,
-                  })
-                
+                <p className="text text-neutral-500 dark:text-neutral-400">
+                      The home for 1 billion NFTs
+                   
+
+                </p>
+
+
+                <h3 className="text-lg sm:text-2xl font-semibold mb-10 mt-10 text-center">
+                {`Claim your lewk.app/${username || 'username'}`}
+                </h3>
+               
+                {displayName && <p className="text text-neutral-500 dark:text-neutral-400">
+                    You are logged in as {displayName}
+
+                </p>}
+
+            </div>
+          
+{/*             
+            {<FormItem label={''}>
+              <Input 
+            //  @ts-ignore
+                value={username}
+                style={{
+                  border: 'none'
                 }}
-              >
-                {Companies.map(jf => {
-                  return <option>{
-                    jf.name}</option>
-                })}
-                
-              </select> */}
-            {/* </FormItem> */}
-            <FormItem label="Category">
-              {/* <Input 
-                defaultValue="" 
+                 //  @ts-ignore
+                placeholder={username}
                 onChange={
                   (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      jobFamily: e.target.value,
-                  })
-                  }
-                }
-              /> */}
-               <select
-                id="jobFamily"
-                name="jobFamily"
-                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
-                // value={formInput.jobFamily}
-                onClick={(e) => {
-                  
-                    updateFormInput({
-                      ...formInput,
-                      jobFamily: (e.target as HTMLInputElement).value,
-                  })
-                
-                }}
-              >
-                {AchievementCategories.map(jf => {
-                  return <option
-                    key={jf.id}
-                  >{
-                    jf.name}</option>
-                })}
-                
-              </select>
-            </FormItem>
-     
-            {/* <FormItem label="Job Family">
-              <NcDropDown
-              
-                // className={` ${containerClassName} `}
-                // iconClass={iconClass}
-                data={AchievementCategories}
-                panelMenusClass={""
-                  // dropdownPositon === "up"
-                  //   ? "origin-bottom-right bottom-0 "
-                    // : 
-                    // "origin-top-right !w-44 sm:!w-52"
-                }
-                onClick={(item) => {
-                  updateFormInput({
-                    ...formInput,
-                    jobFamily: item.name,
-                })
-                }}
-              />
-            </FormItem> */}
-            {/* <FormItem label="Base Salary ($)">
-              <Input 
-                type='number'
-                defaultValue="" 
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      base: e.target.value,
-                  })
+                    setUsername( e.target.value)
+                //     updateFormInput({
+                //       ...formInput,
+                //       title: e.target.value,
+                //   })
                   }
                 }
               />
-            </FormItem> */}
-            {/* <FormItem label="Equity ($)">
-              <Input 
-               type='number'
-                defaultValue="" 
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      equity: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem> */}
+            </FormItem>} */}
 
-            {/* <h3 className="text-lg sm:text-2xl font-semibold">
-              Work Experience and Location
-            </h3> */}
-            {/* <FormItem label="Location"> */}
-              {/* <Input 
-                defaultValue="" 
- 
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      location: e.target.value,
-                  })
-                  }
-                }
-              /> */}
-
-              {/* <select
-                id="location"
-                name="location"
-                className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300  l:text-l rounded-md"
-                // value={formInput.location}
-                onClick={(e) => {
-                    updateFormInput({
-                      ...formInput,
-                      location: (e.target as HTMLInputElement).value,
-                  })
-                
-                }}
-              >
-                {Locations.map(jf => {
-                  return <option
-                    key={jf.id}
-                  >{
-                    jf.name}</option>
-                })}
-                
-              </select>
-
-            </FormItem> */}
-            {/* <FormItem label="Year of Experience">
-              <Input 
-                defaultValue="" 
-                type='number'
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      yearOfExperience: e.target.value,
-                  })
-                  }
-                }
-              />
-
-            </FormItem> */}
-
-            <FormItem label="Description">
-              <Textarea 
-                defaultValue="" 
-      
-                onChange={
-                  (e) => {
-                    updateFormInput({
-                      ...formInput,
-                      skillValueAdd: e.target.value,
-                  })
-                  }
-                }
-              />
-            </FormItem>
-
-            {/* ---- */}
-            {/* <FormItem
-              label="External link"
-              desc="Ciscrypt will include a link to this URL on this item's detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details."
-            >
-              <div className="flex">
-                <span className="inline-flex items-center px-3 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
-                  https://
-                </span>
-                <Input className="!rounded-l-none" placeholder="abc.com" />
-              </div>
-            </FormItem> */}
-
-            {/* ---- */}
-            {/* <FormItem
-              label="Description"
-              desc={
-                <div>
-                  The description will be included on the item's detail page
-                  underneath its image.{" "}
-                  <span className="text-green-500">Markdown</span> syntax is
-                  supported.
-                </div>
-              }
-            >
-              <Textarea rows={6} className="mt-1.5" placeholder="..." />
-            </FormItem> */}
-
-            <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
 
             <div>
               {/* <Label>Choose the skillset you want to mint</Label> */}
           
-        
+              <h2 className="text-3xl sm:text-4xl font-semibold mt-30">
+              {/* Turn your Salary info NFT, and earn passive income selling it */}
+
+            {/* Mint an achievement NFT */}
+
+            </h2>
             </div>
+            <div className="relative py-10 lg:py-10"></div>
+            <h3 className="text-lg sm:text-2xl font-semibold mb-10 text-center">
+
+                
+
+                {/* Company & Title Information */}
+
+                {!currentAccount && <a style={{background: '#39f889', padding: '15px 25px', 'boxShadow': '0 0 50px #39f889', borderRadius: '30px', color: '#111', cursor: 'pointer'}}
+                    onClick={
+                        
+                        () => { 
+                            connectWallet && connectWallet()
+                        
+                            console.log('pppppcurrentAccount', currentAccount)
+
+                            currentAccount && associateWallet(currentAccount)
+                        }
+                    
+                    
+                    }
+                    
+                    >  
+                    Connect Wallet
+                </a>}
+
+                {!displayName && <a style={{
+                    padding: '15px 20px', 
+                    'boxShadow': '0 0 50px #39f889', 
+                    borderRadius: '30px', 
+                    color: '#39f889',
+                    cursor: 'pointer'
+
+                }} onClick={(e) => {
+                e.preventDefault();
+                signInWithGoogle && signInWithGoogle();
+              }} > Sign in with Google
+              
+              {/* <img style={{height: '20px',}} src="https://img.icons8.com/ios-filled/50/000000/google-logo.png" alt="google icon"/> */}
+              <span> </span></a>}
+                </h3>
+
 
             {/* ---- */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-2.5">
@@ -867,7 +822,7 @@ if (!currentAccount)  {
             /> */}
 
             {/* ---- */}
-            <FormItem label="Price (MATIC)">
+            {/* <FormItem label="Price (MATIC)">
               <Input 
                 defaultValue="" 
                 type='number'
@@ -880,7 +835,7 @@ if (!currentAccount)  {
                   }
                 }
               />
-            </FormItem>
+            </FormItem> */}
 
             {/* <MySwitch
               enabled
@@ -896,23 +851,26 @@ if (!currentAccount)  {
 
             {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => listNFTForSale()} >Mint & Sell Skill NFT</a> */}
             <div></div>
-
+{/* 
             <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}   onClick={() => listNFTForSale()}> 
             Mint 
                
                 
-            </a>
+            </a> */}
 
               {/* <ButtonSecondary className="flex-1">Preview item</ButtonSecondary> */}
             </h3>
           </div>
-          <div className="text-neutral-500 dark:text-neutral-400 text-sm">
+          <div className="text-neutral-500 dark:text-neutral-400 text-sm mt-30 text-center">
                 {/* Choose an cover PFP for your TC NFT */}
                 {/* Want to propose a? 
                 email propose@futureprotocol.co */}
 
-                Want to be an artist?
-                email hello@futureprotocol.co
+                {/* Want to be an artist?
+                email hello@futureprotocol.co */}
+                {/* Connect your wallet to get upcoming airdrop */}
+               {!displayName && 'Sign in with Google, so you get the aidrop updates!'}
+               {!currentAccount && 'Connect with wallet to view all your NFTs'}
                 
               </div>
               <div className="text-neutral-500 dark:text-neutral-400 text-sm">
@@ -997,4 +955,4 @@ function CheckIcon(props: any) {
   );
 }
 
-export default CreateNFTLock;
+export default Register;

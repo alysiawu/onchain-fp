@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 // import imagePng from "images/hero-right-4.png";
-import devprofile from "images/dev_profile.png";
+// import devprofile from "images/dev_profile.png";
 // import ButtonPrimary from "shared/Button/ButtonPrimary";
 // import HeroSearchForm from "components/HeroSearchForm/HeroSearchForm";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import './index.css'
 
 export interface SectionHero2Props {
   children?: React.ReactNode;
@@ -11,7 +12,7 @@ export interface SectionHero2Props {
 }
 
 const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   return (
     <div
       className={`nc-SectionHero2 flex flex-col-reverse lg:flex-col relative ${className}`}
@@ -34,7 +35,9 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
             {/* Build your professional reputation economy */}
             {/* Build your professional identity & builder economy */}
             {/* The first P2P marketplace to combat information asymmetry  */}
-            Mint <span style={{color: '#39f889'}}>help</span>
+            {/* Mint <span style={{color: '#39f889'}}>help</span> */}
+
+            {/* Manage Every NFTs you own, all in one place */}
             {/* in people and jobs */}
             
             {/* about to put your jobs, professional identity, and reputation on-chain */}
@@ -47,18 +50,23 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
             {/* Build your professional reputation economy */}
             {/* Build your professional identity & builder economy */}
             {/* The first P2P marketplace to combat information asymmetry  */}
-           Win together
+           {/* Win together */}
             {/* in people and jobs */}
             
             {/* about to put your jobs, professional identity, and reputation on-chain */}
             {/* A wallet identity based pseudonymous compensation data marketplace to empower fair compensation and equity for decentralized future of work.  */}
-
+            Claim your Lewk
           </h2>
           <span className="text-base md:text-lg text-neutral-500 dark:text-neutral-400">
             {/* Starting with compensation data */}
             {/* Upload your W2 and we will pay you $100 */}
             {/* Get by giving */}
+            {/* a lewk is a personal style signature so individual it’s almost indivisible from you */}
+            {/* A lewk refers to someone’s fashion or style, in particular how someone is different from the norm and other people */}
+
+            A lewk is how your are different from the norm and other people
              <br />{" "}
+             
             {/* Creative your NTFs and sell them */}
           </span>
           <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Community</a>
@@ -87,16 +95,16 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
             {/* </span> */}
           {/* </ButtonPrimary> */}
         </div>
-        {/* <div className="flex-grow">
+        <div className="flex-grow">
           <img className="w-full"
-           src={'https://i.ibb.co/KhShZHg/Screen-Shot-2022-09-08-at-4-34-43-PM.png'} 
+           src={'https://i.postimg.cc/mkSgJWHz/Screen-Shot-2022-09-11-at-9-11-38-PM.png'} 
            alt="hero" 
-           /> */}
+           />
 
           {/* <a href="https://imgbb.com/"><img src=" alt="Screen-Shot-2022-09-08-at-4-34-43-PM" /></a> */}
 
 
-        {/* </div> */}
+        </div>
       </div>
 
       {/* <div className="z-10 mb-12 lg:mb-0 lg:-mt-20 xl:-mt-48 w-full"> */}

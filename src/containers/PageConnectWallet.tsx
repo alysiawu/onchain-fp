@@ -83,7 +83,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
           {/* HEADING */}
           <div className="max-w-2xl">
           <h2 className="text-3xl sm:text-4xl font-semibold">
-          Connect your wallet to Polygon Network (Harmoney and Celo coming soon!)
+          Connect your wallet to Polygon Network (Others chains coming soon!)
         </h2>
         
         <span className="block mt-3 text-neutral-500 dark:text-neutral-400">

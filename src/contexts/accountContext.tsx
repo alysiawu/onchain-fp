@@ -11,6 +11,7 @@ const web3Modal = new Web3Modal({
 const AccountContext: React.Context<{
     currentAccount?: string | undefined;
     connectWallet?: () => Promise<void>;
+    setCurrentAccount?: Dispatch<SetStateAction<string | undefined>>;
 }> = React.createContext({
 
 });
@@ -71,6 +72,7 @@ export const AccountContextProvider: React.FC<{ children: any}> = ({ children })
             value={{
                 currentAccount,
                 connectWallet,
+                setCurrentAccount,
             }}
         >
         {children}

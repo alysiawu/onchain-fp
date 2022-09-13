@@ -31,14 +31,14 @@ function PageHome3() {
 
       <div className="container relative space-y-24 mb-24 lg:space-y-32 lg:mb-32">
         {/* SECTION */}
-        <div className="relative py-20 lg:py-28">
+        {/* <div className="relative py-20 lg:py-28">
           <BackgroundSection />
           <Achievement
             sectionStyle="style2"
             data={Array.from("11111111")}
             boxCard="box4"
           />
-        </div>
+        </div> */}
 
         {/* <WhyUseFuture /> */}
 
@@ -68,10 +68,10 @@ function PageHome3() {
         {/* <SectionSliderCategories /> */}
 
         {/* SECTION */}
-        {/* <div className="relative py-20 lg:py-24">
-          <BackgroundSection />
-          <SectionBecomeAnAuthor />
-        </div> */}
+        <div className="relative py-20 lg:py-24">
+          {/* <BackgroundSection /> */}
+          {/* <SectionBecomeAnAuthor /> */}
+        </div>
       </div>
 
       {/* <div className="container py-20 lg:py-32"> */}

@@ -1,13 +1,31 @@
-import React, { FC } from "react";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
-import imagePng from "images/hero3.png";
-import HeroSearchForm from "components/HeroSearchForm/HeroSearchForm";
+import React, { FC, useState, useEffect } from "react";
+// import ButtonPrimary from "shared/Button/ButtonPrimary";
+// import imagePng from "images/hero3.png";
+// import HeroSearchForm from "components/HeroSearchForm/HeroSearchForm";
+import Input from "shared/Input/Input";
 
 export interface SectionHero3Props {
   className?: string;
 }
 
 const SectionHero3: FC<SectionHero3Props> = ({ className = "" }) => {
+  const [userName, setUserName] = useState('')
+
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
+function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+}
+useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange);
+    return () => {
+        window.removeEventListener('resize', handleWindowSizeChange);
+    }
+}, []);
+
+const isMobile = width <= 768;
+
+
   return (
     <div
       className={`nc-SectionHero3 relative ${className}`}
@@ -20,29 +38,34 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "" }) => {
             {/* Own your identity as reputation tokens */}
           
             
-            Capture your achievements better than LinkedIn!
+            {/* Capture your achievements better than LinkedIn! */}
             {/* professional  */}
          
             {/* Capture community contributions as peer-verified non-transferable tokens. */}
           </span>
-          <span className="sm:text-lg md:text-xl font-semibold text-neutral-300">
-            {/* Create, Explore, & Collect Digital Art NFTs. */}
-
-          
-          </span>
+        
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%] text-neutral-300">
             {/* Buy, sell, and showcase NFTs
              */}
-            Mint your achievements
+            {/* Mint your achievements */}
+            {/* Manage all your NFTs all in one place */}
+            Every NFT you own
+          </h2>
+          <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%] text-neutral-300">
+            {/* Buy, sell, and showcase NFTs
+             */}
+            {/* Mint your achievements */}
+            {/* Manage all your NFTs all in one place */}
+            All in one place
           </h2>
           <span className="sm:text-lg md:text-xl font-semibold text-neutral-300">
             {/* Create, Explore, & Collect Digital Art NFTs. */}
-
-          
+     Privacy and safety focused, an app you can trust
           </span>
           <span className="sm:text-lg md:text-xl font-semibold text-neutral-300">
             {/* Create, Explore, & Collect Digital Art NFTs. */}
-            Turn your 'resume' to achievement tokens
+            {/* Turn your 'resume' to achievement tokens */}
+           
            
           </span>
           <span className="sm:text-lg md:text-xl font-semibold text-neutral-300">
@@ -58,23 +81,91 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "" }) => {
             Start your search
           </ButtonPrimary> */}
                 {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Community</a> */}
-            <div>
+
+            
+                   
+          
+
               <div></div>
-            <a style={{background: '#39f889', padding: '20px 40px', 'boxShadow': '0 0 50px #39f889', borderRadius: '35px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
+           
+
+              {/* <a style={{background: '#39f889', padding: '20px 40px', 'boxShadow': '0 0 50px #39f889', borderRadius: '35px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a> */}
+       
+
+            <div className="mt-16 flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-x-5">
+            {/* Create, Explore, & Collect Digital Art NFTs. */}
+            <div style={{position: 'relative', }} className="">
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '12px',
+                  top: '10px',
+                  // padding: '10px',
+                  color: 'grey',
+              }}
+              >
+              {/* futureprotocol.co/ */}
+              lewk.app/
+
+              </div>
+              <Input
+                style={{
+                  padding: '10px',
+                  width: '250px',
+                  paddingLeft: '90px',
+                paddingTop: '10px'
+                }}
+                autoFocus
+                      // ref={inputRef}
+                type='text'
+                placeholder="yourname"
+                onChange={
+                  (e) => {
+                    setUserName(e.target.value)
+                  }
+                }
+              />
+            </div>
+            
+                   <div style={{
+                     marginTop: `${isMobile ? '150px' : '0px'}`,
+                     position: 'relative',
+                   }}>
+                   <a style={{
+                   
+                    //  background: `${userName ? '#39f889' : ''}`,  
+                     animation: 'glow 1s infinite',
+                     transition:'0.5s',
+                     color: '#39f889',
+                     backgroundColor:'rgba(156, 161, 160,0.3)',
+                    //  'boxShadow': '0 0 50px #39f889',
+                      borderRadius: '35px', 
+                      // color: '#111',
+                       padding: '15px 25px'
+                      }} 
+                   className="p-5 sm:space-y-0 "
+                 
+                   href={userName ?  `/register?username=${userName}`: 'javascript:void(0)'
+    } >Claim your own lewk</a>
+
+                   </div>
+                 
+                      
+          </div>
             
 
          
-            </div>
+         
             <span className="sm:text-lg md:text-xl font-semibold text-neutral-300">
             {/* Create, Explore, & Collect Digital Art NFTs. */}
 
           
           </span>
-            <a className="sm:text-lg md:text-xl font-semibold text-neutral-300" href='/our-why'>
+            {/* <a className="sm:text-lg md:text-xl font-semibold text-neutral-300" href='/our-why'> */}
             {/* Create, Explore, & Collect Digital Art NFTs. */}
 
-             Check out our WHY
-          </a>
+             {/* Check out our WHY
+          </a> */}
             {/* <div>   <a style={{padding: '20px 40px', borderRadius: '35px', color: 'white'}} href={'https://testnet.futureprototocol.co'} >Try me on testnet</a></div> */}
 
         </div>

@@ -165,12 +165,13 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
         <Logo />
         <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-sm">
           <span>
-            From cog in the wheel to owning your destiny! 
+            {/* From cog in the wheel to owning your destiny!  */}
+
     
           </span>
           <span>
            
-          At Future Protocol, we bring your professional identity on chain and showoff your expertise and knowledge, and guide you on web3 learning journey. 
+          {/* At Future Protocol, we bring your professional identity on chain and showoff your expertise and knowledge, and guide you on web3 learning journey.  */}
           </span>
 
           <div className="flex justify-between items-center mt-4">
@@ -190,43 +191,45 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
   
 
                 
-            <MenuItem  copy="Our Why" link='/our-why'/>
+            {/* <MenuItem  copy="Our Why" link='/our-why'/> */}
           
 
             <MenuItem  copy="Join our Community" link='https://discord.gg/bGq3zG7t77'/>
 
-            <MenuItem  copy="Mint your achievement" link='/create'/>   
-            <MenuItem  copy="Exlpore" link='/search'/> 
+            {/* <MenuItem  copy="Mint your achievement" link='/create'/>    */}
+            {/* <MenuItem  copy="Exlpore" link='/search'/>  */}
 
 
                 
-      <MenuItem  copy="Interview2Earn" link='/interviewer-onboarding'/>
-      <MenuItem  copy="Join our Talent Nation" link='/quick-apply'/>
-      <MenuItem  copy="Partner & Investor" link='https://zcal.co/i/QJ9_dMGJ'/>
-      <MenuItem  copy="Join our Discord & Grow together" link='https://discord.gg/bGq3zG7t77'/>
+      {/* <MenuItem  copy="Interview2Earn" link='/interviewer-onboarding'/> */}
+      {/* <MenuItem  copy="Join our Talent Nation" link='/quick-apply'/> */}
+
+      <MenuItem  copy="Join Beta" link='https://airtable.com/shr8LtmwYtzXAELuQ'/>
+      {/* <MenuItem  copy="Partner & Investor" link='https://zcal.co/i/QJ9_dMGJ'/> */}
+      {/* <MenuItem  copy="Join our Community" link='https://discord.gg/bGq3zG7t77'/> */}
 
 
 
-       <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-xl">
+       {/* <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-xl">
           <span>
             Talent
           </span>
-      </div>
+      </div> */}
 {/* 
       <div className="flex items-center py-3 justify-between px-5">
         <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/'} ></a>
       </div> */}
-      <MenuItem  copy="Role Based Referral Request" link="/request-a-referral"/>
-      <MenuItem  copy="Talk to Hiring Managers" link="/hiring-managers"/>
-      <MenuItem  copy="Talk to Industry Insiders" link="/industry-insiders"/>
+      {/* <MenuItem  copy="Role Based Referral Request" link="/request-a-referral"/> */}
+      {/* <MenuItem  copy="Talk to Hiring Managers" link="/hiring-managers"/> */}
+      {/* <MenuItem  copy="Talk to Industry Insiders" link="/industry-insiders"/> */}
 
       {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/request-a-referral'} >Talk to Hiring Managers</a> */}
-      <MenuItem  copy="Available Referrals Opportunities" link="/referral-oppos"/>
+      {/* <MenuItem  copy="Available Referrals Opportunities" link="/referral-oppos"/>
       <MenuItem  copy="Claim Your Personal Resume Page" link="/claim"/>
       <MenuItem  copy="Create Skill NFT" link="/create"/>
       <MenuItem  copy="Create Achievement NFT" link="/create"/>
       <MenuItem  copy="Fast Track" link="/talent-pitch"/>
-      <MenuItem  copy="Join Web三DAO" link="https://www.web3talents.co/"/>
+      <MenuItem  copy="Join Web三DAO" link="https://www.web3talents.co/"/> */}
 
       {/* <div className="flex items-center py-3 justify-between px-5">
         <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/claim'} >Claim Your Personal Resume Page</a>
@@ -237,37 +240,37 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
 
 
       
-
+{/* 
       <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-xl">
           <span>
            Hiring
           </span>
-      </div>
+      </div> */}
 
-      <MenuItem  copy="Post a Referral Bounty" link="/referral"/>
+      {/* <MenuItem  copy="Post a Referral Bounty" link="/referral"/> */}
       {/* <MenuItem  copy="Join Web3Recruits" link="/claim"/>
       <MenuItem  copy="Create Skill NFT" link="/create"/>
       <MenuItem  copy="Create Achievement NFT" link="/create"/> */}
-      <MenuItem  copy="Join Web3Recruits" link="''https://www.web3recruits.xyz/"/>
+      {/* <MenuItem  copy="Join Web3Recruits" link="''https://www.web3recruits.xyz/"/> */}
 
 
 
-      <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-xl">
-          <span>
+      {/* <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-xl">
+          <span> */}
             {/* Advocate & Connect & Earn */}
-            Community
-          </span>
-      </div>
+            {/* Community */}
+          {/* </span>
+      </div> */}
 
       {/* <MenuItem  copy="Refer2Earn" link="/referral"/> */}
       {/* <MenuItem  copy="Join Web3Recruits" link="/claim"/>
       <MenuItem  copy="Create Skill NFT" link="/create"/>
       <MenuItem  copy="Create Achievement NFT" link="/create"/> */}
      
-      <MenuItem  copy="Interview2Earn" link='/interviewer-onboarding'/>
-      <MenuItem  copy="Join our Talent Nation" link='/quick-apply'/>
-      <MenuItem  copy="Partner & Investor" link='https://zcal.co/i/QJ9_dMGJ'/>
-      <MenuItem  copy="Join our Discord & Grow together" link='https://discord.gg/bGq3zG7t77'/>
+      {/* <MenuItem  copy="Interview2Earn" link='/interviewer-onboarding'/> */}
+      {/* <MenuItem  copy="Join our Talent Nation" link='/quick-apply'/> */}
+      {/* <MenuItem  copy="Partner & Investor" link='https://zcal.co/i/QJ9_dMGJ'/> */}
+      {/* <MenuItem  copy="Join our Discord & Grow together" link='https://discord.gg/bGq3zG7t77'/> */}
 
       {/* <MenuItem  copy="Join our Pool" link='quick-apply'/> */}
 
@@ -304,18 +307,25 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
             <div></div>
       </div> */}
 
-      <div className="flex items-center justify-between py-3 px-5 space-x-2">
+      {/* <div className="flex items-center justify-between py-3 px-5 space-x-2">
         <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord</a>
         <div></div>
-      </div>
+      </div> */}
 
       <div className="flex items-center justify-between py-3 px-5 space-x-2">
           <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
           <div></div>
       </div>
 
+      {/* <div className="flex items-center justify-between py-3 px-5 space-x-2">
+          <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#39f889'}} href={'/register'} >Get your own lewk</a>
+            <div></div>
+      </div> */}
+
 
    
+     
+
 
 
       {/* <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 "> */}

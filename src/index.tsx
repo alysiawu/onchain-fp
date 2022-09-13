@@ -17,6 +17,9 @@ import { AccountContextProvider } from "contexts/accountContext";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from './contexts/firebase'
 import { AuthProvider } from "contexts/firebaseContext";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Web3ReactProvider } from "@web3-react/core";
+import { ethers } from "ethers";
 
 const app = initializeApp(firebaseConfig);
 
@@ -24,24 +27,38 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+const getLibrary = (provider: any) => {
+  const library = new ethers.providers.Web3Provider(provider);
+  library.pollingInterval = 8000; // frequency provider is polling
+  return library;
+};
+
 root.render(
   // <React.StrictMode>
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <LinkedinContextProvider>
-        <AccountContextProvider>
+  <ChakraProvider>
+     <Web3ReactProvider getLibrary={getLibrary}>
 
-          <AuthProvider>
 
-            <App />
-          </AuthProvider>
-       
-        </AccountContextProvider>
-          
-      </LinkedinContextProvider>
-   
-    </PersistGate>
-  </Provider>
+
+
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <LinkedinContextProvider>
+          <AccountContextProvider>
+
+            <AuthProvider>
+
+              <App />
+            </AuthProvider>
+        
+          </AccountContextProvider>
+            
+        </LinkedinContextProvider>
+    
+      </PersistGate>
+    </Provider>
+    </Web3ReactProvider>
+  </ChakraProvider>
   // </React.StrictMode>
 );
 

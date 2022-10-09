@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import ReactDOM from "react-dom/client";
 //
 import "./styles/index.scss";
@@ -19,6 +19,7 @@ import { firebaseConfig } from './contexts/firebase'
 import { AuthProvider } from "contexts/firebaseContext";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Web3ReactProvider } from "@web3-react/core";
+import { Web3Provider } from '@ethersproject/providers'
 import { ethers } from "ethers";
 
 const app = initializeApp(firebaseConfig);

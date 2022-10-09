@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import NextPrev from "shared/NextPrev/NextPrev";
+// import NextPrev from "shared/NextPrev/NextPrev";
 import NcImage from "shared/NcImage/NcImage";
 import Avatar from "shared/Avatar/Avatar";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import ButtonSecondary from "shared/Button/ButtonSecondary";
-import LikeButton from "components/LikeButton";
-import ItemTypeVideoIcon from "components/ItemTypeVideoIcon";
+// import ButtonSecondary from "shared/Button/ButtonSecondary";
+// import LikeButton from "components/LikeButton";
+// import ItemTypeVideoIcon from "components/ItemTypeVideoIcon";
 import { nftsLargeImgs } from "contains/fakeData";
-import TimeCountDown from "./TimeCountDown";
+// import TimeCountDown from "./TimeCountDown";
 import collectionPng from "images/nfts/collection.png";
 import VerifyIcon from "components/VerifyIcon";
 
@@ -22,9 +22,9 @@ export interface CardLarge1Props {
 
 const CardLarge1: FC<CardLarge1Props> = ({
   className = "",
-  isShowing = true,
-  onClickNext = () => {},
-  onClickPrev = () => {},
+  // isShowing = true,
+  // onClickNext = () => {},
+  // onClickPrev = () => {},
   featuredImgUrl = nftsLargeImgs[0],
 }) => {
   const randomTitle = [

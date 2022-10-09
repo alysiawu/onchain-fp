@@ -39,7 +39,7 @@ const TextSpan = ({ title, content}: {title: string; content: string}) => {
               gangsters, with symbol of tattoos, living in the Proud Kitty Gang
               (“PKG”) metaverse. Each TKG is an 1/1 ID as gangster member & all
               the joint rights. */}
-              Skill NFT seller {nft.seller}
+              {/* Skill NFT seller {nft.seller} */}
 
             </Disclosure.Panel>
           </>
@@ -63,20 +63,20 @@ const TextSpan = ({ title, content}: {title: string; content: string}) => {
               <span>Contract Address</span>
               <span className="text-base text-neutral-900 dark:text-neutral-100 line-clamp-1">
                 {/* 0x50f5474724e0ee42d9a4e711ccfb275809fd6d4a */}
-                {marketplaceAddress}
+                {/* {marketplaceAddress} */}
 
               </span>
 
 
-              <TextSpan title='Title' content={nft.metaData.title} />
+              {/* <TextSpan title='Title' content={nft.metaData.title} /> */}
               <br />
-              <TextSpan title='Company' content= {nft.metaData.company} />
+              {/* <TextSpan title='Company' content= {nft.metaData.company} /> */}
               <br />
-              <TextSpan title='Year of Experience' content= {nft.metaData.yearOfExperience} />
+              {/* <TextSpan title='Year of Experience' content= {nft.metaData.yearOfExperience} /> */}
               <br />
-              <TextSpan title='Skill Value Add' content={nft.metaData.skillValueAdd} />
+              {/* <TextSpan title='Skill Value Add' content={nft.metaData.skillValueAdd} /> */}
               <br />
-              <TextSpan title='Job Family' content={nft.metaData.jobFamily} />
+              {/* <TextSpan title='Job Family' content={nft.metaData.jobFamily} /> */}
               <br />
 
 
@@ -90,7 +90,7 @@ const TextSpan = ({ title, content}: {title: string; content: string}) => {
               <span>Contract Address</span>
               <span className="text-base text-neutral-900 dark:text-neutral-100 line-clamp-1">
                 {/* 0x50f5474724e0ee42d9a4e711ccfb275809fd6d4a */}
-                {marketplaceAddress}
+                {/* {marketplaceAddress} */}
 
               </span>
 
@@ -98,7 +98,7 @@ const TextSpan = ({ title, content}: {title: string; content: string}) => {
               <span>Token ID</span>
               <span className="text-base text-neutral-900 dark:text-neutral-100">
                 {/* 100300372864 */}
-                {nft.tokenId}
+                {/* {nft.tokenId} */}
               </span>
             </Disclosure.Panel>
           </>

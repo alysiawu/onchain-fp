@@ -26,13 +26,13 @@ export default function MenuDropdown({ copy, type} : { copy: string; type: 'jobS
                 sizeClass="w-8 h-8 sm:w-9 sm:h-9"
               /> */}
               {/* {copy} */}
-              <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}>{copy}</a>
+              <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}}>{copy}</a>
             <div></div>
             </Popover.Button>
 
         
 {/* 
-            <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord</a>
+            <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord</a>
             <div></div> */}
 
             <Transition
@@ -51,7 +51,7 @@ export default function MenuDropdown({ copy, type} : { copy: string; type: 'jobS
                       {/* {currentAccount && <Avatar imgUrl={placeholderAvatar} sizeClass="w-12 h-12" />} */}
 
                       {/* <div className="flex-grow">
-                        { !currentAccount && <h4 className="font-semibold" onClick={connectWallet}>Connect Wallet</h4>}
+                        { !currentAccount && <h4 className="font-semibold" onClick={connectWallet}>Sign in with wallet</h4>}
                         <p className="text-xs mt-0.5">{currentAccount?.slice(0, 7)}</p>
                       </div> */}
                     {/* </div> */}
@@ -97,39 +97,39 @@ export default function MenuDropdown({ copy, type} : { copy: string; type: 'jobS
             
 
 
-                        {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/request-a-referral'} >Role Based Referral Request</a>
+                        {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/request-a-referral'} >Role Based Referral Request</a>
 
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/hiring-managers'} >Talk to Hiring Managers</a>
-
-
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/industry-insiders'} >Talk to Industry Insiders</a> */}
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/hiring-managers'} >Talk to Hiring Managers</a>
 
 
-                        {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/referral-oppos'} >   Available Referrals Opportunities</a> */}
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/industry-insiders'} >Talk to Industry Insiders</a> */}
+
+
+                        {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/referral-oppos'} >   Available Referrals Opportunities</a> */}
                      
               
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/claim'} >Create an account</a>
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'} >Fast Track</a>
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/claim'} >Create an account</a>
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'} >Fast Track</a>
 
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} > Create Skillsets NFT</a>
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} > Create Achievements NFT</a>
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/create'} > Create Skillsets NFT</a>
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/create'} > Create Achievements NFT</a>
 
                     
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://www.web3talents.co/'} >Join Web三DAO</a>
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://www.web3talents.co/'} >Join Web三DAO</a>
                     </>}
 
                     { type === 'advocate' && <>
                     
-                    {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/referral'} >Refer2Earn</a>
+                    {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/referral'} >Refer2Earn</a>
              */}
              
   
 
 
-                    <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/interviewer-onboarding'} >Interview2Earn</a>
-                    <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/quick-apply'} >Join our Talent Nation</a>
-                    <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://zcal.co/i/QJ9_dMGJ'} >Partner & Investor</a>
-            <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Community</a>
+                    <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/interviewer-onboarding'} >Interview2Earn</a>
+                    <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/quick-apply'} >Join our Talent Nation</a>
+                    <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://zcal.co/i/QJ9_dMGJ'} >Partner & Investor</a>
+            <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Community</a>
 
          
          
@@ -140,15 +140,15 @@ export default function MenuDropdown({ copy, type} : { copy: string; type: 'jobS
                     </>}
                     { type === 'on-chain' && <>
                     
-                    {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/referral'} >Refer2Earn</a>
+                    {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/referral'} >Refer2Earn</a>
              */}
              
   
 
 
-                    <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/search'} >Search</a>
+                    <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/search'} >Search</a>
 
-                    <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} >Create</a>
+                    <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/create'} >Create</a>
           
           
               
@@ -165,10 +165,10 @@ export default function MenuDropdown({ copy, type} : { copy: string; type: 'jobS
                     { type === 'hiring' && <>
                     
 
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/referral'} >Post a Referral Bounty</a>
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/referral'} >Post a Referral Bounty</a>
                 
 
-                        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://www.web3recruits.xyz/'} >Join Web3Recruits</a>
+                        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://www.web3recruits.xyz/'} >Join Web3Recruits</a>
                     
                     </>}
 

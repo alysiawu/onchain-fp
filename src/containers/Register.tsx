@@ -1,24 +1,24 @@
 import Label from "components/Label/Label";
 import React, { FC, useEffect, useState } from "react";
 import { TwitterShareButton, TwitterIcon } from "react-share";
-import Web3Modal from 'web3modal'
+// import Web3Modal from 'web3modal'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { ethers } from 'ethers'
+// import { ethers } from 'ethers'
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import {
   marketplace as marketplaceAddress, 
   authorization,
-  AchievementCategories,
+  // AchievementCategories,
 
-  SkillBadges
+  // SkillBadges
 } from '../utils/constants'
 // import twitter from "images/socials/twitter.svg";
-import metamaskImg from "images/metamask.webp";
-import polygon from "images/polygon-matic-logo.png"
+// import metamaskImg from "images/metamask.webp";
+// import polygon from "images/polygon-matic-logo.png"
 import loading from 'images/loading.gif'
-import marketplaceAbi from '../artifacts/marketplace.json'
+// import marketplaceAbi from '../artifacts/marketplace.json'
 
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
@@ -240,7 +240,7 @@ const [existed, setExisted] = useState(false)
         </span> */}
 
          <h3 className="text-lg sm:text-2xl font-semibold mt-10">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
               
               <TwitterShareButton
                 style={{background: 'none', margin: '1rem', marginTop: '10px'}}
@@ -262,7 +262,7 @@ const [existed, setExisted] = useState(false)
           </ButtonPrimary> */}
           
           <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3>
           
         </div>
@@ -426,11 +426,11 @@ const associateWallet = async (wallet: string) => {
         // This function (`page`) will get called for each page of records.
     
         records.forEach(function(record) {
-            console.log('Retrieved', record.get('Name'), '--', record.get('Wallets'));
+            // console.log('Retrieved', record.get('Name'), '--', record.get('Wallets'));
             if (record.get('Name') === username) {
                 setExisted(true)
                 setExistedWallets(record.get('Wallets'))
-                console.log('lllll', existed, existedWallets)
+                // console.log('lllll', existed, existedWallets)
 
             }
         });
@@ -457,9 +457,9 @@ const associateWallet = async (wallet: string) => {
                 console.error(err);
                 return;
                 }
-                records.forEach(function(record) {
-                console.log(record.get('Name'));
-                });
+                // records.forEach(function(record) {
+                // console.log(record.get('Name'));
+                // });
 
                 navigate(`/${username}`)
             });
@@ -505,7 +505,7 @@ if (false)  {
   data-nc-id="PageConnectWallet"
 >
   <Helmet>
-    <title>Connect Wallet || Future Protocol</title>
+    <title>Sign in with wallet || Future Protocol</title>
   </Helmet>
   <div className="container">
     <div className="my-12 sm:lg:my-16 lg:my-24 max-w-3xl mx-auto space-y-8 sm:space-y-10">
@@ -584,7 +584,7 @@ if (false)  {
     renderContent={renderContent}
     contentExtraClass="max-w-md"
     onCloseModal={() => setShowModal(false)}
-    modalTitle="Connect Wallet"
+    modalTitle="Sign in with wallet"
   />
 </div>
 
@@ -600,7 +600,7 @@ if (false)  {
       }}
     >
       <Helmet>
-        <title>Lewk.app</title>
+        <title></title>
       </Helmet>
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
@@ -761,7 +761,7 @@ if (false)  {
 
                 {/* Company & Title Information */}
 
-                {!currentAccount && <a style={{background: '#39f889', padding: '15px 25px', 'boxShadow': '0 0 50px #39f889', borderRadius: '30px', color: '#111', cursor: 'pointer'}}
+                {!currentAccount && <a style={{background: '#19FDA6', padding: '15px 25px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '30px', color: '#111', cursor: 'pointer'}}
                     onClick={
                         
                         () => { 
@@ -776,14 +776,14 @@ if (false)  {
                     }
                     
                     >  
-                    Connect Wallet
+                    Sign in with wallet
                 </a>}
 
                 {!displayName && <a style={{
                     padding: '15px 20px', 
-                    'boxShadow': '0 0 50px #39f889', 
+                    'boxShadow': '0 0 50px #19FDA6', 
                     borderRadius: '30px', 
-                    color: '#39f889',
+                    color: '#19FDA6',
                     cursor: 'pointer'
 
                 }} onClick={(e) => {
@@ -849,10 +849,10 @@ if (false)  {
                  onClick={() => listNFTForSale()}
               >Mint & Sell NFT</ButtonPrimary> */}
 
-            {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => listNFTForSale()} >Mint & Sell Skill NFT</a> */}
+            {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={() => listNFTForSale()} >Mint & Sell Skill NFT</a> */}
             <div></div>
 {/* 
-            <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}   onClick={() => listNFTForSale()}> 
+            <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}}   onClick={() => listNFTForSale()}> 
             Mint 
                
                 

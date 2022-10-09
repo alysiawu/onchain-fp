@@ -6,15 +6,17 @@ import { Helmet } from "react-helmet";
 // import Pagination from "shared/Pagination/Pagination";
 // import ButtonPrimary from "shared/Button/ButtonPrimary";
 // import SectionSliderCollections from "components/SectionSliderCollections";
-import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
-import HeaderFilterSearchPage from "components/HeaderFilterSearchPage";
-import Input from "shared/Input/Input";
-import ButtonCircle from "shared/Button/ButtonCircle";
+// import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
+// import HeaderFilterSearchPage from "components/HeaderFilterSearchPage";
+// import Input from "shared/Input/Input";
+// import ButtonCircle from "shared/Button/ButtonCircle";
 import CardNFT from "components/CardNFT";
 
 import { marketplace as marketplaceAddress } from '../utils/constants'
 import marketplaceAbi from '../artifacts/marketplace.json'
 import { getNft } from '../utils/getNFT'
+import { useWeb3React } from "@web3-react/core";
+import NcModal from "shared/NcModal/NcModal";
 
 export interface PageSearchProps {
   className?: string;
@@ -55,10 +57,50 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
       loadNFTs()
   }, [])
 
+
+  const  renderContent = () => {
+    return (
+
+        <form action="#">
+        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
+        ✨🔮 Wrong network 🔮✨ 
+        </h3>
+        <span className="text-l flex mt-10">
+           Please connect with Polygon 
+        </span>
+        <div className="mt-4 space-x-3">
+          {/* <ButtonPrimary onClick={handleClickSubmitForm} type="submit">
+            Delete
+          </ButtonPrimary> */}
+          
+        </div>
+      </form>
+    )
+  }
+
+
+  const {
+    account, 
+    chainId
+  } = useWeb3React()
+  console.log('chainid', chainId)
+const [wrongChain, setWrongChain] = useState(false)
+const [showModal, setShowModal] = useState(false);
+
+
+  useEffect(() => {
+    if (chainId!== 137) {
+      setWrongChain(true)
+      setShowModal(true)
+
+    }
+  }, [chainId])
+
+
   return (
     <div className={`nc-PageSearch  ${className}`} data-nc-id="PageSearch">
       <Helmet>
-        <title>Your pass to the talentverse</title>
+        <title>token gates marketplace</title>
       </Helmet>
 
       <div
@@ -123,7 +165,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-            {nfts.map((nft, index) => (
+            {nfts.reverse().map((nft, index) => (
               <CardNFT key={index} nft={nft}/>
             ))}
           </div>
@@ -142,8 +184,19 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
         {/* </div> */}
 
         {/* SUBCRIBES */}
-        <SectionBecomeAnAuthor />
+        {/* <SectionBecomeAnAuthor /> */}
       </div>
+
+      {
+       <NcModal
+         renderTrigger={() => null}
+         isOpenProp={showModal}
+         renderContent={renderContent}
+         contentExtraClass="max-w-md"
+         onCloseModal={() => setShowModal(false)}
+         modalTitle="Sign in with wallet"
+       />
+      }
     </div>
   );
 };

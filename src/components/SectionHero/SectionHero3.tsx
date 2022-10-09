@@ -49,18 +49,19 @@ const isMobile = width <= 768;
              */}
             {/* Mint your achievements */}
             {/* Manage all your NFTs all in one place */}
-            Every NFT you own
+            {/* Every NFT you own */}
+            Privacy and safety focused, 
           </h2>
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%] text-neutral-300">
             {/* Buy, sell, and showcase NFTs
              */}
             {/* Mint your achievements */}
             {/* Manage all your NFTs all in one place */}
-            All in one place
+            {/* All in one place */}
           </h2>
           <span className="sm:text-lg md:text-xl font-semibold text-neutral-300">
             {/* Create, Explore, & Collect Digital Art NFTs. */}
-     Privacy and safety focused, an app you can trust
+            An app you can trust
           </span>
           <span className="sm:text-lg md:text-xl font-semibold text-neutral-300">
             {/* Create, Explore, & Collect Digital Art NFTs. */}
@@ -80,7 +81,7 @@ const isMobile = width <= 768;
           >
             Start your search
           </ButtonPrimary> */}
-                {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Community</a> */}
+                {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Community</a> */}
 
             
                    
@@ -89,7 +90,7 @@ const isMobile = width <= 768;
               <div></div>
            
 
-              {/* <a style={{background: '#39f889', padding: '20px 40px', 'boxShadow': '0 0 50px #39f889', borderRadius: '35px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a> */}
+              {/* <a style={{background: '#19FDA6', padding: '20px 40px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '35px', color: '#111'}} href={'/connect-wallet'} >Sign in with wallet</a> */}
        
 
             <div className="mt-16 flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-x-5">
@@ -115,7 +116,7 @@ const isMobile = width <= 768;
                   paddingLeft: '90px',
                 paddingTop: '10px'
                 }}
-                autoFocus
+                // autoFocus
                       // ref={inputRef}
                 type='text'
                 placeholder="yourname"
@@ -133,12 +134,12 @@ const isMobile = width <= 768;
                    }}>
                    <a style={{
                    
-                    //  background: `${userName ? '#39f889' : ''}`,  
+                    //  background: `${userName ? '#19FDA6' : ''}`,  
                      animation: 'glow 1s infinite',
                      transition:'0.5s',
-                     color: '#39f889',
+                     color: '#19FDA6',
                      backgroundColor:'rgba(156, 161, 160,0.3)',
-                    //  'boxShadow': '0 0 50px #39f889',
+                    //  'boxShadow': '0 0 50px #19FDA6',
                       borderRadius: '35px', 
                       // color: '#111',
                        padding: '15px 25px'
@@ -172,14 +173,14 @@ const isMobile = width <= 768;
         {/* <HeroSearchForm className="mt-5 lg:mt-24 2xl:mt-40" /> */}
         
       </div>
-      <div className="relative aspect-w-4 aspect-h-3 sm:aspect-w-16 sm:aspect-h-9">
+      {/* <div className="relative aspect-w-4 aspect-h-3 sm:aspect-w-16 sm:aspect-h-9"> */}
         
         {/* <img
           className="absolute inset-0 object-cover rounded-[32px]"
           src={imagePng}
           alt="hero"
         /> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 };

@@ -321,7 +321,7 @@ const getTalentFromAirtable = () => {
   <h2 className="text-lg sm:text-2xl font-semibold mt-10">
         {/* <div className="mv-10"> */}
                
-               {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Join Our Community</a> */}
+               {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Join Our Community</a> */}
              {/* </div> */}
 
   </h2>
@@ -370,7 +370,7 @@ const getTalentFromAirtable = () => {
                 </svg>
               </span> */}
               {/* <input type="submit" hidden value="" /> */}
-                      {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Search</a> */}
+                      {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Search</a> */}
             </form>
 
 
@@ -394,8 +394,8 @@ const getTalentFromAirtable = () => {
             {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
              <div className="mv-10">
                
-               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Join our Community</a>
-               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="/quick-apply" >Apply to join Talent Nation DAO</a>
+               <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Join our Community</a>
+               <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href="/quick-apply" >Apply to join Talent Nation DAO</a>
              </div>
           </div>
         </main>

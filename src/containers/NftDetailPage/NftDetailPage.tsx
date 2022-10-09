@@ -26,6 +26,7 @@ import Input from "shared/Input/Input";
 import FormItem from "components/FormItem";
 import { getNftByTokenId } from "utils/getNFT";
 
+
 export interface NftDetailPageProps {
   className?: string;
   isPreviewMode?: boolean;
@@ -59,7 +60,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const { state } = useLocation()
   const [nft, setNft] = useState(state)
   const { tokenId: _tokenId } = useParams()
-  console.log('nft', nft)
+  // console.log('nft', nft)
 
   const getNFT = async () => {
     const data =  await getNftByTokenId(_tokenId)
@@ -191,13 +192,13 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           {/* <TimeCountDown /> */}
         {/* </div> */}
         {currentAccount === owner && <div className="text-3xl xl:text-4xl font-semibold text-green-500">
-            <>${metaData.base}</>
+            <>{metaData.base}</>
         </div>}
           <div className="text-3xl xl:text-4xl font-semibold text-green-500">
-              {currentAccount === owner && <>${metaData.equity}</>}  
+              {currentAccount === owner && <>{metaData.equity}</>}  
           </div>
           <div className="text-3xl xl:text-4xl font-semibold text-green-500">
-              {currentAccount === owner && <>Years of Experience {metaData.yearOfExperience}</>}  
+              {/* {currentAccount === owner && <>Years of Experience {metaData.yearOfExperience}</>}   */}
           </div>
               <div className="text-3xl xl:text-4xl font-semibold text-green-500">
               {/* {currentAccount === owner && <>Location ${metaData.location}</>}   */}
@@ -244,7 +245,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         {/* {currentAccount === nft?.owner } */}
           <div className="mt-8 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
           <h3 className="text-lg sm:text-2xl font-semibold">
-          <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} 
+          <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} 
             // href={"/connect-wallet"} 
             onClick={async () => {
               if (currentAccount === owner) {

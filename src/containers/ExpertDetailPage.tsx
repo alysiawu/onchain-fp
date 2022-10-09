@@ -92,7 +92,7 @@ console.log('--state', state)
 
     base('Industry Insiders').find(expertId, function(err: any, record: any) {
         if (err) { console.error(err); return; }
-        console.log('Retrieved', record.id, record._rawJson.fields);
+        // console.log('Retrieved', record.id, record._rawJson.fields);
         const parsedData = record._rawJson.fields
 
         const data = {
@@ -304,7 +304,7 @@ console.log('--state', state)
         {/* {currentAccount === nft?.owner } */}
           <div className="mt-8 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
           <h3 className="text-lg sm:text-2xl font-semibold">
-          <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} 
+          <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} 
             // href={"/connect-wallet"} 
             onClick={async () => {
             //   if (currentAccount === owner) {

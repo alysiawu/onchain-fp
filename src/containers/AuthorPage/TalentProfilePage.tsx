@@ -3,7 +3,7 @@ import Confetti from 'react-confetti'
 // import { ethers } from 'ethers'
 // import Web3Modal from 'web3modal'
 import { getDatabase, ref, set, onValue } from "firebase/database";
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 // import axios from 'axios';
 import { Helmet } from "react-helmet";
 import useWindowSize from 'react-use/lib/useWindowSize'
@@ -40,7 +40,8 @@ import { trackEvent } from "utils/tracking";
 import { getNFTs } from 'utils/alchemy'
 import CardNFTDisplay from "components/CardNFTDisplay";
 import { useWeb3React } from "@web3-react/core";
-
+import { Network } from "alchemy-sdk";
+import { BeatLoader } from "react-spinners";
 
 export interface AuthorPageProps {
   className?: string;
@@ -49,7 +50,22 @@ export interface AuthorPageProps {
 // const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
 
 const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
+  
+  const { state } = useLocation()
+ const _nftDataETH = (state as any)?.nftDataETH
+ const _nftDataPOLYGON = (state as any)?.nftDataPOLYGON
+ const [nftDataETH, setNFTDataETH] = useState<any>(_nftDataETH)
+ const [nftDataPOLYGON, setNFTDataPOLYGON] = useState<any>(_nftDataPOLYGON)
+   const [mintSuccess, setMintSuccess] = useState(false)
+   const { width, height } = useWindowSize()
+   const [walletAddress, setWalletAddress] = useState('')
+
+   
+
+ const [loading, setLoading] = useState(false)
+
   var Airtable = require('airtable');
+
   var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appfZedSta1s4n06f');
 
   const {
@@ -61,11 +77,19 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
     active
   } = useWeb3React();
 
+  trackEvent('UserNamePage_Visited', {
+    // library,
+    chainId,
+    account,
+    // activate,
+    // deactivate,
+    // active
+  })
+
+
   
-  const [nftData, setNFTData] = useState<any>()
-    const [mintSuccess, setMintSuccess] = useState(false)
-    const { width, height } = useWindowSize()
-    const [walletAddress, setWalletAddress] = useState('')
+  // const [nftData, setNFTData] = useState<any>()
+
 
     const db = getDatabase()
     const {avatarString} = useParams()
@@ -77,50 +101,11 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
         signInWithGoogle
       } = useFirebaseContext()
 
-       trackEvent('TalentProfileGatedSpace_Visited', {
-            email, 
-            uid,
-        })
+      //  trackEvent('TalentProfileGatedSpace_Visited', {
+      //       email, 
+      //       uid,
+      //   })
   
-      
-    const [formInput, updateFormInput] = useState({ 
-        // chain: 'polygon',
-        // name: '', 
-        // phone: '', 
-        //  //TODO dropdown
-        // jobFamily: '', 
-        // //TODO dropdown
-        // location: '',
-        // email,
-        // interviewerIntro: '',
-        // hourlyRate: '',
-        // calendlyLink: '',
-        // Linkedin: '',
-        // avatarString: '',
-        // linkToResume: '',
-        // price: '', 
-
-//         primarySkill,
-
-//         skillsets,
-//         industryInterest,
-
-//         primarySkill,
-// skillsets,
-// superpower,
-// twoTruthOnelie,
-        primarySkill:'',
-
-        skillsets:'',
-        industryInterest:'',
-        superpower:'',
-        twoTruthOnelie:'',
-
-        hourRate: '',
-        consultOn: '',
-        zoomLink: '',
-        
-      })
 
   const [profileData, setProfileData] = useState<
   {
@@ -136,30 +121,9 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
       superpower: string;
       twoTruthOnelie: string;
       zoomLink: string;
-
   }>()
 
-  // const [errorInput, updateErrorInput] = useState({ 
-  //  hourRate: false,
-  //  consultOn: false,
-  //  zoomLink: false,
-   
-  // })
-
   const getWalletAddress = () => {
-
-
-      // base('NametoWallets').select({
-      //   view: 'Grid view',
-      // }, function(err: any, record: any) {
-      //   if (err) { console.error(err); return; }
-      //   console.log('Retrieved', record.id);
-      //   const wallet = record._rawJson.fields.Wallets
-      //   console.log('Retrieved', wallet);
-      //   setWalletAddress(wallet)
-      //   _getNFTs(wallet)
-      
-      // });
 
       base('NametoWallets').select({
         // Selecting the first 3 records in Grid view:
@@ -170,48 +134,17 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
         // This function (`page`) will get called for each page of records.
     
         records.forEach(function(record) {
-            console.log('Retrieved', record.get('Name'), '--', record.get('Wallets'));
+            // console.log('Retrieved', record.get('Name'), '--', record.get('Wallets'));
             if (record.get('Name') === avatarString) {
                 // setExisted(true)
                 // setExistedWallets(record.get('Wallets'))
                 const wallets = record.get('Wallets')
                 setWalletAddress(wallets)
-                console.log('lllll', wallets)
+                // console.log('lllll', wallets)
                
 
             }
         });
-    
-        // To fetch the next page of records, call `fetchNextPage`.
-        // If there are more records, `page` will get called again.
-        // If there are no more records, `done` will get called.
-        // fetchNextPage();
-
-        // console.log('existedWallets', existedWallets, existed)
-        // if (existed) {
-        //     navigate(`/${username}`)
-        // } else {
-            // console.log('-oooo-currentAccount', wallets)
-            //  base('NametoWallets').create([
-            //     {
-            //     "fields": {
-            //         "Name": avatarString,
-            //         "Wallets": walletAddress
-            //     }
-            //     }
-            // ], function(err: any, records: any[]) {
-            //     if (err) {
-            //     console.error(err);
-            //     return;
-            //     }
-            //     records.forEach(function(record) {
-            //     console.log(record.get('Name'));
-            //     });
-
-            //     // navigate(`/${username}`)
-            // });
-        // }
-
 
     // @ts-ignore
     }, function done(err) {
@@ -222,36 +155,66 @@ const TalentProfilePage: FC<AuthorPageProps> = ({ className = "" }) => {
   }
 
 const _getNFTs = async (wallet: string) => {
-//       const web3Modal = new Web3Modal({
-//       network: 'mainnet',
-//       cacheProvider: true,
-//     })
-//     const connection = await web3Modal.connect()
-//     const provider = new ethers.providers.Web3Provider(connection)
-// // let provider = new ethers.providers.g;
-//   let history = await provider.getAvatar(wallet)
-//   console.log('history', history)
+  // if (_nftDataPOLYGON && _nftDataPOLYGON) return
+  setLoading(true)
+  const _nftData = await getNFTs(wallet, Network.ETH_MAINNET)
 
-  const _nftData = await getNFTs(wallet)
-  console.log('nftData', _nftData)
+  const _nftDataPolygon = await getNFTs(wallet, Network.MATIC_MAINNET)
+  // console.log('nftData', _nftData)
   // @ts-ignore
-  setNFTData(_nftData)
+  // setNFTData(_nftData)
+  setNFTDataPOLYGON(_nftDataPolygon)
+  setNFTDataETH(_nftData)
+  setLoading(false)
 
 }
 
 
 useEffect(() => {
-  console.log('--walletAddress', walletAddress)
+  // console.log('--walletAddress', walletAddress)
   // const currentWallet = localStorage.getItem('currentWallet')
-  if (account) {
-
-    account && _getNFTs(account)
-  }
-  // walletAddress && _getNFTs(walletAddress)
-}, [account])
 
 
-  useEffect(() => { 
+    // account && _getNFTs(account)
+
+    if ((state as any)?.from === 'find_nfts' || 
+    (state as any)?.from === 'profile_page'
+    ) {
+      console.log('llllstate', state)
+      setNFTDataETH((state as any)?.nftDataETH)
+      setNFTDataPOLYGON((state as any)?.nftDataPOLYGON)
+    } else {
+
+      // walletAddress && _getNFTs(walletAddress)
+      // if (!walletAddress) {
+      //   account && _getNFTs(account)
+      // }
+
+    }
+
+
+  
+}, [account, walletAddress, state])
+
+
+
+// useEffect(() => {
+//   // console.log('--walletAddress', walletAddress)
+//   // const currentWallet = localStorage.getItem('currentWallet')
+
+
+//     // account && _getNFTs(account)
+
+//     if ((state as any)?.from === 'find_nfts') {
+//         if (nftDataETH) {
+
+//         }
+//     }
+// }, [nftDataETH])
+
+
+
+  useEffect( () => { 
     if (avatarString) {
       let slug
       if (['Infochain', 'Ghost', 'Fantasy'].indexOf(avatarString) > -1) {
@@ -259,63 +222,75 @@ useEffect(() => {
       } else {
         slug = avatarString
       }
-     
-      // const slug = avatarString
-      console.log('slug', slug)
+      setLoading(true)
 
-      const userRef = ref(db, 'users/' + slug);
+      const wallet = ref(db, 'customDomain/' + slug);
   
-      console.log('--userRef', userRef, slug)
   
-      onValue(userRef, (snapshot) => {
-          console.log('--snapshot', snapshot, snapshot.exists())
+      onValue(wallet, (snapshot) => {
+          // console.log('--snapshot', snapshot, snapshot.exists())
   
           // if (snapshot.exists()) {
           var data = snapshot.val();
-          console.log('--data', data)
-          setProfileData(data)
+          if  (data?.walelt) {
+            console.log('data', data?.wallet)
+            // updatedAt
+            setWalletAddress(data?.wallet)
+            const nftData = ref(db, 'nfts/' + data.wallet);
+
+            onValue(nftData, (snapshot) => {
+              // console.log('--snapshot', snapshot, snapshot.exists())
+      
+              if (snapshot.exists()) {
+              var _nftData = snapshot.val();
+              // console.log('polygonNFTs', _nftData.polygonNFTs)
+              // updatedAt
+  
+    
+              
+              // const nftData = ref(db, 'nfts/' + data.wallet);
+    
+    
+              console.log('--ethNFTs', _nftData.ethNFTs)
+    
+    
+      
+              // const _nftData =  getNFTs(wallet, Network.ETH_MAINNET)
+            
+              // const _nftDataPolygon = await getNFTs(wallet, Network.MATIC_MAINNET)
+              // console.log('nftData', _nftData)
+              // @ts-ignore
+              // setNFTData( _nftData.ethNFTs)
+              setNFTDataPOLYGON(JSON.parse(_nftData.polygonNFTs))
+              // // @ts-ignore
+              setNFTDataETH(JSON.parse(_nftData.ethNFTs))
+              setLoading(false)
+    
+    
+              }
+
+        });
+  
+          }
     });
     }
   }, [avatarString])
 
   // let [categories] = useState([
-  //   "Gated Space",
-    // "Skills",
-    // "Liked",
-    // "Following",
-    // "Followers",
+  //   "Ethereum",
+  //   "Polygon",
+  //   // "Liked",
+  //   // "Following",
+  //   // "Followers",
   // ]);
 
- 
-
-//   async function loadNFTsCreated() {
-//     const web3Modal = new Web3Modal({
-//       network: 'mainnet',
-//       cacheProvider: true,
-//     })
-//     const connection = await web3Modal.connect()
-//     const provider = new ethers.providers.Web3Provider(connection)
-//     const signer = provider.getSigner()
-
-//     const contract = new ethers.Contract(marketplaceAddress, marketplaceAbi.abi, signer)
-//     const data = await contract.fetchItemsListed()
-
-//     const nfts = await Promise.all(data.map(async (i: { tokenId: { toNumber: () => any; }; price: { toString: () => ethers.BigNumberish; }; seller: any; owner: any; }) => {
-//       const item = getNft(i)
-//       return item
-//     }))
-
-//     setNftsCreated(nfts as any)
-//     // console.log('===setNftsCreated', nfts)
-//     setLoadingState(false) 
-//   }
 
 
   useEffect( () => {
     // Load onchain data
     // loadNFTs()
     // loadNFTsCreated()
-    getWalletAddress()
+    // getWalletAddress()
   }, [])
   
   // const gatedSpaceSumbit = async (avatarString: string) => {
@@ -457,13 +432,19 @@ useEffect(() => {
 
   // }
 
-
+const reservedDomains = [
+  'alysia',
+  'alysiawu',
+  'elon',
+  'elonmust'
+]
 
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
       <Helmet>
         <title>All your NFTs all in one place</title>
       </Helmet>
+
 
       {/* HEADER */}
       <div className="w-full">
@@ -474,6 +455,7 @@ useEffect(() => {
             className="object-cover w-full h-full"
           />
         </div>
+        
         <div className="container -mt-10 lg:-mt-16">
        
           <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">
@@ -485,6 +467,8 @@ useEffect(() => {
               />
               
             </div>
+
+            
          
             <div className="pt-5 md:pt-1 md:ml-6 xl:ml-14 flex-grow">
               <div className="max-w-screen-sm ">
@@ -498,7 +482,7 @@ useEffect(() => {
                 </h2>
                 <div className="flex items-center text-sm font-medium space-x-2.5 mt-2.5 text-green-600 cursor-pointer">
                   <span className="text-neutral-700 dark:text-neutral-300">
-                  Avatar randomly generated based on the user name you chose  🥳
+                  Avatar randomly generated based on your user name  🥳
                     {/* Email {profileData && profileData?.email} */}
                     {/* 4.0xc4c16ac453sa645a...b21a{" "} */}
                     {/* {currentAccount} */}    
@@ -506,7 +490,7 @@ useEffect(() => {
                   </span>
                   <span className="text-neutral-700 dark:text-neutral-300">
                     {/* Name: {profileData && profileData?.name} */}
-                   
+                  
                   </span>
                   <span className="text-neutral-700 dark:text-neutral-300">   
                     {/* Phone: {profileData && profileData?.phone} */}
@@ -531,17 +515,42 @@ useEffect(() => {
                   </svg> */}
                 </div>
 
-                <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  
+                <a className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
+                
                 {/* Resume: {profileData && profileData?.linkToResume} */}
                   {/* Punk #4786 / An OG Cryptopunk Collector, hoarder of NFTs.
                   Contributing to @ether_cards, an NFT Monetization Platform. */}
-                </span>
+                </a>
+
+               { avatarString && reservedDomains.indexOf(avatarString) > -1 && <a className="mt-10" style={{ padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href="/" 
+                
+                  
+              
+                >domain name reserved </a> }
+
+
+{ avatarString && reservedDomains.indexOf(avatarString) === -1 && <a className="mt-10" style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href="https://buy.stripe.com/9AQaIwaTneCe9Z68wA" 
+                
+                  
+                onClick={() => {
+                  trackEvent('ReseveDomain_Clicked', {
+                    url: window.location.href,
+                    // library,
+                    // chainId,
+                    // account,
+                    // activate,
+                    // deactivate,
+                    // active
+                  })
+                }}
+                >reserve domain name</a> }
               </div>
               <div className="mt-4 ">
                 {/* <SocialsList itemClass="block w-7 h-7" /> */}
               </div>
             </div>
+
+          
           
             <div className="absolute md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5 flex flex-row-reverse justify-end">
               {/* <NftMoreDropdown
@@ -558,14 +567,33 @@ useEffect(() => {
                 className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer mx-2"
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
               /> */}
-               {/* ✨ Share on twitter  here */}
-                <span style={{paddingTop: '10px'}}>
+        
 
+
+                <span style={{paddingTop: '10px'}}>
+               
+                    <div style={{
+                      marginTop: '0px'
+                    }}> ✨ Share</div>
                     <TwitterShareButton
+                    onClick={() => {
+               
+
+                      trackEvent('SharePageTwitter_Clicked', {
+                        library,
+                        // chainId,
+                        // account,
+                        // activate,
+                        // deactivate,
+                        // active
+                      })
+
+
+                    }}
                     style={{background: 'none', margin: '1rem', marginTop: '10px'}}
-                      title={`Check out my NFTs at here`}
+                      title={`${avatarString}'s Signature Lewk NFTs collections here`}
                       url={`https://www.lewk.app/${avatarString}`}
-                      hashtags={["lewk", "nfts", "airdrops"]}
+                      hashtags={["lewk", "nfts", "airdrops", "web3", "web3community", "blockchain"]}
                     >
                       <TwitterIcon size={32} round />
                 
@@ -584,12 +612,34 @@ useEffect(() => {
       {/* ====================== END HEADER ====================== */}
 
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28">
+      {loading &&<>
+           
+           
+           <div className="sm:text-lg mb-10 md:text-xl font-semibold text-neutral-300 text-center">
+                {/* Create, Explore, & Collect Digital Art NFTs. */}
+                Reading from the block <BeatLoader
+              cssOverride={{
+                display: "block",
+                margin: "0 auto",
+                borderColor: "#19FDA6",
+              }}
+              size={50}
+              color={"#19FDA6"}
+              loading={loading}
+              speedMultiplier={1.5}
+            />
+              </div>
+           </>}
+       
+
+
       {!mintSuccess &&  <main>
           <Tab.Group>
             <div className="flex flex-col lg:flex-row justify-between ">
               <Tab.List className="flex space-x-0 sm:space-x-2 overflow-x-auto ">
                 
-                {/* {categories.map((item) => (
+{/* 
+                {categories.map((item) => (
                   <Tab key={item} as={Fragment}>
                     {({ selected }) => (
                       <button
@@ -613,17 +663,64 @@ useEffect(() => {
              
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
+                {nftDataETH && <h2 className="text-3xl sm:text-4xl font-semibold">
+                  Ethereum 
+                  {/* ({nftDataETH.length}) */}
+                </h2>}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
               
-                     {nftData && nftData.map((nft: { description: any; title: any; media: any; rawMetadata: any; }, index: string) => {
 
-                      return (<CardNFTDisplay key={index} nft={nft}/>)
+                     {nftDataETH && nftDataETH.map((nft: any, index: string) => {
+
+                      return (<CardNFTDisplay key={index} nft={nft} unit='ETH'
+                      chain={'ethereum'}
+                      contractAddress={nft?.contract?.address}
+                      tokenId={nft?.tokenId}
+                      
+                      />)
                      
                   
                     })}
 
 
                 </div>
+                <h2 className="text-3xl mt-10 sm:text-4xl font-semibold">
+                  
+                </h2>
+                <h2 className="text-3xl sm:text-4xl font-semibold">
+                  
+                </h2>
+
+                {nftDataPOLYGON && <h2 className="text-3xl sm:text-4xl font-semibold">
+                  Polygon 
+                  {/* ({nftDataPOLYGON.length}) */}
+                </h2>}
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
+              
+                    {nftDataPOLYGON && nftDataPOLYGON.map((nft: any, index: string) => {
+
+                    return (<CardNFTDisplay key={index} nft={nft} unit='MATIC' 
+                    chain={'ploygon'}
+                    contractAddress={nft?.contract?.address}
+                    tokenId={nft?.tokenId}
+                    />)
+                    
+                
+                  })}
+
+
+              </div>
+
+
+
+                <div className="mt-10 md:mt-10 space-y-5 sm:space-y-6 md:sm:space-y-8">
+              
+            
+
+         </div>
+
+
 
             {/* <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div> */}
             <div className="mt-10 md:mt-10 space-y-5 sm:space-y-6 md:sm:space-y-8">
@@ -672,15 +769,7 @@ twoTruthOnelie: "1. */}
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
                 {/* * are required */}
-                {profileData?.skillsets?.split(',').map(skill => {
-                  return   <div className="text-3xl sm:text-4xl font-semibold mt-10 mb-10 p-10" style={{margin: '20px'}}>
-                    
-                  
-                    <span className="text-3xl sm:text-4xl font-semibold mt-10 mb-10 p-10">  {skill}</span>
-                  
-                  <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} >Bring skill on chain</a>
-                  </div>
-                })}
+             
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-semibold">
@@ -798,15 +887,15 @@ twoTruthOnelie: "1. */}
 
                 <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 ">
 
-                {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="https://book.stripe.com/28obMA7Hbbq22wEeUU" >Request to talk to me</a> */}
-                {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href="https://buy.stripe.com/eVa4k80eJeCe0ow5kl" >Book Now</a> */}
+                {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href="https://book.stripe.com/28obMA7Hbbq22wEeUU" >Request to talk to me</a> */}
+                {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href="https://buy.stripe.com/eVa4k80eJeCe0ow5kl" >Book Now</a> */}
 
                
                 </div>
 
                   {/* <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 ">
 
-                  <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
+                  <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={() => {
                     avatarString && gatedSpaceSumbit(avatarString)
                     }} >Submit</a>
 
@@ -818,6 +907,13 @@ twoTruthOnelie: "1. */}
 
                 {/* PAGINATION */}
                 <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+
+                {/* {nftDataPOLYGON && nftDataPOLYGON.map((nft: { description: any; title: any; media: any; rawMetadata: any; }, index: string) => {
+
+                    return (<CardNFTDisplay key={index} nft={nft}/>)
+
+
+                    })} */}
                   {/* <Pagination /> */}
                   {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
                 </div>
@@ -951,7 +1047,7 @@ twoTruthOnelie: "1. */}
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3>
 
               ✨ Share on twitter  here
@@ -980,7 +1076,7 @@ twoTruthOnelie: "1. */}
          </h3> */}
 
        {/* <h3 className="text-lg sm:text-2xl font-semibold">
-           <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/quick-apply'}> Start Here</a>
+           <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/quick-apply'}> Start Here</a>
            </h3> */}
        {/* </div> */}
 
@@ -993,7 +1089,7 @@ twoTruthOnelie: "1. */}
             </h3> */}
 
           {/* <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Complete your Proof-of-capability profile</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Complete your Proof-of-capability profile</a>
               </h3>
           </div> */}
 
@@ -1018,6 +1114,8 @@ twoTruthOnelie: "1. */}
 
 
       </Confetti> }
+
+  
     </div>
   );
 };

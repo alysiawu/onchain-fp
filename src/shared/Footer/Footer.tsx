@@ -87,20 +87,80 @@ const Footer: React.FC = () => {
   return (
     <div className="nc-Footer relative py-20 lg:pt-32 lg:pb-28 border-t border-neutral-200 dark:border-neutral-700">
       <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-10 ">
+ 
         <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
           <div className="col-span-2 md:col-span-1">
             <Logo />
-          </div>
-          <div className="col-span-2 flex items-center md:col-span-3">
-            <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" />
-            
+          
           </div>
           
+          <div className="col-span-2 flex items-center md:col-span-3">
+           
+              <div className="flex flex-col lg:flex-row lg:items-center">
+                <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" />
+              </div>
+              <div className="flex flex-col lg:flex-row lg:items-center">
+ 
+            
+                {/* <a style={{background: 'none', padding: '12px', width: '200px', 
+                'boxShadow': '0 0 50px #19FDA6', 
+                borderRadius: '20px', 
+                color: '#19FDA6', 
+                textAlign: 'center'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a> */}
+              </div>
+          </div>
+          <div className="col-span-2 md:col-span-1">
+
+            © 2022 - Future Protocol Co.
+      
+          </div>
+          <div className="col-span-2 md:col-span-1">
+
+
+            <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@lewk.app'}>Message Us</a>
+            
+          </div>
+
+            <div className="col-span-2 md:col-span-1">
+
+       {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a> */}
+     
+            </div>
+
+        </div>
+        <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
+          
+       {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@futureprotocol.co'}>Message eeeeeUs</a> */}
+        </div>
+        <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
+          <div>
+              {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@lewk.app'}>Message Us</a> */}
+            </div>
+            <div>
+          
+              {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a> */}
+            </div>
+        </div>
+
+        <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
+          <div>
+       
+            </div>
+        </div>
+                 
+    
+
+
+        <div className="flex lg:items-center">
+         
+        </div>
+
+                
         <div className="flex flex-col lg:flex-row lg:items-center">
    
-   <a style={{background: 'none', padding: '12px', width: '125px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#39f889'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a>
-
-   </div>
+            <div>     
+        
+          </div>
         </div>
         {/* {widgetMenus.map(renderWidgetMenuItem)} */}
       </div>

@@ -967,7 +967,7 @@ Videos within job descriptions can also help drive a 34% higher application rate
                  onClick={() => listNFTForSale()}
               >Done</a> */}
 
-<a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
+<a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={() => {
   submitAJob()
 }} >Done</a>
 
@@ -1019,7 +1019,7 @@ Videos within job descriptions can also help drive a 34% higher application rate
               </h3>
 
               {/* <h3 className="text-lg sm:text-2xl font-semibold"> */}
-              {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}> 
+              {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}}> 
               
            
                 
@@ -1041,7 +1041,7 @@ Videos within job descriptions can also help drive a 34% higher application rate
               {/* </h3> */}
 
               {/* <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3> */}
 
 
@@ -1055,7 +1055,7 @@ Videos within job descriptions can also help drive a 34% higher application rate
             </h3>
 
             <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
             </h3> */}
           </div>
 

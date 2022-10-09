@@ -7,6 +7,9 @@ import { getDatabase } from "firebase/database";
 
 import "firebase/auth";
 
+import { getStorage } from "firebase/storage";
+
+
 // dotenv.config()
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,6 +26,7 @@ import "firebase/auth";
 //   measurementId: "G-S4VLLJ5ZRJ"
 // };
 
+
 export const firebaseConfig = {
     apiKey: "AIzaSyAspKtyuilB6Ps5VEdvlo_qitsjML1e-_c",
     authDomain: "futureprotocol-881fc.firebaseapp.com",
@@ -38,7 +42,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const _db = getDatabase(app);
 export const db = getDatabase()
-
+export const storage = getStorage(app);
 
 // https://dev.to/gathoni/firebase-google-sign-in-with-react-3741
 
@@ -75,6 +79,7 @@ export const signInWithGoogle = () => {
     const {  uid } = user
     console.log('---reloadUserInfo', uid,  user.providerData)
     const {photoUrl, displayName, email } = (user as any).reloadUserInfo
+    localStorage.setItem('email', email)
     console.log('--photoURL, displayName, email', photoUrl, displayName, email)
     // {
     //     "uid": "ZwKyY89l5IMkv7J1mowuFkAV0Wl2",

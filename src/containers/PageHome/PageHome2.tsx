@@ -25,7 +25,7 @@ function PageHome() {
   return (
     <div className="nc-PageHome relative overflow-hidden">
       <Helmet>
-        <title>All the NFTs you own, in one place | Lewk.app</title>
+        <title>Lewk.app</title>
       </Helmet>
       {/* GLASSMOPHIN */}
       <BgGlassmorphism />
@@ -102,7 +102,7 @@ function PageHome() {
 
         {/* <div className="relative py-20 lg:py-28">
           <BackgroundSection className="bg-neutral-100/70 dark:bg-black/20 " />
-          <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord</a>
+          <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord</a>
           <SectionGridFeatureNFT2 />
         </div> */}
 
@@ -140,7 +140,7 @@ function PageHome() {
           {/* <h2 className="font-semibold text-3xl sm:text-4xl xl:text-6xl mt-6 sm:mt-10 !leading-[1.112] tracking-tight"> */}
           {/* a protocol to help Talent building their first on chain professional identity with composable NFTs, or in a sense  */}
           {/* </h2> */}
-          {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'}>Endorse Us</a> */}
+          {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'}>Endorse Us</a> */}
         {/* </div> */}
      
       

@@ -7,19 +7,22 @@ export interface HeaderLoggedProps {}
 const HeaderLogged: FC<HeaderLoggedProps> = () => {
 
   const location = useLocation()
-  console.log('--location', location.pathname == "/register")
+  // console.log('--location', location.pathname == "/register")
   return (
     <div className="nc-HeaderLogged relative w-full z-40 " >
       {/* NAV */}
      
-     {location.pathname == "/register" && <div
+     {<div
       style={{
         textAlign: 'center',
         background: '#000',
-        color: '#39f889',
+        color: '#19FDA6',
         padding: '10px'
       }}
-     > lewk.app is open to everyone for a limited time only!</div>}
+     > 
+     {/* lewk.app is open to everyone for a limited time only! */}
+     
+     </div>}
       <MainNav2Logged />
     </div>
   );

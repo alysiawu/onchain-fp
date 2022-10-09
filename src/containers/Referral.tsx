@@ -1058,7 +1058,7 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
                  onClick={() => listNFTForSale()}
               >Done</a> */}
 
-<a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
+<a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={() => {
   submitReferralBounty()
 }} >Done</a>
 
@@ -1112,15 +1112,15 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
                 Interesting in owning and managing your on chain professional identity?
               </h3>
               <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Sign in with wallet</a>
               </h3>
               <div></div>
               <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/claim'} >Claim your pseudonym</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/claim'} >Claim your pseudonym</a>
               </h3>
               <div></div>
               {/* <h3 className="text-lg sm:text-2xl font-semibold"> */}
-              {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}> 
+              {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}}> 
               
            /claim
 
@@ -1145,7 +1145,7 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
               {/* </h3> */}
 
               {/* <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3> */}
 
 
@@ -1159,7 +1159,7 @@ const PostReferral: FC<PageUploadItemProps> = ({ className = "" }) => {
             </h3>
 
             <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
             </h3> */}
           </div>
 

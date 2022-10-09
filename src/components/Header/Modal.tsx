@@ -18,7 +18,7 @@ import wc from 'images/wc.png'
 import cbw from 'images/cbw.png'
 //   import { connectors } from "./connectors";
   
-  export default function SelectWalletModal({ isOpen, closeModal } : {isOpen: boolean, closeModal: any}) {
+export default function SelectWalletModal({ isOpen, closeModal } : {isOpen: boolean, closeModal: any}) {
     const { activate } = useWeb3React();
   
     const setProvider = (type: string) => {

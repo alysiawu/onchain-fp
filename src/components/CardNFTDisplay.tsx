@@ -1,19 +1,24 @@
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
-import Avatar from "shared/Avatar/Avatar";
+// import { Link } from "react-router-dom";
+// import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
-import { nftsImgs } from "contains/fakeData";
-import ItemTypeImageIcon from "./ItemTypeImageIcon";
-import LikeButton from "./LikeButton";
-import Prices from "./Prices";
-import { ClockIcon } from "@heroicons/react/outline";
-import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
+// import { nftsImgs } from "contains/fakeData";
+// import ItemTypeImageIcon from "./ItemTypeImageIcon";
+// import LikeButton from "./LikeButton";
+// import Prices from "./Prices";
+// import { ClockIcon } from "@heroicons/react/outline";
+// import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
+import { useNavigate } from "react-router-dom";
 
 export interface CardNFTProps {
   className?: string;
   isLiked?: boolean;
   owner?: boolean;
   nft: any;
+  unit: string;
+  chain?: string;
+  contractAddress?: string;
+  tokenId?: string
   // TODO add better type
 //   nft?: {
 //     tokenId: string;
@@ -26,29 +31,30 @@ export interface CardNFTProps {
 //   }
 }
 
-const CardNFTDisplay: FC<CardNFTProps> = ({ className = "", isLiked, nft, owner }) => {
-  const renderAvatars = () => {
-    return (
-      <div className="flex -space-x-1 ">
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-      </div>
-    );
-  };
+const CardNFTDisplay: FC<CardNFTProps> = ({ chain, contractAddress, tokenId, className = "", isLiked, nft, owner, unit }) => {
+  // console.log('--nft', nft)
+  // const renderAvatars = () => {
+  //   return (
+  //     <div className="flex -space-x-1 ">
+  //       <Avatar
+  //         containerClassName="ring-2 ring-white dark:ring-neutral-900"
+  //         sizeClass="h-5 w-5 text-sm"
+  //       />
+  //       <Avatar
+  //         containerClassName="ring-2 ring-white dark:ring-neutral-900"
+  //         sizeClass="h-5 w-5 text-sm"
+  //       />
+  //       <Avatar
+  //         containerClassName="ring-2 ring-white dark:ring-neutral-900"
+  //         sizeClass="h-5 w-5 text-sm"
+  //       />
+  //       <Avatar
+  //         containerClassName="ring-2 ring-white dark:ring-neutral-900"
+  //         sizeClass="h-5 w-5 text-sm"
+  //       />
+  //     </div>
+  //   );
+  // };
 
 //   {
 //     "contract": {
@@ -89,14 +95,33 @@ const CardNFTDisplay: FC<CardNFTProps> = ({ className = "", isLiked, nft, owner 
 //         }
 //     ]
 // }
-console.log('nft', nft)
+// console.log('nft', nft)
+
+const navigate = useNavigate()
   return (
     <div
       className={`nc-CardNFT relative flex flex-col group !border-0 [ nc-box-has-hover nc-dark-box-bg-has-hover ] ${className}`}
       data-nc-id="CardNFT"
     >
       <div className="relative flex-shrink-0 ">
-        <div>
+        <div
+            
+            style={{
+              cursor: 'pointer'
+          }}
+          onClick={
+             () => {
+                 const to=`/${chain}/${contractAddress}/${tokenId}`
+                 navigate(to , {
+                     state: {
+                         nft,
+                    
+                     }
+                 })
+             }
+         }
+
+        >
           <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
             src={nft?.media[0]?.gateway}
@@ -132,8 +157,9 @@ console.log('nft', nft)
        
         {<div className="flex justify-between">
           {/* {renderAvatars()} */}
+          {nft.title} 
 
-          Contract {nft.contract.address.slice(0, 10)}... 
+          {/* Contract {nft.contract.address.slice(0, 10)}...  */}
           {/* {nft.rawMetadata?.description.slice(10)}...  */}
           {/* {nft && nft.metaData.jobFamily} */}
           {/* <span className="text-neutral-700 dark:text-neutral-400 text-xs">
@@ -141,25 +167,55 @@ console.log('nft', nft)
           </span> */}
         </div> }
   
+        {<div className="justify-between">
+          {/* {renderAvatars()} */}
+
+         
+          {/* {nft?.rawMetadata?.attributes?.map((t: { trait_type: any; value: any; }) => {
+            return <div className="flex justify-between">
+              {t.trait_type} - {t.value}
+            </div>
+          })} */}
+          {/* Contract {nft.contract.address.slice(0, 10)}...  */}
+          {/* {nft.rawMetadata?.description.slice(10)}...  */}
+          {/* {nft && nft.metaData.jobFamily} */}
+          {/* <span className="text-neutral-700 dark:text-neutral-400 text-xs">
+            {Math.floor(Math.random() * 90) + 10} in stock
+          </span> */}
+        </div> }
+  
+
     
     
 
-        <div className="w-2d4 w-full border-b border-neutral-100 dark:border-neutral-700"></div>
+        {/* <div className="w-2d4 w-full border-b border-neutral-100 dark:border-neutral-700"></div> */}
 
         <div className="flex justify-between items-end ">
-          <Prices labelTextClassName="bg-white dark:bg-neutral-900 dark:group-hover:bg-neutral-800 group-hover:bg-neutral-50" 
+          {/* <Prices labelTextClassName="bg-white dark:bg-neutral-900 dark:group-hover:bg-neutral-800 group-hover:bg-neutral-50" 
             price={nft?.rawMetadata?.price}
-          />
+            // unit={}
+            unit={unit}
+          /> */}
+           {/* <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href={`/${chain}/${contractAddress}/${tokenId}`} >View Details</a>
+            <div></div> */}
+
+          
+            {/* <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href={`https://opensea.io/assets/${chain}/${contractAddress}/${tokenId}`} >View on OpenSea</a> */}
+            <div></div>
+
+         
           <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
             {/* <ClockIcon className="w-4 h-4" />
             <span className="ml-1 mt-0.5">
               {Math.floor(Math.random() * 20) + 1} hours left
             </span> */}
+            
           </div>
         </div>
+      
       </div>
 
-      <Link to={`/nft-detail/${nft?.tokenId}`} state={nft} className="absolute inset-0"></Link>
+      {/* <Link to={`/nft-detail/${nft?.tokenId}`} state={nft} className="absolute inset-0"></Link> */}
     </div>
   );
 };

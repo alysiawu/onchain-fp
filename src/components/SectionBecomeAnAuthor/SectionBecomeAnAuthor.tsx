@@ -35,7 +35,7 @@ const SectionBecomeAnAuthor: FC<SectionBecomeAnAuthorProps> = ({
             Create Salary NFT
           </ButtonPrimary> */}
 
-          <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} >CREATE</a>
+          <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/create'} >CREATE</a>
           {/* <ButtonSecondary href="/search" className="">
             Discover more
           </ButtonSecondary> */}

@@ -5,11 +5,11 @@ import { Disclosure } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 import { NavItemType } from "./NavigationItem";
 import { NAVIGATION_DEMO_2 } from "data/navigation";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
+// import ButtonPrimary from "shared/Button/ButtonPrimary";
 import SocialsList from "shared/SocialsList/SocialsList";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
-import ButtonSecondary from "shared/Button/ButtonSecondary";
+// import ButtonSecondary from "shared/Button/ButtonSecondary";
 import { trackEvent } from "utils/tracking";
 import {  useNavigate } from "react-router-dom";
 
@@ -155,7 +155,7 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
 
   return (
     <div className="flex items-center py-3 justify-between px-5">
-        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={link} > {copy}</a>
+        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={link} > {copy}</a>
     </div>
   )
 }
@@ -193,8 +193,12 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
                 
             {/* <MenuItem  copy="Our Why" link='/our-why'/> */}
           
-
-            <MenuItem  copy="Join our Community" link='https://discord.gg/bGq3zG7t77'/>
+            {/* <MenuItem  copy="Get your own Roof" link='/roof'/> */}
+            {/* <MenuItem  copy="Communities" link='/communities'/> */}
+            {/* <MenuItem  copy="Marketplace" link='/marketplace'/>
+            <MenuItem  copy="Mint your own NFT" link='/create'/> */}
+            {/* <MenuItem  copy="Join our Community" link='https://discord.gg/bGq3zG7t77'/> */}
+    
 
             {/* <MenuItem  copy="Mint your achievement" link='/create'/>    */}
             {/* <MenuItem  copy="Exlpore" link='/search'/>  */}
@@ -204,10 +208,14 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
       {/* <MenuItem  copy="Interview2Earn" link='/interviewer-onboarding'/> */}
       {/* <MenuItem  copy="Join our Talent Nation" link='/quick-apply'/> */}
 
-      <MenuItem  copy="Join Beta" link='https://airtable.com/shr8LtmwYtzXAELuQ'/>
-      {/* <MenuItem  copy="Partner & Investor" link='https://zcal.co/i/QJ9_dMGJ'/> */}
-      {/* <MenuItem  copy="Join our Community" link='https://discord.gg/bGq3zG7t77'/> */}
+      <MenuItem  copy="Join the revolution" link='https://airtable.com/shrtnvjRsLibyYcOD'/>
+      <MenuItem  copy="Your Lewk Portal" link='/profile'/>
 
+      <MenuItem  copy="Monetize yourself on the blockchain" link='/create'/>
+      {/* <MenuItem  copy="Partner & Investor" link='https://zcal.co/i/QJ9_dMGJ'/> */}
+      {/* <MenuItem  copy="Join our Community" link='https://discord.gg/MSJtrV6xjb'/> */}
+      {/* <MenuItem  copy="Curated communities" link='/communities'/>
+      <MenuItem  copy="Mint NFT Key" link='/create'/> */}
 
 
        {/* <div className="flex flex-col mt-5 text-neutral-700 dark:text-neutral-300 text-xl">
@@ -217,13 +225,13 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
       </div> */}
 {/* 
       <div className="flex items-center py-3 justify-between px-5">
-        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/'} ></a>
+        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/'} ></a>
       </div> */}
       {/* <MenuItem  copy="Role Based Referral Request" link="/request-a-referral"/> */}
       {/* <MenuItem  copy="Talk to Hiring Managers" link="/hiring-managers"/> */}
       {/* <MenuItem  copy="Talk to Industry Insiders" link="/industry-insiders"/> */}
 
-      {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/request-a-referral'} >Talk to Hiring Managers</a> */}
+      {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/request-a-referral'} >Talk to Hiring Managers</a> */}
       {/* <MenuItem  copy="Available Referrals Opportunities" link="/referral-oppos"/>
       <MenuItem  copy="Claim Your Personal Resume Page" link="/claim"/>
       <MenuItem  copy="Create Skill NFT" link="/create"/>
@@ -232,10 +240,10 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
       <MenuItem  copy="Join Web三DAO" link="https://www.web3talents.co/"/> */}
 
       {/* <div className="flex items-center py-3 justify-between px-5">
-        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/claim'} >Claim Your Personal Resume Page</a>
+        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/claim'} >Claim Your Personal Resume Page</a>
       </div>
       <div className="flex items-center py-3 justify-between px-5">
-          <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} > Create Skill NFT</a>
+          <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/create'} > Create Skill NFT</a>
       </div> */}
 
 
@@ -275,50 +283,50 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
       {/* <MenuItem  copy="Join our Pool" link='quick-apply'/> */}
 
       {/* <div className="flex items-center py-3 justify-between px-5">
-        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/referral-oppos'} >Request Referrals</a>
+        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/referral-oppos'} >Request Referrals</a>
         <div></div>
       </div> */}
 
 {/*   
       <div className="flex items-center py-3 justify-between px-5">
-        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/referral'} >Refer2Earn</a>
+        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/referral'} >Refer2Earn</a>
         <div></div>
       </div> */}
 
       {/* <div className="flex items-center justify-between py-3 px-5 space-x-2">
-          <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/quick-apply'} >Join our Pool</a>
+          <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/quick-apply'} >Join our Pool</a>
           <div></div>
       </div> */}
 
 
       {/* <div className="flex items-center justify-between py-3 px-5 space-x-2">
-        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/interviewer-onboarding'} >Be an Interviewer</a>
+        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/interviewer-onboarding'} >Be an Interviewer</a>
             <div></div>
       </div> */}
 
       
       {/* <div className="flex items-center justify-between py-3 px-5 space-x-2">
-        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://www.web3recruits.xyz/'} >Web三DAO</a>
+        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://www.web3recruits.xyz/'} >Web三DAO</a>
             <div></div>
       </div> */}
 {/* 
       <div className="flex items-center justify-between py-3 px-5 space-x-2">
-         <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/post-referral-bounty'} >Post a Referral Bounty</a>
+         <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/post-referral-bounty'} >Post a Referral Bounty</a>
             <div></div>
       </div> */}
 
       {/* <div className="flex items-center justify-between py-3 px-5 space-x-2">
-        <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord</a>
+        <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord</a>
         <div></div>
       </div> */}
 
       <div className="flex items-center justify-between py-3 px-5 space-x-2">
-          <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
+          <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Sign in with wallet</a>
           <div></div>
       </div>
 
       {/* <div className="flex items-center justify-between py-3 px-5 space-x-2">
-          <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#39f889'}} href={'/register'} >Get your own lewk</a>
+          <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href={'/register'} >Get your own lewk</a>
             <div></div>
       </div> */}
 
@@ -330,21 +338,21 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
 
       {/* <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 "> */}
 
-      {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href='/quick-apply' >Done</a> */}
+      {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href='/quick-apply' >Done</a> */}
       {/* </div> */}
         <div className="flex items-center justify-between py-6 px-5 space-x-2">
-      {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} >Request Referral</a> */}
+      {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} >Request Referral</a> */}
         {/* <ButtonPrimary href={"/create"} className="!px-10">
           Create Skill NFT
         </ButtonPrimary> */}
 
-{/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/create'} > Create Skill NFT</a>
+{/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/create'} > Create Skill NFT</a>
             <div></div> */}
 {/* 
-            <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
+            <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Sign in with wallet</a>
             <div></div> */}
         {/* <ButtonSecondary href={"/connect-wallet"} className="flex-1">
-          Connect Wallet
+          Sign in with wallet
         </ButtonSecondary> */}
       </div>
     </div>

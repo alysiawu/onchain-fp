@@ -49,7 +49,7 @@ const JobsSearch: FC<JobsSearchProps> = ({ className = "" }) => {
     }))
 
     setNfts(nfts as any)
-    console.log('===nfts', nfts)
+    // console.log('===nfts', nfts)
     setLoadingState(false) 
   }
 

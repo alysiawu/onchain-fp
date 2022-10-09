@@ -18,15 +18,15 @@ export interface SectionVideosProps {
 const VIDEOS_DEMO: VideoType[] = [
   {
     id: "RzVvThhjAKw",
-    title: "Join Future Protocol's Exclusive Talent Club",
+    title: "We bring blockchain to you",
     thumbnail:
-      "https://i.postimg.cc/KjTWgVMt/splash.png",
+      "https://i.postimg.cc/5tHQDRqL/cover-img.png",
   },
 ];
 
 const SectionVideos: FC<SectionVideosProps> = ({
   videos = VIDEOS_DEMO,
-  className = "",
+  className = "mb-10",
 }) => {
   const [isPlay, setIsPlay] = useState(false);
   const [currentVideo] = useState(0);
@@ -51,7 +51,7 @@ const SectionVideos: FC<SectionVideosProps> = ({
           // ></iframe>
 
           <iframe 
-            src="https://www.youtube.com/embed/Klcf7EqlEkM" title="YouTube video player" 
+            src="https://www.youtube.com/embed/G6Z39GSGcjM" title="YouTube video player" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             frameBorder="0" 
             allowFullScreen
@@ -81,13 +81,58 @@ const SectionVideos: FC<SectionVideosProps> = ({
   };
   // # 1 rule of Websan club is we dont talk about web san club.
   return (
-    <div className={`nc-SectionVideos ${className}`}>
-      <Heading
-        desc='Turn the data you have into currency.'
-      >
-        Future Protocol's Exclusive Club
-      </Heading>
-      <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord for updates</a>
+    <div className={`nc-SectionVideos ${className}`} 
+    style={{
+      
+    }}
+    >
+        <h2 className="font-semibold text-3xl md:text-4xl xl:text-6xl !leading-[114%] mb-10" style={{
+          fontSize: '2rem'
+        }}>
+          Supercharge your multi-chains NFTs
+
+      </h2>
+
+      <span className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10">
+            {/* Starting with compensation data */}
+            {/* Upload your W2 and we will pay you $100 */}
+            {/* Get by giving */}
+            {/* a lewk is a personal style signature so individual it’s almost indivisible from you */}
+            {/* A lewk refers to someone’s fashion or style, in particular how someone is different from the norm and other people */}
+
+            {/* A lewk is how your are different from the norm and other people */}
+            {/* Bring NFTs from blockchains to you! */}
+            ✨  We create meaningful interactions between you and the blockchains✨
+            
+            {/* , you and your communities. */}
+      </span>
+      <div className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10">
+            {/* Starting with compensation data */}
+            {/* Upload your W2 and we will pay you $100 */}
+            {/* Get by giving */}
+            {/* a lewk is a personal style signature so individual it’s almost indivisible from you */}
+            {/* A lewk refers to someone’s fashion or style, in particular how someone is different from the norm and other people */}
+
+            {/* A lewk is how your are different from the norm and other people */}
+            {/* Bring NFTs from blockchains to you! */}
+            ❤️ So you can create meaningful interactions between you and your communities. ❤️
+      </div>
+      <span className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10">          
+      </span>
+      <h2 className="font-semibold text-4xl md:text-5xl xl:text-6xl !leading-[114%] ">
+
+      </h2>
+
+      {/* <Heading
+        desc='Bring NFTs from blockchains to you!'
+      > */}
+        {/* Future Protocol's Exclusive Club */}
+        {/* Supercharge your multi-chains NFTs
+ */}
+      {/* </Heading> */}
+
+    
+      {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord for updates</a> */}
 
       <div className="flex flex-col relative sm:pr-4 sm:py-4 md:pr-6 md:py-6 xl:pr-14 xl:py-14 lg:flex-row">
         <div className="absolute -top-4 -bottom-4 -right-4 w-2/3 rounded-3xl bg-primary-100 z-0 sm:rounded-[50px] md:top-0 md:bottom-0 md:right-0 xl:w-7/12 dark:bg-neutral-800/80"></div>

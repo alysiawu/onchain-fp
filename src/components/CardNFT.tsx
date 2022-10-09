@@ -87,7 +87,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, nft, owner }) => {
         </div> }
         {nft &&  nft.metaData.jobFamily && <div className="flex justify-between">
 
-          {nft.metaData.jobFamily}  {nft.metaData.yearOfExperience && <> - {nft.metaData.yearOfExperience} years of experience</>}
+          {/* {nft.metaData.jobFamily}  {nft.metaData.yearOfExperience && <> - {nft.metaData.yearOfExperience} years of experience</>} */}
        
         </div> }
       

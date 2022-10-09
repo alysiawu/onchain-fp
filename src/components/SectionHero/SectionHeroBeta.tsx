@@ -35,7 +35,7 @@ const SectionHeroBeta: FC<SectionHero2Props> = ({ className = "", children }) =>
              <br />{" "}
             {/* Creative your NTFs and sell them */}
           </span>
-          {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Community</a> */}
+          {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Community</a> */}
 {/* 
           <FormItem label="Choose your pseudonym  *">
                     <Input 

@@ -15,7 +15,7 @@ const socials: SocialType[] = [
   // { name: "Vimeo", icon: vimeo, href: "#" },
   // { name: "Youtube", icon: youtube, href: "#" },
   // { name: "Telegram", icon: telegram, href: "#" },
-  { name: "Twitter", icon: twitter, href: "https://twitter.com/future_protocol" },
+  { name: "Twitter", icon: twitter, href: "https://twitter.com/joinlewk" },
 ];
 
 const SocialsList1: FC<SocialsList1Props> = ({ className = "space-y-3" }) => {
@@ -29,7 +29,7 @@ const SocialsList1: FC<SocialsList1Props> = ({ className = "space-y-3" }) => {
         <div className="flex-shrink-0 w-5 ">
           <img src={item.icon} alt="" />
         </div>
-        <span className="hidden lg:block text-sm">{item.name}</span>
+        {/* <span className="hidden lg:block text-sm">{item.name}</span> */}
       </a>
     );
   };

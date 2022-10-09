@@ -13,11 +13,34 @@ import { Network, Alchemy } from "alchemy-sdk";
 // Print owner's wallet address:
 
 
+export const getNFTsForOwner = async (ownerAddr: string, network = Network.MATIC_MAINNET) => {
+  const settings = {
+      apiKey: "eVdHfi0A39HBm9kanNRkmUhZchwG2M26", // Replace with your Alchemy API Key. polygon key 
+      // apiKey: 'YCop5iUwx0l2Ho5AFRMxsGwnX56w9ozN', // ETH project key
+      network, // Replace with your network.
+    };
+    
+    const alchemy = new Alchemy(settings);
+
+  // const ownerAddr = "0xshah.eth";
+  // console.log("fetching NFTs for address:", ownerAddr);
+  // console.log("...");
+
+  // Print total NFT count returned in the response:
+  const nftsForOwner = await alchemy.nft.getNftsForOwner(ownerAddr);
+  console.log("number of NFTs found:", nftsForOwner.totalCount);
+  console.log("...");
+
+  return nftsForOwner
+} 
+
+
 
 export const getNFTs = async (ownerAddr: string, network = Network.MATIC_MAINNET) => {
     const settings = {
-        apiKey: "eVdHfi0A39HBm9kanNRkmUhZchwG2M26", // Replace with your Alchemy API Key.
-        network: Network.MATIC_MAINNET, // Replace with your network.
+        apiKey: "eVdHfi0A39HBm9kanNRkmUhZchwG2M26", // Replace with your Alchemy API Key. polygon key 
+        // apiKey: 'YCop5iUwx0l2Ho5AFRMxsGwnX56w9ozN', // ETH project key
+        network, // Replace with your network.
       };
       
       const alchemy = new Alchemy(settings);
@@ -33,10 +56,10 @@ export const getNFTs = async (ownerAddr: string, network = Network.MATIC_MAINNET
     
     // Print contract address and tokenId for each NFT:
     for (const nft of nftsForOwner.ownedNfts) {
-      console.log("===");
-      console.log("contract address:", nft.contract.address);
-      console.log("token ID:", nft.tokenId);
-      console.log("===nft", nft);
+      // console.log("===");
+      // console.log("contract address:", nft.contract.address);
+      // console.log("token ID:", nft.tokenId);
+      // console.log("===nft", nft);
           // Fetch metadata for a particular NFT:
 //     console.log("fetching metadata for a Crypto Coven NFT...");
 
@@ -44,22 +67,47 @@ export const getNFTs = async (ownerAddr: string, network = Network.MATIC_MAINNET
         nft.contract.address,
         nft.tokenId
       );
-      console.log("response ", response);
-          console.log("NFT name: ", response.title);
-console.log("token type: ", response.tokenType);
+//       console.log("response ", response);
+//           console.log("NFT name: ", response.title);
+// console.log("token type: ", response.tokenType);
 // console.log("tokenUri: ", response.tokenUri.gateway);
 // console.log("image url: ", response.rawMetadata.image);
-console.log("time last updated: ", response.timeLastUpdated);
-console.log("===");
+// console.log("time last updated: ", response.timeLastUpdated);
+// console.log("===");
         nfts.push(response)
     }
     return nfts
-    console.log("===");
+    // console.log("===");
     
 
   
 
 } 
+
+
+export const getNFTMetadata = async (contractAddress: string,  tokenId: string, chain: 'ethereum' | 'polygon') => {
+  let network
+  if (chain === 'polygon')  {
+    network = Network.MATIC_MAINNET
+  } else {
+    network = Network.ETH_MAINNET
+  }
+
+  
+  const settings = {
+    apiKey: "eVdHfi0A39HBm9kanNRkmUhZchwG2M26", // Replace with your Alchemy API Key. polygon key 
+    // apiKey: 'YCop5iUwx0l2Ho5AFRMxsGwnX56w9ozN', // ETH project key
+    network, // Replace with your network.
+  };
+  
+  const alchemy = new Alchemy(settings);
+
+  const response = await alchemy.nft.getNftMetadata(
+    contractAddress,
+    tokenId
+  );
+  return response
+}
 // Uncomment this line to see the full api response:
 // console.log(response);
 

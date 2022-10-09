@@ -65,7 +65,7 @@ const MainNav2: FC<MainNav2Props> = () => {
               href={"/connect-wallet"}
               sizeClass="px-4 py-2 sm:px-5"
             >
-              Connect Wallet
+              Sign in with wallet
             </ButtonSecondary>
           </div>
           <div className="flex items-center space-x-1.5 xl:hidden">

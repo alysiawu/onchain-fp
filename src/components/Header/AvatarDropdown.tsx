@@ -42,7 +42,7 @@ export default function AvatarDropdown() {
                       {currentAccount && <Avatar imgUrl={placeholderAvatar} sizeClass="w-12 h-12" />}
 
                       <div className="flex-grow">
-                        { !currentAccount && <h4 className="font-semibold" onClick={connectWallet}>Connect Wallet</h4>}
+                        { !currentAccount && <h4 className="font-semibold" onClick={connectWallet}>Sign in with wallet</h4>}
                         <p className="text-xs mt-0.5">{currentAccount?.slice(0, 7)}</p>
                       </div>
                     </div>

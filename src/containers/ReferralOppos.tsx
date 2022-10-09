@@ -278,7 +278,7 @@ const getJobOpeningsFromAirtable = () => {
   <h2 className="text-lg sm:text-2xl font-semibold mt-10">
         {/* <div className="mv-10"> */}
                
-               {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Join Our Community</a> */}
+               {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Join Our Community</a> */}
              {/* </div> */}
 
   </h2>
@@ -295,6 +295,7 @@ const getJobOpeningsFromAirtable = () => {
                 }}
                 onKeyPress={(e) => {
                   // e.preventDefault()
+                  // @ts-ignore
                   onSearch({ searchTerm: e.target.value})
                 }}
 
@@ -332,7 +333,7 @@ const getJobOpeningsFromAirtable = () => {
                 </svg>
               </span>
               {/* <input type="submit" hidden value="" /> */}
-                      {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Search</a> */}
+                      {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Search</a> */}
             </form>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
         
@@ -358,7 +359,7 @@ const getJobOpeningsFromAirtable = () => {
             {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
              <div className="mv-10">
                
-               <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Show more</a>
+               <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Show more</a>
              </div>
           </div>
         </main>

@@ -50,7 +50,7 @@ const otherPageChildMenus: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "/connect-wallet",
-    name: "Connect Wallet",
+    name: "Sign in with wallet",
   },
 
   {

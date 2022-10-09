@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Page } from "./types";
@@ -53,6 +53,20 @@ import ExpertDetailPage from "containers/ExpertDetailPage";
 import JobSeekersPage from "containers/JobSeekersPage";
 import PageHome3 from "containers/PageHome/PageHome3";
 import Register from "containers/Register";
+import PageHomeBeta from "containers/PageHome/PageHomeBeta";
+import WalletPage from "containers/AuthorPage/WalletPage";
+import NftDetailCurationPage from "containers/NftDetailPage/NFTDetailCurationPage";
+import CommunitiesPage from "containers/NftDetailPage/CommunitiesPage";
+import CommunityDetailPage from "containers/NftDetailPage/CommunityDetailPage";
+import GatedPage from "containers/AuthorPage/GatedPage";
+import GatedPage2 from "containers/PageHome/GatedPage2";
+import GatedPageWithSlug from "containers/AuthorPage/GatedPagWithSlug";
+import GatedTestPage from "containers/AuthorPage/GatedTest";
+import GatedTimePage from "containers/AuthorPage/GatedTimePage";
+import MintLewk from "containers/MintLewk";
+import KnowledgeInfluencers from "containers/PageHome/HomeKnowlegdeInfluncers";
+import PeopleSearch from "containers/PeopleSearch";
+
 // import Openings from "containers/Openings";
 
 export const pages: Page[] = [
@@ -83,15 +97,29 @@ export const pages: Page[] = [
 ];
 
 const App = () => {
+
+
+
   return (
+    
     <BrowserRouter basename="/">
       <ScrollToTop />
       <SiteHeader />
       <Routes>
-        <Route path="/" element={<PageHome2 />} />
-        <Route path="/beta" element={<Home />} />
-        <Route path="/#" element={<PageHome2 />} />
+        <Route path="/" element={<KnowledgeInfluencers />} />
+        <Route path="/beta" element={<PageHomeBeta />} />
+        <Route path="/mint-lewk" element={<MintLewk />} />
+        <Route path="/connect" element={<PeopleSearch />} />
+        <Route path="/gated/:pageSlug" element={<GatedPageWithSlug />} />
+        
+        {/* <Route path="/" element={<PageHome2 />} /> */}
+        {/* <Route path="/roof" element={<PageHomeBeta />} /> */}
+        {/* <Route path="/#" element={<PageHome2 />} /> */}
         <Route path="/request-a-referral" element={<RoleBasedReferralRequest />} />
+        <Route path="/communities" element={<CommunitiesPage />} />
+        <Route path="/community/:communityId" element={<CommunityDetailPage />} />
+
+
         <Route path="/hiring-managers" element={<HiringManagersPage />} />
         <Route path="/experts" element={<ExpertsPage />} />
         <Route path="/talent" element={<JobSeekersPage />} />
@@ -100,6 +128,8 @@ const App = () => {
         <Route path="/expert/:expertId/:index" element={<ExpertDetailPage />} />
 
         <Route path="/person/:personId" element={<ExpertDetailPage />} />
+
+        <Route path="/marketplace" element={<PageSearch />} />
 
 
 
@@ -123,7 +153,14 @@ const App = () => {
         <Route path="/talent-pitch" element={<TalentPitch />} />
         <Route path="/get-started" element={<TalentStart />} />
         <Route path="/:avatarString" element={<TalentProfilePage />} />
-        
+        <Route path="/meet/:pageSlug" element={<GatedTimePage />} />
+  
+        <Route path="/gated" element={<GatedPage />} />
+        <Route path="/gated-test" element={<GatedTestPage />} />
+
+        <Route path="/wallet/:walletAddress" element={<WalletPage />} />
+        <Route path="/:chain/:contractAddress/:tokenId" element={<NftDetailCurationPage />} />
+
 
         <Route path="/profile" element={<AuthorPage />} />
 
@@ -136,12 +173,13 @@ const App = () => {
 
 
         <Route path="/create" element={<CreateNFTLock />} />
+        <Route path="/gate" element={<CreateNFTLock />} />
         <Route path="/create-onchain-idenity" element={<CreateNFTLock />} />
         <Route path="/nft-detail" element={<NftDetailPage2 />} />
         <Route path="/nft-detail/:tokenId" element={<NftDetailPage />} />
         <Route path="/connect-wallet" element={<PageConnectWallet />} />
         <Route path="/search" element={<PageSearch />} />
-    
+        <Route path="/marketplace" element={<PageSearch />} />
 
         <Route path="/talent-profile" element={<AuthorPage />} />
 
@@ -172,6 +210,7 @@ const App = () => {
         <Route element={Page404 as unknown as ReactNode} />
       </Routes>
       <Footer />
+   
     </BrowserRouter>
   );
 };

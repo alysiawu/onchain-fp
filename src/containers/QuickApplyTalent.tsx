@@ -2,25 +2,25 @@ import Label from "components/Label/Label";
 import React, { FC, useState } from "react";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 
-import Web3Modal from 'web3modal'
-import { useNavigate } from 'react-router-dom';
-import { ethers } from 'ethers'
+// import Web3Modal from 'web3modal'
+// import { useNavigate } from 'react-router-dom';
+// import { ethers } from 'ethers'
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import {
   marketplace as marketplaceAddress, 
   authorization,
-  JobFamilies,
-  Companies,
-  Locations,
+  // JobFamilies,
+  // Companies,
+  // Locations,
   PFPs
 } from '../utils/constants'
 import twitter from "images/socials/twitter.svg";
 import loading from 'images/loading.gif'
 // import marketplaceAbi from '../artifacts/marketplace.json'
 
-import ButtonPrimary from "shared/Button/ButtonPrimary";
+// import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 // import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
@@ -650,7 +650,7 @@ const QuickApplyTalent: FC<PageUploadItemProps> = ({ className = "" }) => {
                  onClick={() => listNFTForSale()}
               >Done</a> */}
 
-<a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => {
+<a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={() => {
   submitAsTalent()
 }} >Done</a>
 
@@ -706,11 +706,11 @@ const QuickApplyTalent: FC<PageUploadItemProps> = ({ className = "" }) => {
                 Interesting in owning and managing your on chain professional identity?
               </h3>
               <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/connect-wallet'} >Sign in with wallet</a>
               </h3>
 
               <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3>
 
               ✨ Share on twitter  here
@@ -738,7 +738,7 @@ const QuickApplyTalent: FC<PageUploadItemProps> = ({ className = "" }) => {
             </h3>
 
           <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Start Here</a>
               </h3>
           </div>
 

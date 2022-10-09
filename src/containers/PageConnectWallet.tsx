@@ -76,7 +76,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       data-nc-id="PageConnectWallet"
     >
       <Helmet>
-        <title>Connect Wallet || Future Protocol</title>
+        <title>Sign in with wallet || Future Protocol</title>
       </Helmet>
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-3xl mx-auto space-y-8 sm:space-y-10">
@@ -155,7 +155,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
         renderContent={renderContent}
         contentExtraClass="max-w-md"
         onCloseModal={() => setShowModal(false)}
-        modalTitle="Connect Wallet"
+        modalTitle="Sign in with wallet"
       />
     </div>
   );

@@ -16,7 +16,7 @@ import {
   // PFPs,
   SkillBadges
 } from '../utils/constants'
-import twitter from "images/socials/twitter.svg";
+// import twitter from "images/socials/twitter.svg";
 import metamaskImg from "images/metamask.webp";
 import polygon from "images/polygon-matic-logo.png"
 import loading from 'images/loading.gif'
@@ -38,6 +38,8 @@ import NcModal from "shared/NcModal/NcModal";
 // import { WalletService } from "@unlock-protocol/unlock-js";
 import Textarea from "shared/Textarea/Textarea";
 import { useAccountContext } from "contexts/accountContext";
+import { useFirebaseContext } from "contexts/firebaseContext";
+import { signInWithGoogle } from "contexts/firebase";
 
 // const networks = {
   
@@ -83,6 +85,15 @@ export interface PageUploadItemProps {
 // })
 
 const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
+
+  const {
+    email, 
+    photoUrl,
+    // displayName,
+    // signInWithGoogle,
+    // currentUser
+  } = useFirebaseContext()
+
 
   const plans = [
     {
@@ -143,7 +154,12 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
   }, [currentAccount])
 
 
+useEffect(() =>{
 
+  if (!localStorage.getItem('email') && !email) {
+    signInWithGoogle()
+  }
+}, [email])
 
   let client: IPFSHTTPClient | undefined;
   try {
@@ -219,7 +235,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-        ✨ Congrats! You Claimed an Achievement NFT, this is the pass for your Web三DAO talentverse !✨ 
+        ✨ Congrats! You Minted your NFT!✨ 
         </h3>
         {/* <span className="text-l flex mt-10">
           share to <img src={twitter} width='25' className='mr-5 ml-2' onClick={() => {
@@ -228,7 +244,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
         </span> */}
 
          <h3 className="text-lg sm:text-2xl font-semibold mt-10">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
               
               <TwitterShareButton
                 style={{background: 'none', margin: '1rem', marginTop: '10px'}}
@@ -250,7 +266,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
           </ButtonPrimary> */}
           
           <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Discord Community</a>
               </h3>
           
         </div>
@@ -267,7 +283,7 @@ const CreateNFTLock: FC<PageUploadItemProps> = ({ className = "" }) => {
         ✨🔮 Magic in the works... 🔮✨ 
         </h3>
         <span className="text-l flex mt-10">
-          <img src={loading} width='50' className='mr-5'/> Minting Skill NFT On Chain
+          <img src={loading} width='50' className='mr-5'/> Minting NFT...
         </span>
         <div className="mt-4 space-x-3">
           {/* <ButtonPrimary onClick={handleClickSubmitForm} type="submit">
@@ -384,7 +400,7 @@ if (!currentAccount)  {
   data-nc-id="PageConnectWallet"
 >
   <Helmet>
-    <title>Connect Wallet || Lewk.app</title>
+    <title>Sign in with wallet || Lewk.app</title>
   </Helmet>
   <div className="container">
     <div className="my-12 sm:lg:my-16 lg:my-24 max-w-3xl mx-auto space-y-8 sm:space-y-10">
@@ -463,7 +479,7 @@ if (!currentAccount)  {
     renderContent={renderContent}
     contentExtraClass="max-w-md"
     onCloseModal={() => setShowModal(false)}
-    modalTitle="Connect Wallet"
+    modalTitle="Sign in with wallet"
   />
 </div>
 
@@ -476,7 +492,7 @@ if (!currentAccount)  {
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Home to all the NFTs you own | Lewk.app</title>
+        <title>Lewk.app</title>
       </Helmet>
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
@@ -485,7 +501,7 @@ if (!currentAccount)  {
             <h2 className="text-3xl sm:text-4xl font-semibold">
               {/* Turn your Salary info NFT, and earn passive income selling it */}
 
-            Mint an achievement NFT
+            Monetize yourself
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400 flex">
               {/* You can set preferred display name, create your profile URL and
@@ -504,7 +520,7 @@ if (!currentAccount)  {
                         {`${fileUrl ? 'Change File' : 'Upload File'}`}
                 </a> */}
 
-                <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}
+                <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111', cursor: 'pointer'}}
                     onClick={() => fileInput?.current?.click()} >  
                 {`${fileUrl ? 'Change File' : 'Upload File'}`}</a>
              
@@ -531,7 +547,7 @@ if (!currentAccount)  {
 
 
               <span className="text-neutral-500 dark:text-neutral-400 text-sm">
-                This will be the coverage image of your NFT, it can be your anything that represents your achievement.
+                This will be the coverage image of your NFT.
                 File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV,
                 OGG, GLB, GLTF. Max size: 100 MB
               </span>
@@ -793,7 +809,9 @@ if (!currentAccount)  {
             <FormItem label="Description">
               <Textarea 
                 defaultValue="" 
-      
+                style={{
+                  padding: '10px'
+                }}
                 onChange={
                   (e) => {
                     updateFormInput({
@@ -894,10 +912,18 @@ if (!currentAccount)  {
                  onClick={() => listNFTForSale()}
               >Mint & Sell NFT</ButtonPrimary> */}
 
-            {/* <a style={{background: '#39f889', padding: '10px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={() => listNFTForSale()} >Mint & Sell Skill NFT</a> */}
+            {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={() => listNFTForSale()} >Mint & Sell Skill NFT</a> */}
             <div></div>
 
-            <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}}   onClick={() => listNFTForSale()}> 
+            <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111', cursor: 'pointer'}}   onClick={() => {
+              if (localStorage.getItem('email') || !email) {
+               listNFTForSale()
+              } 
+              
+              else {
+                signInWithGoogle()
+              }
+            }}> 
             Mint 
                
                 

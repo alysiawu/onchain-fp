@@ -69,6 +69,33 @@ type EventName = 'PostJobPage_Visted'
 
 | 'IndustryInsisdersPage_Visted'
 
+
+
+| 'Lewkhome_Visited'
+| 'QueryTheBlockCTAbtn_Clicked'
+| 'SavePage_Clicked'
+| 'UserNamePage_Visited'
+
+| 'SaveUserName_Clicked'
+| 'SharePageTwitter_Clicked'
+
+| 'SignInWithWallet_Clicked'
+
+| 'DisconnectWallet_Clicked'
+| 'JoinBeta_Clicked'
+
+| 'QueryTheBlockCTAbtnSecondHero_Clicked'
+
+| 'ReseveDomain_Clicked'
+
+| 'ShareCurationPageTwitter_Clicked'
+
+| 'LewkWallet'
+
+| 'CreatePageSlug_Clicked'
+
+| 'Gated_Content_Accessed'
+
 export const trackEvent = (eventName: EventName, metadata: any) => {
     if ((window as any).analytics) {
         // let position

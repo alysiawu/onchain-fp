@@ -25,6 +25,16 @@ import ArchiveFilterListBox from "components/ArchiveFilterListBox";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
 import { getNft } from "utils/getNFT";
 import { useAccountContext } from "contexts/accountContext";
+import { getNFTs } from "utils/alchemy";
+import { Network } from "alchemy-sdk";
+import { saveCustomerUrltoFirebase, saveNFTDataFirebase, saveWalletToAirtable, TokenGateCondition } from "containers/PageHome/helpers";
+import { useWeb3React } from "@web3-react/core";
+import CardNFTDisplay from "components/CardNFTDisplay";
+import Input from "shared/Input/Input";
+import { trackEvent } from "utils/tracking";
+import { useNavigate } from "react-router-dom";
+import FormItem from "components/FormItem";
+import CreateGatedPage from "./CreatedGatedPage";
 
 export interface AuthorPageProps {
   className?: string;
@@ -37,10 +47,29 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   const [nftsCollected, setNftsCollected] = useState([])
   const [nftsCreated, setNftsCreated] = useState([])
   const [loadingState, setLoadingState] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [nftDataETH, setNFTDataETH] = useState<any>()
+  const [nftDataPOLYGON, setNFTDataPOLYGON] = useState<any>()
+  const [pageSlug, setPageSlug] = useState('')
+  const [errorInput, updateErrorInput] = useState({ 
+    pageSlug: ''
+  })
+  const navigate = useNavigate()
 
+  const {
+    library,
+    chainId,
+    account,
+    activate,
+    deactivate,
+    active
+  } = useWeb3React();
   let [categories] = useState([
     "Minted",
     "Collected",
+    "Ethereumn",
+    "Polygon",
+    'Gated'
 
     // "Liked",
     // "Following",
@@ -81,10 +110,12 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
     }))
 
     setNftsCollected(nfts as any)
-    console.log('===nfts', nfts)
+    // console.log('===nfts', nfts)
     setLoadingState(false) 
   }
 
+
+  
   async function loadNFTsCreated() {
     const web3Modal = new Web3Modal({
       network: 'mainnet',
@@ -103,9 +134,42 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
     }))
 
     setNftsCreated(nfts as any)
-    console.log('===setNftsCreated', nfts)
+    // console.log('===setNftsCreated', nfts)
     setLoadingState(false) 
   }
+
+  const _getNFTs = async (wallet: string) => {
+    setLoading(true)
+    const _nftData = await getNFTs(wallet, Network.ETH_MAINNET)
+  
+    const _nftDataPolygon = await getNFTs(wallet, Network.MATIC_MAINNET)
+    console.log('nftData', _nftData)
+    console.log('_nftDataPolygon', _nftDataPolygon)
+    // @ts-ignore
+
+    setNFTDataPOLYGON(_nftDataPolygon)
+    setNFTDataETH(_nftData)
+    // saveNFTDataFirebase(wallet, _nftData, _nftDataPolygon)
+    localStorage.setItem(wallet, JSON.stringify(
+      {
+        nftDataETH: _nftData,
+        nftDataPOLYGON: _nftDataPolygon,
+        updatedAt: Date.now()
+      }
+    ))
+    setLoading(false)
+
+  
+  }
+
+
+     
+      useEffect(() => {  
+
+ 
+          account && _getNFTs(account)
+
+      }, [account])
 
 
   useEffect( () => {
@@ -114,6 +178,10 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
     loadNFTsCreated()
   }, [])
   
+
+
+
+
 
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
@@ -206,7 +274,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
       </div>
       {/* ====================== END HEADER ====================== */}
 
-      <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28">
+      <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28 flex">
         <main>
           <Tab.Group>
             <div className="flex flex-col lg:flex-row justify-between ">
@@ -227,9 +295,9 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                   </Tab>
                 ))}
               </Tab.List>
-              <div className="mt-5 lg:mt-0 flex items-end justify-end">
+              {/* <div className="mt-5 lg:mt-0 flex items-end justify-end">
                 <ArchiveFilterListBox />
-              </div>
+              </div> */}
             </div>
             <Tab.Panels>
            
@@ -265,15 +333,20 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-                  {Array.from("11111111").map((_, index) => (
-                    <CardNFT isLiked key={index} />
-                  ))}
+                 
+                {nftDataETH && nftDataETH.map((nft: { description: any; title: any; media: any; rawMetadata: any; }, index: string) => {
+    
+                    return (<CardNFTDisplay key={index} nft={nft} unit='ETH'/>)
+                  
+
+                  })}
+
                 </div>
 
                 {/* PAGINATION */}
                 <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
+                  {/* <Pagination /> */}
+                  {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
                 </div>
               </Tab.Panel>
 
@@ -281,34 +354,50 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8 lg:mt-10">
-                  {Array.from("11111111").map((_, index) => (
+                  {/* {Array.from("11111111").map((_, index) => (
                     <CardAuthorBox3 following key={index} />
-                  ))}
+                  ))} */}
+
+                  {nftDataPOLYGON && nftDataPOLYGON.map((nft: { description: any; title: any; media: any; rawMetadata: any; }, index: string) => {
+                      
+                      return (<CardNFTDisplay key={index} nft={nft} unit='MATIC' />)
+                      
+
+                    })}
                 </div>
 
                 {/* PAGINATION */}
                 <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
+                  {/* <Pagination /> */}
+                  {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
                 </div>
               </Tab.Panel>
-              <Tab.Panel className="">
+              <Tab.Panel className="" 
+              style={{
+            
+                width: '100%'
+              }}>
+              <CreateGatedPage />
                 {/* LOOP ITEMS */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
-                  {Array.from("11111111").map((_, index) => (
+              
+           
+               
+
+                  {/* {Array.from("11111111").map((_, index) => (
                     <CardAuthorBox3 following={false} key={index} />
-                  ))}
-                </div>
+                  ))} */}
+           
 
                 {/* PAGINATION */}
                 <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
+                  {/* <Pagination />
+                  <ButtonPrimary loading>Show me more</ButtonPrimary> */}
                 </div>
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
         </main>
+      
 
         {/* === SECTION 5 === */}
         {/* <div className="relative py-16 lg:py-28">
@@ -317,7 +406,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
         </div> */}
 
         {/* SUBCRIBES */}
-        <SectionBecomeAnAuthor />
+        {/* <SectionBecomeAnAuthor /> */}
       </div>
     </div>
   );

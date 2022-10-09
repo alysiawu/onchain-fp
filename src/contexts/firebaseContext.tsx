@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "./firebase";
+import NcModal from "shared/NcModal/NcModal";
 
 export const AuthContext = React.createContext<
 {
@@ -19,13 +20,13 @@ export const AuthContext = React.createContext<
 });
 
 export const useFirebaseContext= () => {
-    return React.useContext(AuthContext)
+  return React.useContext(AuthContext)
 }
 
 export const AuthProvider = ({ children }: {children: any}) => {
-    
+  const [showLoginModal, setShowLoginModal] = useState(false)
   const [currentUser, setCurrentUser] = useState<{}>({});
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>(localStorage.getItem('email') || '');
   const [uid, setUid] = useState('')
 
   const [photoUrl, setPhotoUrl] = useState<string>('');
@@ -33,6 +34,27 @@ export const AuthProvider = ({ children }: {children: any}) => {
   const auth = getAuth();
   // const googleProvider = new app.auth.GoogleAuthProvider()
   const provider = new GoogleAuthProvider();
+
+  const  renderContent = () => {
+    return (
+
+        <form action="#">
+        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
+        ✨🔮 Magic in the works... 🔮✨ 
+        </h3>
+        <span className="text-l flex mt-10">
+           Minting NFT...
+        </span>
+        <div className="mt-4 space-x-3">
+          {/* <ButtonPrimary onClick={handleClickSubmitForm} type="submit">
+            Delete
+          </ButtonPrimary> */}
+          
+        </div>
+      </form>
+    )
+  }
+
 
   const signInWithGoogle = () => {
     console.log('kkkk')
@@ -121,12 +143,24 @@ export const AuthProvider = ({ children }: {children: any}) => {
     <AuthContext.Provider value={{ 
         currentUser,
         uid,
-        email,
+        email: localStorage.getItem('email') || email,
         photoUrl,
         displayName,
         signInWithGoogle
     }}>
       {children}
+      {
+        true && <NcModal
+        isOpenProp={showLoginModal}
+        onCloseModal={() => {
+          setShowLoginModal(false)
+        }}
+        contentExtraClass="max-w-screen-sm"
+        renderContent={renderContent}
+        // renderTrigger={renderTrigger}
+        modalTitle=""
+      />
+      }
     </AuthContext.Provider>
   );
 }

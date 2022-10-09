@@ -78,7 +78,7 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
     style={{
-      // background: '#39f889',
+      // background: '#19FDA6',
       // color: '#111'
     }}
       disabled={disabled || loading}

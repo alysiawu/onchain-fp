@@ -42,10 +42,10 @@ const WhyUseFuture: FC<SectionHero3Props> = ({ className = "" }) => {
           >
             Start your search
           </ButtonPrimary> */}
-                {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Community</a> */}
+                {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/bGq3zG7t77'} >Join our Community</a> */}
                 Allow every class you took and every work you do turned into achievement tokens
             <div>
-            <a style={{background: '#39f889', padding: '20px 40px', 'boxShadow': '0 0 50px #39f889', borderRadius: '35px', color: '#111'}} href={'/connect-wallet'} >Connect Wallet</a>
+            <a style={{background: '#19FDA6', padding: '20px 40px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '35px', color: '#111'}} href={'/connect-wallet'} >Sign in with wallet</a>
 
          
             </div>

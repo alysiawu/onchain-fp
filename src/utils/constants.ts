@@ -1,3 +1,4 @@
+// import { marketplace } from './constants';
 import { featuredImgs } from './../contains/fakeData';
 
 
@@ -8,6 +9,8 @@ export const marketplace = '0x2aa03c9cd829f57a0ea4bbb496547308f6e10874'
 // Test net Mumbai
 // export const marketplace = '0x50c56D4289C6F001a3ba362AF8f35c153f7fa98a'
 
+// mainnet - $38 bucks
+// export const marketplace = '0xd5D47a3d9b3719E243e3b2F1b34df4e1CF720B85'
 // Infura
 // https://www.becomebetterprogrammer.com/upload-files-using-react-ipfs-infura/
 const projectId = "27ckvwku1Ndu8S2tBbh3VbZW8pw";
@@ -44,6 +47,14 @@ export const JobFamilies = [
 
 export const AchievementCategories = [
     {
+        id: '0',
+        name: 'Time',
+    },
+    {
+        id: '10',
+        name: 'Attention',
+    },
+    {
         id: '1',
         name: 'Skill',
     },
@@ -68,8 +79,20 @@ export const AchievementCategories = [
     },
     {
         id: '6',
-        name:  'Others'
-    }
+        name:  'Others',
+    },
+    {
+        id: '7',
+        name: 'Pass',
+    },
+    {
+        id: '8',
+        name: 'Membership',
+    },
+    {
+        id: '9',
+        name: 'Ticket',
+    },
 ]
 
 // https://companies.hello-we3.com/

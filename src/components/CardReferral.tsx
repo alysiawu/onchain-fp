@@ -94,7 +94,7 @@ const clickQuickApply = () => {
     <div
       className={`nc-CardNFT relative flex flex-col group !border-0 [ nc-box-has-hover nc-dark-box-bg-has-hover ] ${className}`}
       data-nc-id="CardNFT"
-      style={{background: 'grey', boxShadow: '0 0 50px #39f889', padding: '1.5rem'}}
+      style={{background: 'grey', boxShadow: '0 0 50px #19FDA6', padding: '1.5rem'}}
     >
       <div className="relative flex-shrink-0 ">
         <div className={`text-lg font-medium py-5`}>
@@ -199,7 +199,7 @@ const clickQuickApply = () => {
            
               <div className=" " style={{marginBottom: '2rem'}}>
                
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Refer Candidate</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Refer Candidate</a>
 
              </div>
 

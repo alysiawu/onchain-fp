@@ -98,7 +98,7 @@ const clickQuickApply = () => {
     <div
       className={`nc-CardNFT relative flex flex-col group !border-0 [ nc-box-has-hover nc-dark-box-bg-has-hover ] ${className}`}
       data-nc-id="CardNFT"
-      style={{background: 'grey', boxShadow: '0 0 50px #39f889', padding: '1.5rem'}}
+      style={{background: 'grey', boxShadow: '0 0 50px #19FDA6', padding: '1.5rem'}}
     >
       <div className="relative flex-shrink-0  justify-center items-center text-center">
         <div className={`text-lg font-medium py-5`} style={{height: '100px'}}>
@@ -182,7 +182,7 @@ const clickQuickApply = () => {
 
 
       <div className="relative justify-center items-center text-center">
-      {/* <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Request to talk</a> */}
+      {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Request to talk</a> */}
 
       </div>
 
@@ -276,12 +276,12 @@ const clickQuickApply = () => {
            
             {/* <div className={`flex-grow flex absolute bottom-5 left-55`}>
                
-              <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Request to talk</a>
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Request to talk</a>
 
              </div> */}
 
              <div className="relative justify-center items-center text-center">
-      <a style={{background: '#39f889', padding: '12px', 'boxShadow': '0 0 50px #39f889', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Request to talk</a>
+      <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Request to talk</a>
 
       </div>
 

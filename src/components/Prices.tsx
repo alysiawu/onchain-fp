@@ -6,15 +6,18 @@ export interface PricesProps {
   contentClass?: string;
   labelTextClassName?: string;
   labelText?: string;
+  unit?: string;
 }
 
 const Prices: FC<PricesProps> = ({
   className = "pt-3",
-  price = `$${((Math.random() * 100).toPrecision(4))}`,
+  price,
+  // price = `${((Math.random() * 100).toPrecision(4))}`,
   contentClass = "py-1.5 md:py-2 px-2.5 md:px-3.5 text-sm sm:text-base font-semibold",
   labelTextClassName = "bg-white",
   // labelText = Math.random() > 0.4 ? "Price" : "Current Bid",
   labelText = "Price",
+  unit,
 }) => {
   return (
     <div className={`${className}`}>
@@ -26,7 +29,7 @@ const Prices: FC<PricesProps> = ({
         >
           {labelText}
         </span>
-        <span className=" text-green-500 !leading-none">{price} MATIC</span>
+        <span className=" text-green-500 !leading-none">{price} {unit} </span>
       </div>
     </div>
   );

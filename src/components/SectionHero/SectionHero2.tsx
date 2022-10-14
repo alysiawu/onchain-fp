@@ -14,7 +14,7 @@ import Input from "shared/Input/Input";
 import BeatLoader from "react-spinners/BeatLoader";
 import CardNFTDisplay from "components/CardNFTDisplay";
 import NcModal from "shared/NcModal/NcModal";
-import { saveCustomerUrltoFirebase, saveNFTDataFirebase, saveWalletToAirtable } from "containers/PageHome/helpers";
+import { saveCustomerUrltoFirebase, saveCustomerUrltoFirebase2, saveNFTDataFirebase, saveWalletToAirtable } from "containers/PageHome/helpers";
 
 export interface SectionHero2Props {
   children?: React.ReactNode;
@@ -94,7 +94,9 @@ const savePage = async (_userName: string, wallet: string) => {
     // console.log(record.get('Name'));
     // });
     
-  await saveCustomerUrltoFirebase(wallet, userName)
+  await saveCustomerUrltoFirebase2(wallet, userName)
+
+  // saveCustomerUrltoFirebase2
   // setSaveUserName(true)
 
     navigate(`/${userName}`, {

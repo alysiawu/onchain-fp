@@ -225,14 +225,17 @@ useEffect(() => {
       setLoading(true)
 
       const wallet = ref(db, 'customDomain/' + slug);
-  
-  
+
       onValue(wallet, (snapshot) => {
           // console.log('--snapshot', snapshot, snapshot.exists())
   
           // if (snapshot.exists()) {
           var data = snapshot.val();
-          if  (data?.walelt) {
+
+            
+          console.log('---data', data)
+
+          if  (data?.wallet) {
             console.log('data', data?.wallet)
             // updatedAt
             setWalletAddress(data?.wallet)
@@ -290,7 +293,7 @@ useEffect(() => {
     // Load onchain data
     // loadNFTs()
     // loadNFTsCreated()
-    // getWalletAddress()
+    getWalletAddress()
   }, [])
   
   // const gatedSpaceSumbit = async (avatarString: string) => {

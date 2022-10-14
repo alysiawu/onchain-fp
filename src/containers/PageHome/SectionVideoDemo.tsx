@@ -89,7 +89,7 @@ const SectionVideosDemo: FC<SectionVideosProps> = ({
         <h2 className="font-semibold text-3xl md:text-4xl xl:text-6xl !leading-[114%] mb-10" style={{
           fontSize: '2rem'
         }}>
-                     ✨    Monetize your knowledge, information, attention and time ✨
+                     ✨     ✨
            
       </h2>
 
@@ -103,7 +103,7 @@ const SectionVideosDemo: FC<SectionVideosProps> = ({
             {/* A lewk is how your are different from the norm and other people */}
             {/* Bring NFTs from blockchains to you! */}
 
-            Peer to peer value exchange enabled by the blockchain
+            {/* Peer to peer value exchange enabled by the blockchain */}
             {/* , you and your communities. */}
       </span>
       <div className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10">

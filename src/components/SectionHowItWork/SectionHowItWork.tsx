@@ -18,14 +18,14 @@ const DEMO_DATA = [
     id: 1,
     img: HIW1img,
     imgDark: HIW1img,
-    title: "Set up offering & price",
+    title: "Connect Wallet to Polygon",
     desc: "",
   },
   {
     id: 2,
     img: HIW2img,
     imgDark: HIW2img,
-    title: "Create a link or NFT",
+    title: "Mint NFT Keys",
     desc: "",
   },
   {
@@ -33,14 +33,14 @@ const DEMO_DATA = [
     img: HIW3img,
     imgDark: HIW3img,
     // title: "React & Curate",
-      title: "Share the link to social media or community",
+      title: "Token Gate Digital Element and Pin Your Lewk Wallet ID",
     desc: "",
   },
   {
     id: 4,
     img: HIW4img,
     imgDark: HIW4img,
-    title: "Waiting for fans to book",
+    title: "Share Your Lewk Page With Fans",
     desc: "",
   },
 ];

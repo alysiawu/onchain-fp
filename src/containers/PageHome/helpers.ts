@@ -76,6 +76,19 @@ export const saveCustomerUrltoFirebase = async (wallet: string, pageSlug: string
 }
 
 
+export const saveCustomerUrltoFirebase2 = async (wallet: string, pageSlug: string, tokenGates?: any) => {
+    const db = getDatabase();
+    const _payload: any= {
+        wallet,
+        updatedAt: Date.now()
+    }
+    if (tokenGates) {
+        _payload.tokenGates = JSON.stringify(tokenGates)
+    }
+
+    await set(ref(db, 'customDomain/' + pageSlug), _payload);
+}
+
 // export const saveContentGatetoFirebase = async (wallet: string, pageSlug: string) => {
 //     const db = getDatabase();
 
@@ -284,6 +297,23 @@ export const saveGatedContent =  async (slug: string, contentType: string, conte
     await set(ref(db, 'GatedContent/' + slug + '/' + contentType), {
 
         contentType,
+        content,
+        updatedAt: Date.now()
+      });
+    
+
+}
+
+
+export const saveGatedContent2 =  async (slug: string, content: string) => {
+    const db = getDatabase();
+    const path = 'GatedContent/' + slug
+
+    const curation = ref(db, path);
+
+    await set(ref(db, 'GatedContent/' + slug), {
+
+
         content,
         updatedAt: Date.now()
       });

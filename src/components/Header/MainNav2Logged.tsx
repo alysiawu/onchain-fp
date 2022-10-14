@@ -280,20 +280,10 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             href='/create'
              >
           
-                <span>Monetize attention </span>
+                <span>Create</span>
               </a>
             </div>
-            <div className="login-buttons" style={{margin: '10px'}}>
-            <a style={{background: '#19FDA6', padding: '10px', 
-            cursor: 'pointer',
-            'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} 
-              
-            href='/create'
-             >
-          
-                <span>Monetize knowledge </span>
-              </a>
-            </div>
+           
 
               {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/MSJtrV6xjb'} >Join our community</a>
             <div></div> */}

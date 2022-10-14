@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Input from "shared/Input/Input";
 import { trackEvent } from 'utils/tracking';
 import './index.css'
 
 const SubscribeForm = () => {
 
-    const [email, setEmail] = useState('')
+    const [url, setUrl] = useState('')
     const [subscribed, setSubscribed] = useState(false)
+    const navigate = useNavigate()
 
     return (
         <>
@@ -23,17 +25,17 @@ const SubscribeForm = () => {
   
         <div>
         <Input
-        style={{
-            padding: '25px 50px', fontSize: '20px',  width: '300px',
-            marginRight: '50px'
-        }}
+          style={{
+              padding: '25px 50px', fontSize: '20px',  width: '600px',
+              marginRight: '50px'
+          }}
           required
           aria-required
-          placeholder="Enter your email"
-          type="email"
+          placeholder="e.g. https://yousite.com/"
+          type="url"
           rounded="rounded-full"
           onChange={(e) => {
-            setEmail(e.target.value)
+            setUrl(e.target.value)
           }}
         />
 
@@ -44,53 +46,56 @@ const SubscribeForm = () => {
             
         </div>
             
-    <a style={{  animation: 'glow 1s infinite',
-                         transition:'0.5s',
-                         color: '#19FDA6',
-                         backgroundColor:'rgba(156, 161, 160,0.3)',
-                        //  'boxShadow': '0 0 50px #19FDA6',
-                          borderRadius: '35px', 
-                          // color: '#111',
-                           padding: '15px 25px',
-                           cursor: 'pointer'}} 
+        <a style={{  animation: 'glow 1s infinite',
+            transition:'0.5s',
+            color: '#19FDA6',
+            backgroundColor:'rgba(156, 161, 160,0.3)',
+          //  'boxShadow': '0 0 50px #19FDA6',
+            borderRadius: '35px', 
+            // color: '#111',
+              padding: '15px 25px',
+              cursor: 'pointer'}} 
     
-    // href={'https://airtable.com/shr8LtmwYtzXAELuQ'} 
+            // href={'https://airtable.com/shr8LtmwYtzXAELuQ'} 
 
 
-onClick={() => {
-// console.log('ppp')
-trackEvent('JoinBeta_Clicked', {
-    email
-//   library,
-//   chainId,
-//   account,
-//   activate,
-//   deactivate,
-//   active
-})
+            onClick={() => {
+              console.log('ppp')
+            trackEvent('Create_Clicked', {
+                url
+            //   library,
+            //   chainId,
+            //   account,
+            //   activate,
+            //   deactivate,
+            //   active
+            })
+            navigate('/create-link')
 
-var Airtable = require('airtable');
-const airAPI = 'keyDr90Ny9XSuy819'
-const airtaleBase = new Airtable({apiKey: airAPI}).base('appfZedSta1s4n06f');
+            // var Airtable = require('airtable');
+            // const airAPI = 'keyDr90Ny9XSuy819'
+            // const airtaleBase = new Airtable({apiKey: airAPI}).base('appfZedSta1s4n06f');
 
-airtaleBase('subscriberEmail').create([
-  {
-    "fields": {
-      "Email": email
-    }
-  },
+            // airtaleBase('subscriberEmail').create([
+            //   {
+            //     "fields": {
+            //       "Email": email
+            //     }
+            //   },
 
-], function(err: any, records: any[]) {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  setSubscribed(true)
- 
-});
+            // ], function(err: any, records: any[]) {
+            //   if (err) {
+            //     console.error(err);
+            //     return;
+            //   }
+            //   setSubscribed(true)
+            
+            // });
 
-}}
->Join Beta</a>
+
+
+        }}
+        >Create</a>
 
           {/* <a className="w-6 h-6" 
           
@@ -121,6 +126,10 @@ airtaleBase('subscriberEmail').create([
           /> */}
     
       </form>
+
+
+
+
       </>
     )
 }

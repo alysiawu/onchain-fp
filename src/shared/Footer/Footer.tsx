@@ -122,6 +122,14 @@ const Footer: React.FC = () => {
           </div>
 
             <div className="col-span-2 md:col-span-1">
+            <a href="#">
+    <img id="badge-button"  
+    style={{
+      width: '240px',
+      height: '53px'
+    }}
+    src="https://static.alchemyapi.io/images/marketing/badge.png" alt="Alchemy Supercharged" />
+</a>
 
        {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a> */}
      

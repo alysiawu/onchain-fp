@@ -66,6 +66,10 @@ import GatedTimePage from "containers/AuthorPage/GatedTimePage";
 import MintLewk from "containers/MintLewk";
 import KnowledgeInfluencers from "containers/PageHome/HomeKnowlegdeInfluncers";
 import PeopleSearch from "containers/PeopleSearch";
+import CreateLink from "containers/CreateLink";
+import GatingCondition from "containers/GatingCondition";
+import Success from "containers/Success";
+import NewHome from "containers/PageHome/NewHome";
 
 // import Openings from "containers/Openings";
 
@@ -106,11 +110,16 @@ const App = () => {
       <ScrollToTop />
       <SiteHeader />
       <Routes>
-        <Route path="/" element={<KnowledgeInfluencers />} />
+        <Route path="/" element={<NewHome />} />
+        <Route path="/oldhome" element={<KnowledgeInfluencers />} />
         <Route path="/beta" element={<PageHomeBeta />} />
         <Route path="/mint-lewk" element={<MintLewk />} />
         <Route path="/connect" element={<PeopleSearch />} />
-        <Route path="/gated/:pageSlug" element={<GatedPageWithSlug />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/:pageSlug" element={<GatedPageWithSlug />} />
+        <Route path="/create-link" element={<CreateLink />} />
+        <Route path="/gate-condition" element={<GatingCondition />} />
+        <Route path="/madskullz" element={<NftDetailCurationPage />} />
         
         {/* <Route path="/" element={<PageHome2 />} /> */}
         {/* <Route path="/roof" element={<PageHomeBeta />} /> */}
@@ -152,7 +161,7 @@ const App = () => {
         <Route path="/quick-apply" element={<QuickApplyTalent />} />
         <Route path="/talent-pitch" element={<TalentPitch />} />
         <Route path="/get-started" element={<TalentStart />} />
-        <Route path="/:avatarString" element={<TalentProfilePage />} />
+        <Route path="/profile/:avatarString" element={<TalentProfilePage />} />
         <Route path="/meet/:pageSlug" element={<GatedTimePage />} />
   
         <Route path="/gated" element={<GatedPage />} />

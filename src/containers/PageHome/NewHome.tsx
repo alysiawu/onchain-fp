@@ -39,36 +39,17 @@ import { useNavigate } from "react-router-dom";
 import { BeatLoader, DotLoader } from "react-spinners"
 
 import { trackEvent } from "utils/tracking";
-// import SectionSliderCardNftVideo from "components/SectionSliderCardNftVideo";
-import SectionVideos from "./SectionVideos";
-import { saveCustomerUrltoFirebase, saveNFTDataFirebase, saveWalletToAirtable } from "./helpers";
-import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
-// import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-// import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
-// import SectionSliderCardNftVideo from "components/SectionSliderCardNftVideo";
-// import SectionSliderCollections2 from "components/SectionSliderCollections2";
-import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
-import TopWallets from "components/SectionGridAuthorBox/TopWallets";
-import DiscoverWallets from "components/SectionGridAuthorBox/DiscoverWallets";
-import DiscoverDao from "components/SectionGridAuthorBox/DiscoverDao";
-import SectionHowItWork from "components/SectionHowItWork/SectionHowItWork";
-import Heading from "components/Heading/Heading";
-import CurateVideo from "./CurateVideo";
-import ExploreCommunities from "components/SectionGridAuthorBox/ExploreCommunities";
-import CommunityOverNFTHero from "components/SectionSubscribe2/CommunityOverNFTHero";
-import SubscribeForm from "components/SectionSubscribe2/SubscribeForm";
-import HeroHeader from "components/SectionSubscribe2/Header";
-import SectionVideosDemo from "./SectionVideoDemo";
-// import DiscoverCommunities from "components/SectionGridAuthorBox/DiscoverCommunities";
-// import Heading from "components/Heading/Heading";
 
+import { saveCustomerUrltoFirebase, saveNFTDataFirebase, saveWalletToAirtable } from "./helpers";
+
+import SubscribeForm from "components/SectionSubscribe2/SubscribeForm";
 
 
 export interface SectionHero3Props {
   className?: string;
 }
 
-function KnowledgeInfluencers() {
+function NewHome() {
   const {
     library,
     chainId,
@@ -237,67 +218,6 @@ function KnowledgeInfluencers() {
     
             // navigate(`/${userName}`)
         });
-    
-    
-    
-        return;
-    
-        base('NametoWallets').select({
-            // Selecting the first 3 records in Grid view:
-            // maxRecords: 3,
-            view: "Grid view",
-            // filterByFormula: `Name%3Dalysia`
-        }).eachPage(function page(records: any[], fetchNextPage: () => void) {
-            // This function (`page`) will get called for each page of records.
-        
-            records.forEach(function(record) {
-                // console.log('Retrieved', record.get('Name'), '--', record.get('Wallets'));
-                if (record.get('Name') === userName) {
-                    setExisted(true)
-                    setExistedWallets(record.get('Wallets'))
-                    console.log('lllll', existed, existedWallets)
-    
-                }
-            });
-        
-            // To fetch the next page of records, call `fetchNextPage`.
-            // If there are more records, `page` will get called again.
-            // If there are no more records, `done` will get called.
-            // fetchNextPage();
-    
-            // console.log('existedWallets', existedWallets, existed)
-            if (existed) {
-                navigate(`/${userName}`, {
-                    state: existed
-                })
-    
-            } else {
-                console.log('-oooo-currentAccount', wallet)
-                 base('NametoWallets').create([
-                    {
-                    "fields": {
-                        "Name": userName.trim().toLocaleLowerCase(),
-                        "Wallets": wallet
-                    }
-                    }
-                ], function(err: any, records: any[]) {
-                    if (err) {
-                    console.error(err);
-                    return;
-                    }
-                    records.forEach(function(record) {
-                    console.log(record.get('Name'));
-                    });
-    
-                    navigate(`/${userName}`)
-                });
-            }
-    
-    
-        // @ts-ignore
-        }, function done(err) {
-            if (err) { console.error(err); return; }
-        });
     }
     
       const  renderContent = () => {
@@ -376,6 +296,7 @@ function KnowledgeInfluencers() {
                 {/* Through the Lewking Glass */}
                 {/* learn to earn */}
                 {/* Build on chain reputation */}
+                Share Web2 content with Web3 Audience
               </span>
             
               <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%] text-neutral-300">
@@ -432,12 +353,13 @@ function KnowledgeInfluencers() {
 
                   {/* Lewk is here to profoundly change  */}
                   {/* LEWK IS HERE TO PROFOUNDLY CHANGE */}
-                  Introducing Digital 
+              {/* Create a new Lewk */}
+             
                   </h2>
               <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%] text-neutral-300">
                    {/* How you access the right information  */}
                    {/* HOW YOU ACCESS THE RIGHT INFORMATION */}
-                   Property Ownership
+                   {/* Property Ownership */}
               </h2>
               <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%] text-neutral-300">
                  {/* from the right people */}
@@ -469,10 +391,14 @@ function KnowledgeInfluencers() {
                 borderBottom: '1px solid #19FDA6'
               }}>
               Curation </i> &nbsp; */}
+              Create a new Lewk
               </h2>
-              <span className="font-semibold text-neutral-300 mb-20" style={{color: '#19FDA6'}}>
+              <span className="font-semibold text-neutral-300 mb-20" 
+              // style={{color: '#19FDA6'}}
+              >
                 {/* Create, Explore, & Collect Digital Art NFTs. */}
-                Mint, buy, and re-sell polygon NFT keys and augment the utility in-house by creating NFT-gated digital properties
+                {/* Mint, buy, and re-sell polygon NFT keys and augment the utility in-house by creating NFT-gated digital properties */}
+                Token-gate anything for free!
               </span>
               <span className="font-semibold text-neutral-300 mb-20" style={{color: '#19FDA6'}}>
                 {/* Create, Explore, & Collect Digital Art NFTs. */}
@@ -550,6 +476,8 @@ function KnowledgeInfluencers() {
                
               </span>
               <SubscribeForm></SubscribeForm>
+
+              
               <div className="container relative sm:mb-24 lg:mt-20 lg:mb-32">
         {/* SECTION HERO */}
 
@@ -787,52 +715,24 @@ function KnowledgeInfluencers() {
       <BgGlassmorphism />
 
       <div className="container relative mt-5 mb-5 sm:mb-5 lg:mt-20 lg:mb-32">
-        {/* <HeroHeader /> */}
-        {/* SECTION HERO */}
-        {/* <CommunityOverNFTHero className="py-24 lg:py-32" /> */}
+
         <SectionHero3 
-      // setNFTDataETH={setNFTDataETH}
-      // setLoading={setLoading}
-      // setNFTDataPOLYGON={setNFTDataPOLYGON}
-        // getNFTs = {getNFTs}
-      
+  
       />
 
 
    
-        {/* SECTION 3 */}
-        {/* <SectionMagazine8 /> */}
-
-        {/* SECTION */}
-        <div className="relative py-20 lg:py-28">
-          {/* <BackgroundSection /> */}
-          {/* <SectionGridAuthorBox
-            sectionStyle="style2"
-            data={Array.from("11111111")}
-            boxCard="box4"
-          /> */}
-
-          
-
-    {/* <SectionHero2 
-      // setNFTDataETH={setNFTDataETH}
-      // setLoading={setLoading}
-      // setNFTDataPOLYGON={setNFTDataPOLYGON}
-        getNFTs = {getNFTs}
-      
-      /> */}
-        </div>
 
 
-
+{/* 
 
         <h2 className="font-semibold text-3xl md:text-4xl 2xl:text-5xl font-semibold xl:text-6xl  text-center !leading-[114%] mb-10" style={{
           fontSize: '2rem'
-        }}>
+        }}> */}
           {/* Comment, React, and Curate NFTs */}
-      </h2>
+      {/* </h2> */}
 
-      <span className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10  text-center ">
+      {/* <span className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 mb-10  text-center "> */}
             {/* Starting with compensation data */}
             {/* Upload your W2 and we will pay you $100 */}
             {/* Get by giving */}
@@ -844,16 +744,16 @@ function KnowledgeInfluencers() {
             {/* ✨  You can ask any questions as well ✨ */}
             
             {/* , you and your communities. */}
-      </span>
+      {/* </span> */}
 
   
-
+{/* 
       <h2 className="font-semibold text-3xl md:text-4xl 2xl:text-5xl font-semibold xl:text-6xl  text-center !leading-[114%] mb-10" style={{
   fontSize: '2rem'
 }}>
 How it works
-</h2>
-      <div className="container relative mb-5 sm:mb-5 lg:mt-20 lg:mb-32">
+</h2> */}
+      {/* <div className="container relative mb-5 sm:mb-5 lg:mt-20 lg:mb-32"> */}
 
 
         {/* SECTION HERO */}
@@ -870,16 +770,16 @@ How it works
         {/* <CurateVideo /> */}
 
         {/* SECTION 2 */}
-        <SectionHowItWork className="mt-24 lg:mt-40 xl:mt-48" />
-      </div>
+        {/* <SectionHowItWork className="mt-24 lg:mt-40 xl:mt-48" /> */}
+      {/* </div> */}
      
-      <div className="container relative mb-5 sm:mb-5 lg:mt-20 lg:mb-32">
+      {/* <div className="container relative mb-5 sm:mb-5 lg:mt-20 lg:mb-32">
       <SectionVideosDemo />
-      </div>
-      <div className="container relative sm:mb-24 lg:mt-20 lg:mb-32">
-        </div>
+      </div> */}
+      {/* <div className="container relative sm:mb-24 lg:mt-20 lg:mb-32">
+        </div> */}
 
-        <SectionSubscribe2 className="py-24 lg:py-32" />
+        {/* <SectionSubscribe2 className="py-24 lg:py-32" /> */}
       <div className="relative py-20 lg:py-28">
           {/* <BackgroundSection /> */}
           {/* <SectionGridAuthorBox
@@ -889,30 +789,30 @@ How it works
           /> */}
 
           
-
+{/* 
       <SectionHero2 
       // setNFTDataETH={setNFTDataETH}
       // setLoading={setLoading}
       // setNFTDataPOLYGON={setNFTDataPOLYGON}
         getNFTs = {getNFTs}
       
-      />
+      /> */}
 
-<div className="container relative sm:mb-24 lg:mt-20 lg:mb-32">
+{/* <div className="container relative sm:mb-24 lg:mt-20 lg:mb-32"> */}
 
-<h2 className="font-semibold text-3xl md:text-4xl 2xl:text-5xl font-semibold xl:text-6xl  text-center !leading-[114%] mb-10" style={{
+{/* <h2 className="font-semibold text-3xl md:text-4xl 2xl:text-5xl font-semibold xl:text-6xl  text-center !leading-[114%] mb-10" style={{
   fontSize: '2rem'
 }}>
   Discover Other Wallets
-</h2>
-</div>
-  <DiscoverWallets
+</h2> */}
+{/* </div> */}
+  {/* <DiscoverWallets
     sectionStyle="style2"
     data={Array.from("11111111")}
     boxCard="box4"
-  />
-<div className="container relative sm:mb-24 lg:mt-20 lg:mb-32">
-</div>
+  /> */}
+{/* <div className="container relative sm:mb-24 lg:mt-20 lg:mb-32">
+</div> */}
         </div>
         
 
@@ -984,7 +884,7 @@ How it works
 
 
       {/* <div className="relative py-20 lg:py-20"></div> */}
-      <div className="container relative mt-5 mb-50 sm:mb-24 lg:mt-20 lg:mb-32">
+      {/* <div className="container relative mt-5 mb-50 sm:mb-24 lg:mt-20 lg:mb-32"> */}
       {/* <SectionHero2 
       // setNFTDataETH={setNFTDataETH}
       // setLoading={setLoading}
@@ -1074,7 +974,7 @@ How it works
 
         {/* SECTION */}
         {/* <SectionSubscribe2 className="py-24 lg:py-32" /> */}
-      </div>
+      {/* </div> */}
          
 
       {/* <div className="relative py-20 lg:py-20"></div> */}
@@ -1093,7 +993,7 @@ How it works
 
 
 
-      <div className="relative py-20 lg:py-28"></div>
+
       { saveUserName && <Confetti
         width={_width}
         height={height}
@@ -1106,4 +1006,4 @@ How it works
   );
 }
 
-export default KnowledgeInfluencers;
+export default NewHome;

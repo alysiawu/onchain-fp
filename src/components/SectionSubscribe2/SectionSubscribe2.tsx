@@ -44,8 +44,8 @@ const SectionSubscribe2: FC<SectionSubscribe2Props> = ({ className = "" }) => {
         />
       </div>
       <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mr-10 lg:w-2/5">
-        <h2 className="font-semibold text-4xl">Be the first to know</h2>
-        <h2 className="font-semibold text-4xl"> new feature drops!</h2>
+        <h2 className="font-semibold text-4xl mb-5">Join our beta program</h2>
+        <h2 className="font-semibold text-4xl"> & earn free NFT giveaways</h2>
         <span className="block mt-5 text-neutral-500 dark:text-neutral-400">
           {/* Subcribe to our super-exclusive drop list and be the first to know
           abour upcoming drops */}

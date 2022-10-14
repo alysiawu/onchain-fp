@@ -90,18 +90,25 @@ const Footer: React.FC = () => {
  
         <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
           <div className="col-span-2 md:col-span-1">
-            <Logo />
+            {/* <Logo /> */}
           
           </div>
           
           <div className="col-span-2 flex items-center md:col-span-3">
            
               <div className="flex flex-col lg:flex-row lg:items-center">
-                <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" />
+                {/* <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" /> */}
               </div>
               <div className="flex flex-col lg:flex-row lg:items-center">
- 
-            
+              <a href="#">
+              <img id="badge-button"  
+              style={{
+                width: '240px',
+                height: '53px'
+              }}
+              src="https://static.alchemyapi.io/images/marketing/badge.png" alt="Alchemy Supercharged" />
+          </a>
+                      
                 {/* <a style={{background: 'none', padding: '12px', width: '200px', 
                 'boxShadow': '0 0 50px #19FDA6', 
                 borderRadius: '20px', 
@@ -111,65 +118,34 @@ const Footer: React.FC = () => {
           </div>
           <div className="col-span-2 md:col-span-1">
 
-            © 2022 - Future Protocol Co.
+            {/* © 2022 - Future Protocol Co. */}
       
           </div>
-          <div className="col-span-2 md:col-span-1">
+        
 
-
-            <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@lewk.app'}>Message Us</a>
-            
-          </div>
-
-            <div className="col-span-2 md:col-span-1">
-            <a href="#">
-    <img id="badge-button"  
-    style={{
-      width: '240px',
-      height: '53px'
-    }}
-    src="https://static.alchemyapi.io/images/marketing/badge.png" alt="Alchemy Supercharged" />
-</a>
-
-       {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a> */}
+         
+        </div>
      
-            </div>
-
-        </div>
         <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
           
-       {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@futureprotocol.co'}>Message eeeeeUs</a> */}
-        </div>
-        <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
-          <div>
+              {/* © 2022 - Future Protocol Co. */}
               {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@lewk.app'}>Message Us</a> */}
-            </div>
-            <div>
-          
-              {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@futureprotocol.co'}>Message Us</a> */}
-            </div>
+           
+       
         </div>
 
         <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
-          <div>
-       
-            </div>
+         
+          {/* <a style={{background: 'none', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6', textAlign: 'center'}} href={'mailto:hello@lewk.app'}>Message Us</a> */}
+            
         </div>
                  
     
 
 
-        <div className="flex lg:items-center">
-         
-        </div>
 
                 
-        <div className="flex flex-col lg:flex-row lg:items-center">
-   
-            <div>     
-        
-          </div>
-        </div>
+     
         {/* {widgetMenus.map(renderWidgetMenuItem)} */}
       </div>
     </div>

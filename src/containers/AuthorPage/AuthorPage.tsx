@@ -186,7 +186,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
       <Helmet>
-        <title>All your NFTs, all in one place</title>
+        <title></title>
       </Helmet>
 
       {/* HEADER */}

@@ -70,6 +70,7 @@ import CreateLink from "containers/CreateLink";
 import GatingCondition from "containers/GatingCondition";
 import Success from "containers/Success";
 import NewHome from "containers/PageHome/NewHome";
+import GatedLinks from "containers/AuthorPage/GatedLinks";
 
 // import Openings from "containers/Openings";
 
@@ -112,13 +113,19 @@ const App = () => {
       <Routes>
         <Route path="/" element={<NewHome />} />
         <Route path="/oldhome" element={<KnowledgeInfluencers />} />
+        <Route path="/create-link" element={<CreateLink />} />
+        <Route path="/gate-condition" element={<GatingCondition />} />
+        <Route path=":pageSlug" element={<GatedLinks />} />
+
+
+
+
         <Route path="/beta" element={<PageHomeBeta />} />
         <Route path="/mint-lewk" element={<MintLewk />} />
         <Route path="/connect" element={<PeopleSearch />} />
         <Route path="/success" element={<Success />} />
-        <Route path="/:pageSlug" element={<GatedPageWithSlug />} />
-        <Route path="/create-link" element={<CreateLink />} />
-        <Route path="/gate-condition" element={<GatingCondition />} />
+  
+     
         <Route path="/madskullz" element={<NftDetailCurationPage />} />
         
         {/* <Route path="/" element={<PageHome2 />} /> */}
@@ -204,7 +211,7 @@ const App = () => {
         <Route path="/about" element={<PageAbout />} />
         <Route path="/subscription" element={<PageSubcription />} />
         <Route path="/login" element={<PageLogin />} />
-
+     
         {/* {pages.map(({ component, path, exact }) => {
           return (
             <Route

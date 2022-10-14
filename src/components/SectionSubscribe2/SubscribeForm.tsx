@@ -60,7 +60,7 @@ const SubscribeForm = () => {
 
 
             onClick={() => {
-              console.log('ppp')
+         
             trackEvent('Create_Clicked', {
                 url
             //   library,
@@ -70,7 +70,11 @@ const SubscribeForm = () => {
             //   deactivate,
             //   active
             })
-            navigate('/create-link')
+            navigate('/create-link', {
+              state: {
+                gatedUrl: url
+              }
+            })
 
             // var Airtable = require('airtable');
             // const airAPI = 'keyDr90Ny9XSuy819'

@@ -6,37 +6,18 @@ import { useLocation, useParams } from 'react-router-dom'
 import { Helmet } from "react-helmet";
 import useWindowSize from 'react-use/lib/useWindowSize'
 import { TwitterIcon, TwitterShareButton } from "react-share";
-
-// import { marketplace as marketplaceAddress } from '../../utils/constants'
-// import marketplaceAbi from '../../artifacts/marketplace.json'
-
-// import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import NcImage from "shared/NcImage/NcImage";
 import CardNFT from "components/CardNFT";
 import Pagination from "shared/Pagination/Pagination";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import authorBanner from "images/nfts/authorBanner.png";
-// import { nftsImgs } from "contains/fakeData";
-// import NftMoreDropdown from "components/NftMoreDropdown";
-// import ButtonDropDownShare from "components/ButtonDropDownShare";
-// import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
-// import SocialsList from "shared/SocialsList/SocialsList";
-// import FollowButton from "components/FollowButton";
-// import VerifyIcon from "components/VerifyIcon";
 import { Tab } from "@headlessui/react";
 import CardAuthorBox3 from "components/CardAuthorBox3/CardAuthorBox3";
-// import ArchiveFilterListBox from "components/ArchiveFilterListBox";
-// import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
-// import { getNft } from "utils/getNFT";
-// import { useAccountContext } from "contexts/accountContext";
-// import CardNFT2 from "components/CardNFT2";
 import CardSkillBadge from "components/CardSkillBage";
-// import FormItem from "components/FormItem";
-// import Input from "shared/Input/Input";
+
 import { useFirebaseContext } from "contexts/firebaseContext";
 import { trackEvent } from "utils/tracking";
 import { getNFTs } from 'utils/alchemy'
-import CardNFTDisplay from "components/CardNFTDisplay";
+
 import { useWeb3React } from "@web3-react/core";
 import { Network } from "alchemy-sdk";
 import { BeatLoader } from "react-spinners";
@@ -48,7 +29,8 @@ export interface AuthorPageProps {
 
 // const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
 
-const GatedPageWithSlug: FC<AuthorPageProps> = ({ className = "" }) => {
+const GatedLinks: FC<AuthorPageProps> = ({ className = "" }) => {
+    console.log('ppppp')
   
   const { state } = useLocation()
  const _nftDataETH = (state as any)?.nftDataETH
@@ -62,11 +44,9 @@ const GatedPageWithSlug: FC<AuthorPageProps> = ({ className = "" }) => {
    const { pageSlug } = useParams()
    console.log('---pageSlug', pageSlug)
 
- const [loading, setLoading] = useState(false)
+ const [loading, setLoading] = useState(false)  
 
   var Airtable = require('airtable');
-
-  var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appfZedSta1s4n06f');
 
   const {
     library,
@@ -237,101 +217,9 @@ const reservedDomains = [
         
         <div className="container -mt-10 lg:-mt-16">
        
-          <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">
-            <div className="w-32 lg:w-44 flex-shrink-0 mt-12 sm:mt-0">
-             
-              <NcImage
-                src={`https://api.multiavatar.com/${pageSlug}.svg`}
-                containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
-              />
-              
-            </div>
-
-            
-         
-            <div className="pt-5 md:pt-1 md:ml-6 xl:ml-14 flex-grow">
-              <div className="max-w-screen-sm ">
-                <h2 className="inline-flex items-center text-2xl sm:text-3xl lg:text-4xl font-semibold">
-                  {/* <span>{currentAccount?.slice(0, 6)}</span> */}
-                  
-                  {/* <VerifyIcon
-                    className="ml-2"
-                    iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8"
-                  /> */}
-                </h2>
-                <div className="flex items-center text-sm font-medium space-x-2.5 mt-2.5 text-green-600 cursor-pointer">
-                  <span className="text-neutral-700 dark:text-neutral-300">
-                  Avatar randomly generated based on page url  🥳
-                    {/* Email {profileData && profileData?.email} */}
-                    {/* 4.0xc4c16ac453sa645a...b21a{" "} */}
-                    {/* {currentAccount} */}    
-                    
-                  </span>
-                  <span className="text-neutral-700 dark:text-neutral-300">
-                    {/* Name: {profileData && profileData?.name} */}
-                  
-                  </span>
-                  <span className="text-neutral-700 dark:text-neutral-300">   
-                    {/* Phone: {profileData && profileData?.phone} */}
-                    </span>
-
-                 
-                  {/* <svg width="20" height="21" viewBox="0 0 20 21" fill="none">
-                    <path
-                      d="M18.05 9.19992L17.2333 12.6833C16.5333 15.6916 15.15 16.9083 12.55 16.6583C12.1333 16.6249 11.6833 16.5499 11.2 16.4333L9.79999 16.0999C6.32499 15.2749 5.24999 13.5583 6.06665 10.0749L6.88332 6.58326C7.04999 5.87492 7.24999 5.25826 7.49999 4.74992C8.47499 2.73326 10.1333 2.19159 12.9167 2.84993L14.3083 3.17493C17.8 3.99159 18.8667 5.71659 18.05 9.19992Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M12.5498 16.6583C12.0331 17.0083 11.3831 17.3 10.5915 17.5583L9.2748 17.9917C5.96646 19.0583 4.2248 18.1667 3.1498 14.8583L2.08313 11.5667C1.01646 8.25833 1.8998 6.50833 5.20813 5.44167L6.5248 5.00833C6.86646 4.9 7.19146 4.80833 7.4998 4.75C7.2498 5.25833 7.0498 5.875 6.88313 6.58333L6.06646 10.075C5.2498 13.5583 6.3248 15.275 9.7998 16.1L11.1998 16.4333C11.6831 16.55 12.1331 16.625 12.5498 16.6583Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg> */}
-                </div>
-
-                <a className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                
-                {/* Resume: {profileData && profileData?.linkToResume} */}
-                  {/* Punk #4786 / An OG Cryptopunk Collector, hoarder of NFTs.
-                  Contributing to @ether_cards, an NFT Monetization Platform. */}
-                </a>
-
-               { avatarString && reservedDomains.indexOf(avatarString) > -1 && <a className="mt-10" style={{ padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href="/" 
-                
-                  
-              
-                >domain name reserved </a> }
-
-
-{ pageSlug && reservedDomains.indexOf(pageSlug) === -1 && <a className="mt-10" style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href="https://buy.stripe.com/9AQaIwaTneCe9Z68wA" 
-                
-                  
-                onClick={() => {
-                  trackEvent('ReseveDomain_Clicked', {
-                    url: window.location.href,
-                    library,
-                    chainId,
-                    account,
-                    activate,
-                    deactivate,
-                    active
-                  })
-                }}
-                >reserve page url</a> }
-              </div>
-              <div className="mt-4 ">
-                {/* <SocialsList itemClass="block w-7 h-7" /> */}
-              </div>
-            </div>
-
-          
-          
+          <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">    
             <div className="absolute md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5 flex flex-row-reverse justify-end">
+
               {/* <NftMoreDropdown
                 actions={[
                   {
@@ -347,7 +235,7 @@ const reservedDomains = [
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
               /> */}
         
-
+{/* 
 
                 <span style={{paddingTop: '10px'}}>
                
@@ -377,7 +265,7 @@ const reservedDomains = [
                       <TwitterIcon size={32} round />
                 
                     </TwitterShareButton>
-                </span>
+                </span> */}
 
               {/* <FollowButton
                 isFollowing={false}
@@ -431,9 +319,9 @@ const reservedDomains = [
                 Gating Tokens
                 </h2> */}
            <div className="sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-           Gating NFT contract
-   
-                {tokenGatesData && JSON.parse(tokenGatesData?.video?.tokenGates).map((tg: { chain: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; contractAddress: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined )=> {
+           {/* Gating NFT contract
+    */}
+                {tokenGatesData && tokenGatesData.video && JSON.parse(tokenGatesData?.tokenGates).map((tg: { chain: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; contractAddress: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined )=> {
                   return <div key={index}>
       
     
@@ -863,30 +751,7 @@ twoTruthOnelie: "1. */}
              
           </div>
 
-          {/* <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8" style={{marginTop: '200px'}}> */}
-         
-{/* 
-         <h3 className="text-lg sm:text-2xl font-semibold">
-           ✨ Proof-of-Human by adding a video intro
-         </h3> */}
-
-       {/* <h3 className="text-lg sm:text-2xl font-semibold">
-           <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/quick-apply'}> Start Here</a>
-           </h3> */}
-       {/* </div> */}
-
-          
-          {/* <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8" style={{marginTop: '200px'}}> */}
-         
-
-            {/* <h3 className="text-lg sm:text-2xl font-semibold">
-              ✨ Looking for engineering job?
-            </h3> */}
-
-          {/* <h3 className="text-lg sm:text-2xl font-semibold">
-              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/talent-pitch'}> Complete your Proof-of-capability profile</a>
-              </h3>
-          </div> */}
+ 
 
        
             </div>
@@ -915,4 +780,4 @@ twoTruthOnelie: "1. */}
   );
 };
 
-export default GatedPageWithSlug;
+export default GatedLinks;

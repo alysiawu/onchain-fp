@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { TwitterShareButton, TwitterIcon } from "react-share";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
@@ -46,7 +46,7 @@ export interface PageUploadItemProps {
 }
 
 const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
-  const [gatingWallets, setGatingWallets] = useState([''])
+  const [gatingWallets, setGatingWallets] = useState<Array<string>>()
 
   const plans = [
     {
@@ -91,12 +91,16 @@ const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
      },
   ]
 
+  const { state: {
+    gatedUrl,
+    title,
+    description,
+    imageUrl
+  }} = useLocation()
 
   const [showModal, setShowModal] = useState(false);
   const { connectWallet } = useAccountContext()
   const [currentAccount, setCurrentAccount] = useState('')
-  const navigate = useNavigate()
-
   const [showMintingModal, setShowMintingModal] = useState(false)
   const [showMintSuccessModal, setShowMintSuccessModal] = useState(false)
   const [mintSuccess, setMintSuccess] = useState(false)
@@ -154,7 +158,7 @@ const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-        ✨ Congrats! Your created a lewk!✨ 
+        ✨ Congrats! Your created a lewk link at https://lewk.app/{pageSlug}!✨ 
         </h3>
         {/* <span className="text-l flex mt-10">
           share to <img src={twitter} width='25' className='mr-5 ml-2' onClick={() => {
@@ -163,19 +167,19 @@ const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
         </span> */}
 
          <h3 className="text-lg sm:text-2xl font-semibold mt-10">
-              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
-              
+            
               <TwitterShareButton
                 style={{background: 'none', margin: '1rem', marginTop: '10px'}}
                   title={`I just created a token gated lewk link at`}
                   url={`https://www.lewk.app/${pageSlug}`}
                   hashtags={["shareweb2withweb3"]}
                 >
-                  <TwitterIcon size={32} round />
-            
+                  {/* <TwitterIcon size={32} round /> */}
+                  <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}}> ✨ Share on twitter  
+              </a>
                 </TwitterShareButton>
                 
-                </a>
+                
               </h3>
 
               
@@ -232,7 +236,7 @@ const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
   }[]>()
 
   const [PolygonGatingCondition, setPolygonGatingCondition] = useState<{
-    tokenId: string,
+    // tokenId?: string,
     contractAddress: string,
     chain: 'Polygon' | 'Ethereum'
   }[]>()
@@ -243,7 +247,7 @@ const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
         _pageSlug: string,
         wallet: string, 
         tokenGates: any, 
-        content: string
+        // content: string
     ) => {
         
         console.log('--pageSlug', pageSlug)
@@ -251,15 +255,14 @@ const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
         console.log('---contentType, tokenGates', [...tokenGates, { gatingWallets }])
         await saveCustomerUrltoFirebase2(wallet, pageSlug, [...tokenGates, {
           gatingWallets
-        }])
-        await saveGatedContent2(pageSlug, content)
-        setShowMintSuccessModal(true)
-
-        // navigate('/success', {
-        //   state: {
-
-        //   }
-        // })      
+        }], {
+          title,
+          description,
+          imageUrl,
+          gatedUrl
+        })
+        // await saveGatedContent2(pageSlug, content)
+        setShowMintSuccessModal(true)    
     }
   
 useEffect(() => {
@@ -347,14 +350,6 @@ if (!currentAccount)  {
     </div>
   </div>
 
-  <NcModal
-    renderTrigger={() => null}
-    isOpenProp={showModal}
-    renderContent={renderContent}
-    contentExtraClass="max-w-md"
-    onCloseModal={() => setShowModal(false)}
-    modalTitle="Sign in with wallet"
-  />
 </div>
 
   )
@@ -364,6 +359,9 @@ if (!currentAccount)  {
     <div
       className={`nc-PageUploadItem ${className}`}
       data-nc-id="PageUploadItem"
+      style={{
+        height: '1000px'
+      }}
     >
       <Helmet>
         <title>Lewk.app</title>
@@ -403,30 +401,40 @@ if (!currentAccount)  {
                     placeholder="Collection name, address, or token symbol"
                     onChange={
                       (e) => {
-                        const values =  e.target.value.split(";")
-                        const condistions = values.map(v => {
-                            const [contractAddress, tokenId] = v.split(',')
-                            return {
-                                contractAddress,
-                                tokenId,
-                                chain: 'Ethereum'
-                            }
-                        })
-                        console.log('---condistions', condistions)
+                        // const values =  e.target.value.split(";")
+                        // const condistions = values.map(v => {
+                        //     const [contractAddress, tokenId] = v.split(',')
+                        //     return {
+                        //         contractAddress,
+                        //         tokenId,
+                        //         chain: 'Ethereum'
+                        //     }
+                        // })
+                        const condistion = {
+                          chain: formInput.chain,
+                          contractAddress: e.target.value
+                        }
+                        console.log('---condistions', condistion)
                         if (formInput.chain === 'ETH') {
                            // @ts-ignore
                           setETHGatingCondition(condistions)
                         } else {
                            // @ts-ignore
-                          setPolygonGatingCondition(condistions)
+                          setPolygonGatingCondition(condistion)
                         }
                       }
                   }
                   />
 
                 <select
-                    id="company"
-                    name="company"
+                    id="chain"
+                    name="chain"
+                    style={{
+                      color: '#19FDA6',
+                      // color: '#000',
+                      marginLeft: '10px',
+                      height: '50px'
+                    }}
                     className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300 l:text-l rounded-md"
                     // value={formInput.company}
                     onClick={(e) => {
@@ -448,7 +456,9 @@ if (!currentAccount)  {
                     value: 'Polygon'
                 }
                   ].map(jf => {
-                  return <option>{
+                  return <option
+               
+                  >{
                     jf.name}</option>
                 })}
                 
@@ -456,64 +466,57 @@ if (!currentAccount)  {
                 </div>
             
             </FormItem>
-                  {gatingWallets.map((wallet, index) => {
+                  {gatingWallets && gatingWallets.map((wallet, index) => {
                     return <div
                     key={index}
                     >{wallet}</div>
                   })}
-
-                
-                      <FormItem label="" >
-                        <Input
-                          // value = {wallet}
-                          placeholder='ENS or Ethereum address'
-                          onChange={
-                            (e) => {
-                              // const _wallets = gatingWallets
-                              // 0x7de9DBa3154fe4e82d9c7BAeE3DD31D0237c8302
-                           
-                          
-                              if (!!('0x7de9DBa3154fe4e82d9c7BAeE3DD31D0237c8302'.length === e.target.value.length)) {
-                                // copy.splice(copy.length -1, 0, e.target.value)
-                                console.log('0x7de9DBa3154fe4e82d9c7BAeE3DD31D0237c8302'.length, e.target.value.length)
-                                setGatingWallets([...gatingWallets, e.target.value])
-                              }
-                             
+                <FormItem label="" >
+                  <Input
+                    // value = {wallet}
+                    placeholder='ENS or Ethereum address'
+                    onChange={
+                      (e) => {
+                        // const _wallets = gatingWallets
+                        // 0x7de9DBa3154fe4e82d9c7BAeE3DD31D0237c8302
                       
-                              }
-                          }/>                
-                    </FormItem>
-            <h3 className="text-lg sm:text-2xl font-semibold mt-10">
-         
- 
-
-            <a style={{
-                background: '#19FDA6', 
-                padding: '12px', 
-                'boxShadow': '0 0 50px #19FDA6',
-                 borderRadius: '20px', 
-                 color: '#111', 
-                 cursor: 'pointer'
-
-              }}   
-                onClick={() =>  {
-                    let rr: any[] = []
-                    if (PolygonGatingCondition) {
-                        rr = rr.concat(PolygonGatingCondition)
-                    }
-                    if (ETHGatingCondition) {
-                        rr = rr.concat(ETHGatingCondition)
-                    }
-                    account &&  createGatedLink(pageSlug, account, rr,
                     
-                    gatedContent || ''
-                    )
-                }
-              }> 
-                Create Page
-               
+                        if (!!('0x7de9DBa3154fe4e82d9c7BAeE3DD31D0237c8302'.length === e.target.value.length)) {
+                          // copy.splice(copy.length -1, 0, e.target.value)
+                          console.log('0x7de9DBa3154fe4e82d9c7BAeE3DD31D0237c8302'.length, e.target.value.length)
+                          const d = gatingWallets ? [...gatingWallets, e.target.value] : [e.target.value]
+                          setGatingWallets(d)
+                        }
+                        
                 
-            </a>
+                        }
+                    }/>                
+              </FormItem>
+            <h3 className="text-lg sm:text-2xl font-semibold mt-10">
+              <a style={{
+                  background: '#19FDA6', 
+                  padding: '12px', 
+                  'boxShadow': '0 0 50px #19FDA6',
+                  borderRadius: '20px', 
+                  color: '#111', 
+                  cursor: 'pointer'
+
+                }}   
+                  onClick={() =>  {
+                      let rr: any[] = []
+                      if (PolygonGatingCondition) {
+                          rr = rr.concat(PolygonGatingCondition)
+                      }
+                      if (ETHGatingCondition) {
+                          rr = rr.concat(ETHGatingCondition)
+                      }
+                      account && createGatedLink(pageSlug, account, rr)
+                  }
+                }> 
+                  Create Page
+                
+                  
+              </a>
 
               {/* <ButtonSecondary className="flex-1">Preview item</ButtonSecondary> */}
             </h3>
@@ -523,9 +526,9 @@ if (!currentAccount)  {
                 {/* Want to propose a? 
                 email propose@futureprotocol.co */}
 
-                Want to be an artist?
+                {/* Want to be an artist?
                 email hello@futureprotocol.co
-                
+                 */}
               </div>
               <div className="text-neutral-500 dark:text-neutral-400 text-sm">
                 {/* Choose an cover PFP for your TC NFT */}
@@ -547,19 +550,8 @@ if (!currentAccount)  {
         width={width}
         height={height}
       /> }
-      {
-       showMintingModal && <NcModal
-        isOpenProp={showMintingModal}
-        onCloseModal={() => {
-          setShowMintingModal(false)
-        }}
-        contentExtraClass="max-w-screen-sm"
-        renderContent={renderContent}
-        // renderTrigger={renderTrigger}
-        modalTitle=""
-      />
-      }
-      {
+    
+    {
        showMintSuccessModal && <NcModal
         isOpenProp={showMintSuccessModal}
         onCloseModal={() => {

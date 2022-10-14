@@ -1,88 +1,33 @@
 import Label from "components/Label/Label";
 import React, { FC, useEffect, useState } from "react";
 import { TwitterShareButton, TwitterIcon } from "react-share";
-import Web3Modal from 'web3modal'
-import { useNavigate } from 'react-router-dom';
-import { ethers } from 'ethers'
+import { useLocation, useNavigate } from 'react-router-dom';
 import { create as ipfsHttpClient, IPFSHTTPClient } from 'ipfs-http-client'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import {
   marketplace as marketplaceAddress, 
   authorization,
-  AchievementCategories,
-  // Companies,
-  // Locations,
-  // PFPs,
-//   SkillBadges
 } from '../utils/constants'
 // import twitter from "images/socials/twitter.svg";
 import metamaskImg from "images/metamask.webp";
-import polygon from "images/polygon-matic-logo.png"
 import loading from 'images/loading.gif'
-import marketplaceAbi from '../artifacts/marketplace.json'
-
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 // import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
 import FormItem from "components/FormItem";
-// import { RadioGroup } from "@headlessui/react";
-// import { nftsImgs } from "contains/fakeData";
-// import MySwitch from "components/MySwitch";
-// import ButtonSecondary from "shared/Button/ButtonSecondary";
 import NcImage from "shared/NcImage/NcImage";
 // import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
 import NcModal from "shared/NcModal/NcModal";
-
-// import { WalletService } from "@unlock-protocol/unlock-js";
 import Textarea from "shared/Textarea/Textarea";
 import { useAccountContext } from "contexts/accountContext";
 import { useFirebaseContext } from "contexts/firebaseContext";
 import { signInWithGoogle } from "contexts/firebase";
 
-// const networks = {
-  
-// }
-
 export interface PageUploadItemProps {
   className?: string;
 }
-
-// https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png
-// const plans = [
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmTV5TvgzvYd3PDtcTx1iTbxYG1MDrhnjxVKwehfj6aeEP?filename=6.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/Qmad4u7F4Z6j1zMaqLHGH7ierJ8yZ2GY5ayJK4xAVqVmvu?filename=10.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmQyaoEyL2idHSgRyJ1AaQ5FHC6jTeTkWnRFnsqNkMPrVh?filename=14.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmPzE1FfPw9FqDLhz3ZbNoM8Bxrx7jihTG3wwrDMfviGMa?filename=42.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmSA3e7swDUDHnL22JUnQg74ZXAv68fsC3PQ82cwLq8t78?filename=38.png',
-//   },
-//   {
-//     name: "Crypto Legend - Professor",
-//     featuredImage: 'https://ipfs.io/ipfs/QmeirssBsSUGZt53M3SZNVv73VcLkhErQ9x9bwE6RtpPPX?filename=31.png',
-//   },
-// ];
-
-// https://websan.infura-ipfs.io/ipfs/
-// https://$custom-subdomain.ipfs.infura-ipfs.io/ipfs/$CID/path/to/something
-// https://infura-ipfs.io:5001/api/v0/add?pin=false
-// const client = ipfsHttpClient({ 
-//   url: 'https://infura-ipfs.io:5001/api/v0'
-// })
 
 const CreateLink: FC<PageUploadItemProps> = ({ className = "" }) => {
 
@@ -93,7 +38,6 @@ const CreateLink: FC<PageUploadItemProps> = ({ className = "" }) => {
     // signInWithGoogle,
     // currentUser
   } = useFirebaseContext()
-
 
   const plans = [
     {
@@ -112,11 +56,14 @@ const CreateLink: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [mintSuccess, setMintSuccess] = useState(false)
   const [uploadingFile, setUploadingFile] = useState(false)
   const { width, height } = useWindowSize()
-  const [metadataIpfsUrl, setMetadataIpfsUrl] = useState<string>()
-  // const [selected, setSelected] = useState(SkillBadges[1]);
+
+  const { state } = useLocation()
+  const { gatedUrl } = state
+  console.log('--gatedUrl', gatedUrl)
+  
   const [formInput, updateFormInput] = useState({ 
     chain: 'polygon',
-
+    description: '',
     title: '', 
     company: '', 
     file: '',
@@ -136,7 +83,7 @@ const CreateLink: FC<PageUploadItemProps> = ({ className = "" }) => {
 
   useEffect(() => {
     // if (!currentAccount) {
-      // connectWallet && connectWallet() 
+      // connectWallet && conneactWallet() 
       // localStorage.getItem('currentWallet')
     // }
     if (!localStorage.getItem('currentWallet')) {
@@ -179,58 +126,6 @@ useEffect(() =>{
     client = undefined;
   }
 
-  
-  async function uploadMetadataToIPFS() {
-    setUploadingFile(true)
-    const { 
-      title, 
-      company, 
-       //TODO dropdown
-      jobFamily, 
-      //TODO dropdown
-      location,
-      yearOfExperience,
-      skillValueAdd,
-      base,
-      equity,
-      price,
-
-
-      // image,
-    } = formInput
-
-
-    console.log('---formInput', formInput)
-    // if (!title || !company || !price || !jobFamily || !yearOfExperience || !location) return
-    /* first, upload to IPFS */
-    const data = JSON.stringify({
-      title, 
-      company, 
-      image: fileUrl,
-       //TODO dropdown
-      jobFamily, 
-      //TODO dropdown
-      location,
-      yearOfExperience,
-      skillValueAdd,
-      base,
-      equity,
-      price,
-      // image: selected.featuredImage
-    })
-    try {
-      const added = client && await client.add(data)
-      const url = added && `https://websan.infura-ipfs.io/ipfs/${added.path}`
-      /* after file is uploaded to IPFS, return the URL to use it in the transaction */
-
-      setMetadataIpfsUrl(url)
-      setUploadingFile(false)
-      return url
-    } catch (error) {
-      console.log('Error uploading file: ', error)
-      setUploadingFile(false)
-    }  
-  }
 
   const renderMintSuccessContent  = () => {
     return (
@@ -296,50 +191,6 @@ useEffect(() =>{
     )
   }
 
-
-
-
-  async function listNFTForSale() {
-    setShowMintingModal(true)
-    const url = await uploadMetadataToIPFS()
-    const web3Modal = new Web3Modal()
-    const connection = await web3Modal.connect()
-    const provider = new ethers.providers.Web3Provider(connection)
-    const signer = provider.getSigner()
-    /* next, create the item */
-    const price = ethers.utils.parseUnits(formInput.price, 'ether')
-    let contract = new ethers.Contract(
-      marketplaceAddress, 
-      // PolygonNFTMarketplaceAddress,
-      marketplaceAbi.abi, 
-      signer
-    )
-
-    let listingPrice = await contract.getListingPrice()
-
-    listingPrice = listingPrice.toString()
-    let transaction = await contract.createToken(url, price, { value: listingPrice })
-    // let transaction = await contract.createToken(url, price, '0x0000000000000000000000000000000000001010', 10, { value: listingPrice })
-    const res = await transaction.wait()
-      // console.log('--res', res, 'transaction', transaction)
-    setMintSuccess(true)
-    setShowMintingModal(false)
-    setShowMintSuccessModal(true)
-    // toast("Item successfully listed for sale 🎉 ")
-    // await saveToDB({
-    //   formInput,
-    //   image: fileUrl,
-    //   url,
-    //   metadataUrl: url,
-    //   signer,
-    //   marketplaceAddress
-    //   // PolygonNFTMarketplaceAddress,
-    //   // listingPrice,
-    //   // musicFileUrl,
-    // })
-    // TODO 
-    // navigate('/profile')
-  }
 
   const fileInput = React.createRef<HTMLInputElement>();
 
@@ -786,7 +637,7 @@ if (!currentAccount)  {
                   (e) => {
                     updateFormInput({
                       ...formInput,
-                      skillValueAdd: e.target.value,
+                      description: e.target.value,
                   })
                   }
                 }
@@ -887,7 +738,15 @@ if (!currentAccount)  {
             </a> */}
 
             <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111', cursor: 'pointer'}}   onClick={() => {
-                navigate('/gate-condition')
+                navigate('/gate-condition', {
+                    state: {
+                        gatedUrl,
+                        title: formInput.title,
+                        description: formInput.description,
+                        imageUrl: fileUrl
+
+                    }
+                })
             }}> 
             Next 
                
@@ -901,9 +760,9 @@ if (!currentAccount)  {
                 {/* Choose an cover PFP for your TC NFT */}
                 {/* Want to propose a? 
                 email propose@futureprotocol.co */}
-
+{/* 
                 Want to be an artist?
-                email hello@futureprotocol.co
+                email hello@futureprotocol.co */}
                 
               </div>
               <div className="text-neutral-500 dark:text-neutral-400 text-sm">

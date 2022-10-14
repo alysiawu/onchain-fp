@@ -149,18 +149,7 @@ export const AuthProvider = ({ children }: {children: any}) => {
         signInWithGoogle
     }}>
       {children}
-      {
-        true && <NcModal
-        isOpenProp={showLoginModal}
-        onCloseModal={() => {
-          setShowLoginModal(false)
-        }}
-        contentExtraClass="max-w-screen-sm"
-        renderContent={renderContent}
-        // renderTrigger={renderTrigger}
-        modalTitle=""
-      />
-      }
+    
     </AuthContext.Provider>
   );
 }

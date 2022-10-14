@@ -33,8 +33,7 @@ import { Network } from "alchemy-sdk";
 import { useWeb3React } from "@web3-react/core";
 import { Tab } from "@headlessui/react";
 import CardNFTDisplay from "components/CardNFTDisplay";
-// import ButtonDropDownShare from "components/ButtonDropDownShare";
-import NcModal from "shared/NcModal/NcModal";
+
 import { useNavigate } from "react-router-dom";
 import { BeatLoader, DotLoader } from "react-spinners"
 
@@ -167,26 +166,7 @@ function NewHome() {
         }, 100)
     }
 
-    const saveWallet = async (_userName: string, wallet: string) => {
-      const res = await saveWalletToAirtable(_userName, wallet)
-        // if (res == 'success') {
-          // setSaveUserName(true)
-          // records.forEach(function(record) {
-          // console.log(record.get('Name'));
-          // });
-          
-          await saveCustomerUrltoFirebase(wallet, _userName)
-          setSaveUserName(true)
-          navigate(`/${_userName}`, {
-              state: {
-                  from: 'find_nfts',
-                  nftDataPOLYGON,
-                  nftDataETH
-              }
-             
-          })
-        // }
-    }
+
 
 
 
@@ -668,18 +648,7 @@ function NewHome() {
     
                   </Tab.Group>
     
-                  {
-           showUserNameModal && <NcModal
-            isOpenProp={showUserNameModal}
-            onCloseModal={() => {
-              setShowUserNameModal(false)
-            }}
-            contentExtraClass="max-w-screen-sm"
-            renderContent={renderContent}
-            // renderTrigger={renderTrigger}
-            modalTitle=""
-          />
-          }
+       
         {loading &&<>
            
            

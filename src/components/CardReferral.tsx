@@ -1,6 +1,9 @@
+import { Disclosure } from "@headlessui/react";
+import { ChevronUpIcon } from "@heroicons/react/solid";
 import { useFirebaseContext } from "contexts/firebaseContext";
 import React, { FC } from "react";
 import {  useNavigate } from "react-router-dom";
+import NcImage from "shared/NcImage/NcImage";
 import { trackEvent } from "utils/tracking";
 // import { Link } from "react-router-dom";
 // import Avatar from "shared/Avatar/Avatar";
@@ -25,8 +28,11 @@ export interface CardNFTProps {
     location?: string,
     h1b?: string,
     email?: string,
-    name?: string
-    bountyAmount? :string
+    name?: string,
+    bounty? :string,
+    referralForm: string,
+    requirement: string,
+    logo: string
   },
 //   nft?: {
 //     tokenId: string;
@@ -96,14 +102,44 @@ const clickQuickApply = () => {
       data-nc-id="CardNFT"
       style={{background: 'grey', boxShadow: '0 0 50px #19FDA6', padding: '1.5rem'}}
     >
-      <div className="relative flex-shrink-0 ">
+      <div className="relative flex-shrink-0 "
+        // onClick={
+        //   () => navigate(`/role/${oppo.uuid}`, {
+        //     state: oppo
+        //   })
+        // }
+      >
         <div className={`text-lg font-medium py-5`}>
           {/* <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
-            src={nft&& nft.image || nftsImgs[Math.floor(Math.random() * nftsImgs.length)]}
+            src={oppo.logo}
             className="object-cover group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
+            style={{
+              height: '50%'
+            }}
           /> */}
+<img src={oppo.logo} style={{
+  height: '50px',
+  margin: '5px'
+}}/>
 
+  <div 
+    style={{
+  
+      margin: '20px'
+    }}
+  >
+ 
+<span
+ style={{
+  fontSize: '35px',
+  margin: '20px'
+}}
+>${oppo?.bounty}</span>
+
+
+
+</div>
             {/* {oppo?.company} */}
 
 
@@ -112,33 +148,66 @@ const clickQuickApply = () => {
             src={nftsImgs[Math.floor(Math.random() * nftsImgs.length)]}
             className="object-cover group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           /> */}
-            {oppo?.company}
+            {oppo?.company} -     {oppo?.title}
           
         </div>
         <div>
 
-            {oppo?.title}
+        
+<>
+<Disclosure>
+        {({ open }) => (
+          <>
+            <Disclosure.Button className="flex justify-between w-full px-4 py-2 font-medium text-left bg-neutral-100 dark:bg-neutral-700 dark:hover:bg-neutral-500 rounded-lg hover:bg-neutral-200 focus:outline-none focus-visible:ring focus-visible:ring-neutral-500 focus-visible:ring-opacity-75">
+              <span>Requirement</span>
+              <ChevronUpIcon
+                className={`${
+                  open ? "transform rotate-180" : ""
+                } w-5 h-5 text-neutral-500`}
+              />
+            </Disclosure.Button>
+            <Disclosure.Panel
+              className="px-4 pt-4 pb-2 text-neutral-500 text-sm dark:text-neutral-800"
+              as="div"
+            >
+              <div
+                style={{
+                  width: '250px',
+               
+              }}
+              >
 
+
+                  {oppo.requirement && oppo.requirement.split(';').map(re => {
+                    return (
+                        <><div> - {re}</div></>
+                    )
+                })}
+
+              </div>
+              
+              
+              {/* Tattooed Kitty Gang (“TKG”) is a collection of 666 badass kitty
+              gangsters, with symbol of tattoos, living in the Proud Kitty Gang
+              (“PKG”) metaverse. Each TKG is an 1/1 ID as gangster member & all
+              the joint rights. */}
+              {/* Skill NFT seller {nft.seller} */}
+
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+</>
 
         </div>
+      
+         
         <div>
-
-        Bounty ${oppo?.bountyAmount}
-
-
-</div>
-         <div>
-
+       
           
+      
 
-            H1B: {oppo?.h1b === 'yes'?  '👍': '👀'}
- 
-
-        </div>
-        <div>
-
-
-            Remote: {oppo?.location == 'remote' ?  '👍': '👀'}
+            {/* Remote: {oppo?.location == 'remote' ?  '👍': '👀'} */}
 
         </div>
 <div>
@@ -199,7 +268,8 @@ const clickQuickApply = () => {
            
               <div className=" " style={{marginBottom: '2rem'}}>
                
-              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Refer Candidate</a>
+              {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} onClick={clickQuickApply} > Refer Candidate</a> */}
+              <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111', cursor: 'pointer'}} href={oppo.referralForm} > Refer Candidate</a>
 
              </div>
 

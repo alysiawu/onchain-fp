@@ -46,10 +46,7 @@ export const AccountContextProvider: React.FC<{ children: any}> = ({ children })
         setCurrentAccount(accounts[0])
         localStorage.setItem('currentWallet', accounts[0])
     }
-    // const [_connectWallet, setConnectWallet] = useState(connectWallet)
-      useEffect(() => { 
-        // connectWallet() 
-      }, [])
+  
 
 
 //   const connectWallet = async () => {

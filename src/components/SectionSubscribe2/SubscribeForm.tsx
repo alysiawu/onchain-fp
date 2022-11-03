@@ -26,12 +26,13 @@ const SubscribeForm = () => {
         <div>
         <Input
           style={{
-              padding: '25px 50px', fontSize: '20px',  width: '600px',
+              padding: '25px 50px', fontSize: '20px',  
+              width: '100%',
               marginRight: '50px'
           }}
           required
           aria-required
-          placeholder="e.g. https://yousite.com/"
+          placeholder="Ex. https://yourlink.com/"
           type="url"
           rounded="rounded-full"
           onChange={(e) => {

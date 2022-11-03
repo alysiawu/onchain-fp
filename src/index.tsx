@@ -38,10 +38,6 @@ root.render(
   // <React.StrictMode>
   <ChakraProvider>
      <Web3ReactProvider getLibrary={getLibrary}>
-
-
-
-
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <LinkedinContextProvider>
@@ -55,7 +51,6 @@ root.render(
           </AccountContextProvider>
             
         </LinkedinContextProvider>
-    
       </PersistGate>
     </Provider>
     </Web3ReactProvider>

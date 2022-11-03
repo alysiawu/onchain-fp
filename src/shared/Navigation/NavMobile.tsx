@@ -208,10 +208,16 @@ const MenuItem = ({ copy, link}: {copy: string; link: string}) => {
       {/* <MenuItem  copy="Interview2Earn" link='/interviewer-onboarding'/> */}
       {/* <MenuItem  copy="Join our Talent Nation" link='/quick-apply'/> */}
 
-      <MenuItem  copy="Join the revolution" link='https://airtable.com/shrtnvjRsLibyYcOD'/>
-      <MenuItem  copy="Your Lewk Portal" link='/profile'/>
+      {/* <MenuItem  copy="Join the revolution" link='https://airtable.com/shrtnvjRsLibyYcOD'/> */}
+      <MenuItem  copy="Create Web3 Professional Idenity" link='https://lewkprotocol.xyz'/>
+      <MenuItem  copy="Post a Bounty" link='https://airtable.com/shr7YBHjb8imXVv7v'/>
 
-      <MenuItem  copy="Monetize yourself on the blockchain" link='/create'/>
+  
+
+
+      <MenuItem  copy="Your Lewk Wallet" link='/profile'/>
+      
+      <MenuItem  copy="Mint" link='/create'/>
       {/* <MenuItem  copy="Partner & Investor" link='https://zcal.co/i/QJ9_dMGJ'/> */}
       {/* <MenuItem  copy="Join our Community" link='https://discord.gg/MSJtrV6xjb'/> */}
       {/* <MenuItem  copy="Curated communities" link='/communities'/>

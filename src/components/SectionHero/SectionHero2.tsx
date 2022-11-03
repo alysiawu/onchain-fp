@@ -63,13 +63,13 @@ const _getNFTs = async (wallet: string) => {
   setNFTDataPOLYGON(_nftDataPolygon)
   setNFTDataETH(_nftData)
   saveNFTDataFirebase(wallet, _nftData, _nftDataPolygon)
-  localStorage.setItem(wallet, JSON.stringify(
-    {
-      nftDataETH: _nftData,
-      nftDataPOLYGON: _nftDataPolygon,
-      updatedAt: Date.now()
-    }
-  ))
+  // localStorage.setItem(wallet, JSON.stringify(
+  //   {
+  //     nftDataETH: _nftData,
+  //     nftDataPOLYGON: _nftDataPolygon,
+  //     updatedAt: Date.now()
+  //   }
+  // ))
   setLoading(false)
 
 }

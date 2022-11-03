@@ -71,6 +71,9 @@ import GatingCondition from "containers/GatingCondition";
 import Success from "containers/Success";
 import NewHome from "containers/PageHome/NewHome";
 import GatedLinks from "containers/AuthorPage/GatedLinks";
+import ReferralBountyHome from "containers/PageHome/ReferralBountyHome";
+import JobDetail from "containers/NftDetailPage/JobDetailPage";
+import JobDetailPage from "containers/NftDetailPage/JobDetailPage";
 
 // import Openings from "containers/Openings";
 
@@ -111,7 +114,10 @@ const App = () => {
       <ScrollToTop />
       <SiteHeader />
       <Routes>
-        <Route path="/" element={<NewHome />} />
+        <Route path="/lewk" element={<NewHome />} />
+        <Route path="/" element={<ReferralOppos />} />
+        <Route path="/role/:uuid" element={<JobDetailPage />} />
+        <Route path="/bountyhome" element={<ReferralBountyHome />} />
         <Route path="/oldhome" element={<KnowledgeInfluencers />} />
         <Route path="/create-link" element={<CreateLink />} />
         <Route path="/gate-condition" element={<GatingCondition />} />
@@ -150,7 +156,7 @@ const App = () => {
 
 
         <Route path="/industry-insiders" element={<IndustryInsidersPage />} />
-        <Route path="/referral-oppos" element={<ReferralOppos />} />
+       
 
 
         <Route path="/jobs" element={<JobsSearch />} />

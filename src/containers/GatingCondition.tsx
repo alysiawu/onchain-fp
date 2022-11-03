@@ -124,16 +124,7 @@ const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
     price: '', 
   })
 
-  useEffect(() => {
-    if (!localStorage.getItem('currentWallet')) {
-      // reconnect
-      connectWallet && connectWallet() 
-    } else {
-      const w = localStorage.getItem('currentWallet') || ''
-      // ts-ignore
-      setCurrentAccount(w)
-    }
-  }, [currentAccount])
+
 
 
   let client: IPFSHTTPClient | undefined;
@@ -230,131 +221,52 @@ const GatingCondition: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [gatedContent, setGatedContent] = useState()
 
   const [ETHGatingCondition, setETHGatingCondition] = useState<{
-    tokenId: string,
+    // tokenId: string,
     contractAddress: string,
     chain: 'Polygon' | 'Ethereum'
-  }[]>()
+  }>()
 
   const [PolygonGatingCondition, setPolygonGatingCondition] = useState<{
     // tokenId?: string,
     contractAddress: string,
     chain: 'Polygon' | 'Ethereum'
-  }[]>()
+  }>()
   const uniqueUrl = Math.random().toString(36).slice(2, 12);
     const [pageSlug, setPageSlug] = useState(uniqueUrl)
 
     const createGatedLink = async (
         _pageSlug: string,
-        wallet: string, 
+     
         tokenGates: any, 
         // content: string
     ) => {
         
         console.log('--pageSlug', pageSlug)
         // const pageSlug = _pageSlug.trim().toLowerCase()
-        console.log('---contentType, tokenGates', [...tokenGates, { gatingWallets }])
-        await saveCustomerUrltoFirebase2(wallet, pageSlug, [...tokenGates, {
-          gatingWallets
-        }], {
+        // console.log('---contentType, tokenGates', [...tokenGates, { gatingWallets }])
+        let oo = {}
+        if (gatingWallets) {
+          // @ts-ignore
+          oo.gatingWallets = gatingWallets
+        }
+        if (tokenGates) {
+          oo = {
+            ...tokenGates,
+            ...oo
+          }
+        }
+        await saveCustomerUrltoFirebase2(pageSlug, oo, {
           title,
           description,
           imageUrl,
-          gatedUrl
+          
         })
-        // await saveGatedContent2(pageSlug, content)
+        await saveGatedContent2(pageSlug, gatedUrl)
         setShowMintSuccessModal(true)    
     }
   
-useEffect(() => {
 
-}, [gatingWallets])
 
-if (!currentAccount)  {
-
-  return (
-    <div
-  className={`nc-PageConnectWallet ${className}`}
-  data-nc-id="PageConnectWallet"
->
-  <Helmet>
-    <title>Sign in with wallet || Lewk.app</title>
-  </Helmet>
-  <div className="container">
-    <div className="my-12 sm:lg:my-16 lg:my-24 max-w-3xl mx-auto space-y-8 sm:space-y-10">
-      {/* HEADING */}
-      <div className="max-w-2xl">
-        <h2 className="text-3xl sm:text-4xl font-semibold">
-          Connect your wallet to Metamask
-        </h2>
-        
-        <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-          Connect with one of our available wallet providers
-        </span>
-      </div>
-      <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
-      <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
-        <div className="space-y-3">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              // onClick={() => setShowModal(true)}
-              onClick={() => connectWallet && connectWallet()}
-              typeof="button"
-              tabIndex={0}
-              className="relative rounded-xl hover:shadow-lg hover:bg-neutral-50 border 
-            border-neutral-200 dark:border-neutral-700 px-3 sm:px-5 py-4 cursor-pointer flex 
-            focus:outline-none focus:shadow-outline-blue focus:border-blue-500 dark:bg-neutral-800 
-            dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-200"
-            >
-              <div className="flex items-center w-full">
-                <NcImage
-                  src={plan.img}
-                  containerClassName="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 p-2 sm:p-3 bg-white rounded-full overflow-hidden shadow-lg"
-                />
-                <div
-                  className={`ml-4 sm:ml-8 font-semibold text-xl sm:text-2xl `}
-                >
-                  {plan.name}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ---- */}
-        <div className="pt-2 ">
-          <ButtonPrimary href={"/"} className="flex-1">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M9.57 5.92993L3.5 11.9999L9.57 18.0699"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M20.5 12H3.67004"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-
-            <span className="ml-2">Go Back Home</span>
-          </ButtonPrimary>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-  )
-  
-} else {
    return (
     <div
       className={`nc-PageUploadItem ${className}`}
@@ -378,7 +290,7 @@ if (!currentAccount)  {
                   Who should have access?
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400 flex">
-            Gate to 1 contract and up to 10 wallets. 
+            Gate to 1 contract and unlimited wallets. 
             {/* Provide details about the NFT to be used to unlock the content, and anyone trying to access your file will not be able to access it unless they own the NFT specified. */}
               {/* You can set preferred display name, create your profile URL and
               manage other personal settings. */}
@@ -417,7 +329,7 @@ if (!currentAccount)  {
                         console.log('---condistions', condistion)
                         if (formInput.chain === 'ETH') {
                            // @ts-ignore
-                          setETHGatingCondition(condistions)
+                          setETHGatingCondition(condistion)
                         } else {
                            // @ts-ignore
                           setPolygonGatingCondition(condistion)
@@ -503,14 +415,14 @@ if (!currentAccount)  {
 
                 }}   
                   onClick={() =>  {
-                      let rr: any[] = []
+                      let rr: any = {}
                       if (PolygonGatingCondition) {
-                          rr = rr.concat(PolygonGatingCondition)
+                          rr = PolygonGatingCondition
                       }
                       if (ETHGatingCondition) {
-                          rr = rr.concat(ETHGatingCondition)
+                          rr = ETHGatingCondition
                       }
-                      account && createGatedLink(pageSlug, account, rr)
+                      createGatedLink(pageSlug, rr)
                   }
                 }> 
                   Create Page
@@ -565,7 +477,7 @@ if (!currentAccount)  {
       }
     </div>
   );
-} 
+
 };
 
 // function CheckIcon(props: any) {

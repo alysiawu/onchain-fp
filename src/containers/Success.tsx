@@ -304,7 +304,7 @@ const [errorInput, updateErrorInput] = useState({
         // console.log(record.get('Name'));
         // });
         console.log('---contentType, tokenGates', tokenGates)
-        await saveCustomerUrltoFirebase2(wallet, pageSlug, tokenGates)
+        await saveCustomerUrltoFirebase2(pageSlug, tokenGates)
         await saveGatedContent2(_pageSlug, content)
         // setSaveUserName(true)
         navigate('/success')

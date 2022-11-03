@@ -269,19 +269,29 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             <div></div>
             {/* <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'/free-mint'} >Free Mint</a>
             <div></div> */}
-      
+             <div className="login-buttons" style={{margin: '10px'}}>
+              <a style={{background: '#19FDA6', padding: '10px', 
+              cursor: 'pointer',
+              'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} 
+                
+              href='https://lewkprotocol.xyz'
+              >
+            
+                  <span>Create Web3 Identity</span>
+                </a>
+            </div>
 
             
             <div className="login-buttons" style={{margin: '10px'}}>
-            <a style={{background: '#19FDA6', padding: '10px', 
-            cursor: 'pointer',
-            'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} 
-              
-            href='/create'
-             >
-          
-                <span>Create</span>
-              </a>
+              <a style={{background: '#19FDA6', padding: '10px', 
+              cursor: 'pointer',
+              'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} 
+                
+              href='/create'
+              >
+            
+                  <span>Mint</span>
+                </a>
             </div>
            
 
@@ -365,7 +375,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
 
             <div></div>
 
-            <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href={'https://airtable.com/shrtnvjRsLibyYcOD'} 
+            {/* <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href={'https://airtable.com/shrtnvjRsLibyYcOD'} 
             
             
               onClick={() => {
@@ -381,7 +391,25 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
 
               }}
             >Join the revolution</a>
-            <div></div>
+            <div></div> */}
+
+            <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href={'https://airtable.com/shr7YBHjb8imXVv7v'} 
+            
+            
+            onClick={() => {
+              // console.log('ppp')
+              trackEvent('JoinBeta_Clicked', {
+                library,
+                chainId,
+                account,
+                activate,
+                deactivate,
+                active
+              })
+
+            }}
+          >Post a Bounty</a>
+          <div></div>
 
             {/* <a style={{ padding: '10px 15px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#19FDA6'}} href={'/register'} >Get your own lewk</a>
             <div></div> */}
@@ -403,7 +431,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
     })
 
   }}
->Your Lewk Portal</a>
+>Your Lewk Wallet</a>
           
 
 

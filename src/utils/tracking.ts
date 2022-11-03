@@ -83,6 +83,8 @@ type EventName = 'PostJobPage_Visted'
 
 | 'DisconnectWallet_Clicked'
 | 'JoinBeta_Clicked'
+| 'PostBounty_Clicked'
+| 'GatedLink_Clicked'
 | 'Create_Clicked'
 
 | 'QueryTheBlockCTAbtnSecondHero_Clicked'

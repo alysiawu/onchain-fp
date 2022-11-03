@@ -100,14 +100,14 @@ const Footer: React.FC = () => {
                 {/* <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" /> */}
               </div>
               <div className="flex flex-col lg:flex-row lg:items-center">
-              <a href="#">
+              {/* <a href="#">
               <img id="badge-button"  
               style={{
                 width: '240px',
                 height: '53px'
               }}
               src="https://static.alchemyapi.io/images/marketing/badge.png" alt="Alchemy Supercharged" />
-          </a>
+          </a> */}
                       
                 {/* <a style={{background: 'none', padding: '12px', width: '200px', 
                 'boxShadow': '0 0 50px #19FDA6', 

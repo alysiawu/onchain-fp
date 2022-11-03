@@ -26,30 +26,6 @@ export interface CardNFTProps {
 }
 
 const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, nft, owner }) => {
-  const renderAvatars = () => {
-    return (
-      <div className="flex -space-x-1 ">
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-      </div>
-    );
-  };
-
-
   return (
     <div
       className={`nc-CardNFT relative flex flex-col group !border-0 [ nc-box-has-hover nc-dark-box-bg-has-hover ] ${className}`}

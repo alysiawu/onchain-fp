@@ -29,16 +29,32 @@ export interface PageSearchProps {
   className?: string;
 }
 
-var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appfZedSta1s4n06f');
+var base = new Airtable({apiKey: 'keyDr90Ny9XSuy819'}).base('appCSwkJSOqF9ctqb');
 
 const ReferralOppos: FC<PageSearchProps> = ({ className = "" }) => {
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
+  function handleWindowSizeChange() {
+      setWidth(window.innerWidth);
+  }
+  useEffect(() => {
+      window.addEventListener('resize', handleWindowSizeChange);
+      return () => {
+          window.removeEventListener('resize', handleWindowSizeChange);
+      }
+  }, []);
+  
+  const isMobile = width <= 768;
+
   const [nfts, setNfts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [oppos, setOppos] = useState([])
   const [loadingState, setLoadingState] = useState(false)
   const [jobOpenings, setJobOpenings] = useState<{
-    title: string; company: string; location: string; h1b: string; email: string; name: string;
+    title: string; company: string; location: string; bounty: string; referralForm: string;
     uuid: string;
+    requirement: string;
+    logo: string;
   } []>()
 
 //   async function loadNFTs() {
@@ -84,8 +100,8 @@ const {
 
 const getJobOpeningsFromAirtable = () => {
 
-    let data: { airtableId: string; title: string | number | boolean | Collaborator | readonly Collaborator[] | readonly string[] | readonly Attachment[] | undefined; company: string | number | boolean | Collaborator | readonly Collaborator[] | readonly string[] | readonly Attachment[] | undefined; uuid: string }[] = []
-    base('Web3 Jobs').select({
+    let data: any[] = []
+    base('Table 1').select({
       // Selecting the first 3 records in Grid view:
       maxRecords: 5000,
       view: "Grid view"
@@ -100,6 +116,10 @@ const getJobOpeningsFromAirtable = () => {
                 airtableId: record.id,
                 title: record.get('Title'),
                 company: record.get('Company'),
+                bounty: record.get('Bounty'),
+                requirement: record.get('Requirement'),
+                referralForm: record.get('ReferralForm'),
+                logo: record.get('logo'),
                 uuid: record.id,
                 // description: record.get('Description')
              
@@ -161,9 +181,10 @@ const getJobOpeningsFromAirtable = () => {
       title: string;
       company: string;
       location: string;
-      h1b: string;
-      email: string;
-      name: string;
+      bounty: string;
+      referralForm: string;
+      // email: string;
+      // name: string;
       uuid: string;
   }) => { 
     const s = searchTerm.toLowerCase()
@@ -175,15 +196,8 @@ const getJobOpeningsFromAirtable = () => {
     console.log('---filtered', filtered)
     setOppos(filtered as unknown as any)
 
-    const filteredAirtable = jobOpenings && jobOpenings.filter((oppo: {
-      title: string;
-      company: string;
-      location: string;
-      h1b: string;
-      email: string;
-      name: string;
-      uuid: string;
-  }) => { 
+    // @ts-ignore
+    const filteredAirtable = jobOpenings && jobOpenings.filter(oppo => { 
       return oppo?.title?.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 || oppo?.company?.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
     
     })
@@ -205,7 +219,7 @@ const getJobOpeningsFromAirtable = () => {
   return (
     <div className={`nc-PageSearch  ${className}`} data-nc-id="PageSearch">
       <Helmet>
-        <title>Your pass to the talentverse</title>
+        <title>No B.S. Web3.0 Bounty Economy</title>
       </Helmet>
 
       <div
@@ -275,11 +289,12 @@ const getJobOpeningsFromAirtable = () => {
             ))}
           </div> */}
 
-  <h2 className="text-lg sm:text-2xl font-semibold mt-10">
-        {/* <div className="mv-10"> */}
-               
+  <h2 className="text-lg sm:text-2xl font-semibold mt-10 mb-10">
+        <div className="mv-10 max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7">
+        Join The Web3.0 Bounty Economy!
                {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Join Our Community</a> */}
-             {/* </div> */}
+             </div>
+             
 
   </h2>
            
@@ -335,27 +350,145 @@ const getJobOpeningsFromAirtable = () => {
               {/* <input type="submit" hidden value="" /> */}
                       {/* <a style={{background: '#19FDA6', padding: '12px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={'https://discord.gg/WeRyZYkUD9'} >Search</a> */}
             </form>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-        
-            {jobOpenings && jobOpenings.map((oppo, index) => (
-                <CardReferral key={index} oppo={oppo}/>
+            {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10"> */}
+            
+
+            {/* <div className="container relative mt-5 mb-50 sm:mb-24 lg:mt-20 lg:mb-32"> */}
+{/* 
+            <div 
+                  className=""
+                  style={{
+                    width: '100%',
+                    height: '50px',
+                    display: 'flex',
+                    color: '#fff',
+                    // background: 'rgb(25, 253, 166)',
+                    borderBottom: '1px solid rgb(25, 253, 166)',
+                    // borderRadius: '50px'
+                  
+                  }}>
+                      <div className="p-4 py-5 space-y-3"
+                        style={{
+                   
+                          
+                         
+                          width: '300px'
+                        
+                        }}
+
+                      >
+
+                     Title
+                      </div>
+                      <div className="p-4 py-5 space-y-3"
+                       style={{
+                   
+                          
+                        
+                        width: '300px'
+                      
+                      }}
+>
+
+                      Company
+                      </div>
+                      <div className="p-4 py-5 space-y-3">
+
+                     Bounty
+                      </div>
+                    
+                  
+                 
+
+
+                </div> */}
+{/* 
+            {jobOpenings && jobOpenings.map(({title, company, bounty, referralForm }, index) => (
+                // <CardReferral key={index} oppo={oppo}/>
+
+                (<div 
+                  className=""
+                  style={{
+                    width: '100%',
+                    height: '50px',
+                    display: 'flex',
+                    color: '#fff',
+                    
+                    // background: 'rgb(25, 253, 166)'
+                  }}>
+                      <div className="p-4 py-5 space-y-3"
+                        style={{
+                   
+                          
+                        
+                          width: '25%'
+                        
+                        }}
+
+                      >
+
+                      {title}
+                      </div>
+                      <div className="p-4 py-5 space-y-3"
+                       style={{
+                   
+                          
+                        
+                        width: '25%'
+                      
+                      }}
+>
+
+                      {company}
+                      </div>
+                      <div className="p-4 py-5 space-y-3" style={{
+                   
+                          
+                        
+                   width: '25%'
+                 
+                 }}
+>
+
+                      ${bounty}
+                      </div>
+                      <div className="p-4 py-5 space-y-3">
+
+                         
+                          <a style={{background: '#19FDA6', padding: '10px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '20px', color: '#111'}} href={referralForm} > refer</a>
+                      </div>
+                  
+                 
+
+
+                </div>)
+                // (!isMobile&& <CardReferral key={index} oppo={oppo}/>)
+
+
             ))}
-          </div>
+
+
+
+          </div> */}
 
 
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-            {oppos && [...oppos].map((oppo, index) => (
+            {/* {oppos && [...oppos].map((oppo, index) => (
               <CardReferral key={index} oppo={oppo}/>
-            ))}
-            {/* {jobOpenings && jobOpenings.map((oppo, index) => (
-                <CardReferral key={index} oppo={oppo}/>
             ))} */}
+
+
+
+            {jobOpenings && jobOpenings.map((oppo, index) => (
+                <CardReferral key={index} oppo={oppo}/>
+            ))}
+             
           </div>
 
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
+            {/* <Pagination /> */}
             {/* <ButtonPrimary loading>Show me more</ButtonPrimary> */}
              <div className="mv-10">
                

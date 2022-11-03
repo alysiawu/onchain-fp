@@ -21,6 +21,8 @@ import { getNFTs } from 'utils/alchemy'
 import { useWeb3React } from "@web3-react/core";
 import { Network } from "alchemy-sdk";
 import { BeatLoader } from "react-spinners";
+import CardGatedLink from "components/CardGatedLink";
+import { useAccountContext } from "contexts/accountContext";
 
 
 export interface AuthorPageProps {
@@ -30,8 +32,9 @@ export interface AuthorPageProps {
 // const placeholderAvatar = 'https://api.multiavatar.com/eeeeee.svg'
 
 const GatedLinks: FC<AuthorPageProps> = ({ className = "" }) => {
-    console.log('ppppp')
-  
+    // console.log('ppppp')
+    const { connectWallet } = useAccountContext()
+    const [currentAccount, setCurrentAccount] = useState('')
   const { state } = useLocation()
  const _nftDataETH = (state as any)?.nftDataETH
  const _nftDataPOLYGON = (state as any)?.nftDataPOLYGON
@@ -42,11 +45,11 @@ const GatedLinks: FC<AuthorPageProps> = ({ className = "" }) => {
    const [walletAddress, setWalletAddress] = useState('')
 
    const { pageSlug } = useParams()
-   console.log('---pageSlug', pageSlug)
+  //  console.log('---pageSlug', pageSlug)
 
  const [loading, setLoading] = useState(false)  
 
-  var Airtable = require('airtable');
+  // var Airtable = require('airtable');
 
   const {
     library,
@@ -79,23 +82,26 @@ const GatedLinks: FC<AuthorPageProps> = ({ className = "" }) => {
       //       email, 
       //       uid,
       //   })
-      const [gatedContent, setGatedContent] = useState()
-      const [tokenGatesData, setTokenGates] = useState<any>();
-      const [profileData, setProfileData] = useState<
+      const [gatedContent, setGatedContent] = useState<
       {
-          email: string;
-          linkToResume: string;
-          name: string;
-          phone: string;
-          hourlyRate: string;
-          primarySkill: string;
-
-          skillsets: string;
-          industryInterest: string;
-          superpower: string;
-          twoTruthOnelie: string;
-          zoomLink: string;
+          content:string
       }>()
+      const [tokenGatesData, setTokenGates] = useState<any>();
+      // const [profileData, setProfileData] = useState<
+      // {
+      //     email: string;
+      //     linkToResume: string;
+      //     name: string;
+      //     phone: string;
+      //     hourlyRate: string;
+      //     primarySkill: string;
+
+      //     skillsets: string;
+      //     industryInterest: string;
+      //     superpower: string;
+      //     twoTruthOnelie: string;
+      //     zoomLink: string;
+      // }>()
 
 
 const getGatedContent =  (slug: string) => {
@@ -132,39 +138,129 @@ return !!has
 } 
 
 
+
 const _getNFTs = async (wallet: string, _tokenGates: any) => {
+    console.log('===_tokenGates', _tokenGates)
   setLoading(true)
   setHasAssess(false)
-  const _nftData = await getNFTs(wallet, Network.ETH_MAINNET)
-
-  const _nftDataPolygon = await getNFTs(wallet, Network.MATIC_MAINNET)
-
-  let hasAccess = false
-  if ( _tokenGates[0].chain === 'Polygon') {
-    hasAccess = hasToken(_tokenGates[0],  _nftDataPolygon)
-    
-  } else if ( _tokenGates[0].chain === 'Ethereum') {
-    hasAccess = hasToken(_tokenGates[0], _nftData)
+  if (!_tokenGates) {
+    setLoading(false)
+    setHasAssess(true)
+    pageSlug && getGatedContent(pageSlug)
+    return
   }
 
-    setHasAssess(hasAccess)
-    hasAccess && pageSlug && getGatedContent(pageSlug)
+  if (_tokenGates && _tokenGates.gatingWallets && _tokenGates.gatingWallets.indexOf(account) == -1) {
+    setHasAssess(false)
+    return
+  }
+
+  if (_tokenGates && _tokenGates.gatingWallets && _tokenGates.gatingWallets.indexOf(account) > -1) {
+    setHasAssess(true)
+    return
+  }
+
+  if (_tokenGates && _tokenGates.chain) {
+    const _nftData = await getNFTs(wallet, Network.ETH_MAINNET)
+
+    const _nftDataPolygon = await getNFTs(wallet, Network.MATIC_MAINNET)
+  
+
+    let hasAccess = false
+    if (_tokenGates && _tokenGates.chain &&  _tokenGates.chain.toLowerCase() === 'polygon') {
+      hasAccess = hasToken(_tokenGates,  _nftDataPolygon)
+      
+    } else if ( _tokenGates && _tokenGates.chain && _tokenGates.chain.toLowerCase() === 'eth') {
+      hasAccess = hasToken(_tokenGates, _nftData)
+    }
+
+      setHasAssess(hasAccess)
+      hasAccess && pageSlug && getGatedContent(pageSlug)
 
 
-  // @ts-ignore
-  // setNFTData(_nftData)
-  setNFTDataPOLYGON(_nftDataPolygon)
-  setNFTDataETH(_nftData)
+    // @ts-ignore
+    // setNFTData(_nftData)
+    setNFTDataPOLYGON(_nftDataPolygon)
+    setNFTDataETH(_nftData)
+
+  } else {
+
+  }
+  
 
   setLoading(false)
 
 }
 
+  const checkEligibility = async (wallet: string, _tokenGates: any) => {
+    if (!_tokenGates) {
+     
+      setHasAssess(true)
+      pageSlug && getGatedContent(pageSlug)
+      return
+    } else {
+       // only wallet 
+      if (!_tokenGates.chain) {
+        console.log('ppppp', account)
+        if (_tokenGates.gatingWallets.indexOf(account) > -1) {
+          console.log('ppppp', account)
+          setHasAssess(true)
+           pageSlug && getGatedContent(pageSlug)
+
+          return
+        }
+        setHasAssess(false)
+        return
+      } else {
+        // chain gating 
+        let hasAccess = false
+        if (_tokenGates.chain.toLowerCase() === 'eth') {
+          setLoading(true)
+          const _nftData = await getNFTs(wallet, Network.ETH_MAINNET)
+
+       
+          hasAccess = hasToken(_tokenGates, _nftData)
+          setLoading(false)
+        } else if (_tokenGates.chain.toLowerCase() === 'polygon') {
+          setLoading(true)
+          const _nftDataPolygon = await getNFTs(wallet, Network.MATIC_MAINNET)
+          setLoading(false)
+          hasAccess = hasToken(_tokenGates,  _nftDataPolygon)
+        }
+
+          // only chain 
+        if (!_tokenGates.gatingWallets) {
+          setHasAssess(hasAccess)
+          hasAccess && pageSlug && getGatedContent(pageSlug)
+        } else {
+          // chain and wallets 
+          setHasAssess(hasAccess && _tokenGates.gatingWallets.indexOf(account) > -1)
+          hasAccess && pageSlug && getGatedContent(pageSlug)
+
+        }
+
+
+      }
+
+    
+     
+
+
+      // chain && wallet
+    }
+  }
+
 
 const [hasAccess, setHasAssess] = useState(false)
+const [gatedData, setGatedData] = useState<{
+    description: string;
+    imageUrl: string;
+    title: string
+}>()
 
 const getPageInfo =  (slug: string) => {
   const db = getDatabase();
+  console.log('===slug', slug)
   const path = 'customDomain/' + slug
   const curation = ref(db, path);
 
@@ -174,10 +270,12 @@ const getPageInfo =  (slug: string) => {
       // if (snapshot.exists()) {
       var data = snapshot.val();
       console.log('===data', data)
-      setTokenGates(data)
+      setTokenGates(data.tokenGates)
 
-      account && _getNFTs(account, JSON.parse(data.video.tokenGates))
+      account && checkEligibility(account, data.tokenGates)
       console.log('===pagegggggdata', data)
+      setGatedData(data?.gatedData)
+      console.log('===gatedData', data?.gatedData)
 
   })
 
@@ -185,19 +283,34 @@ const getPageInfo =  (slug: string) => {
 
 // fist get the page info
 useEffect(() => {
-  console.log('--pageSlug', pageSlug)
+  console.log('--pageSlug', pageSlug, account)
   account && pageSlug && getPageInfo(pageSlug)
 }, [pageSlug, account])
 
+useEffect(() => {
+  // if (!currentAccount) {
+    // connectWallet && connectWallet() 
+    // localStorage.getItem('currentWallet')
+  // }
+  if (!localStorage.getItem('currentWallet')) {
+    // reconnect
+    connectWallet && connectWallet() 
+  } else {
+    const w = localStorage.getItem('currentWallet') || ''
+    // ts-ignore
+    setCurrentAccount(w)
+  }
 
 
-const reservedDomains = [
-  'alysia',
-  'alysiawu',
-  'elon',
-  'elonmust'
-]
+  // if connected with wallet
 
+
+}, [currentAccount])
+
+
+// useEffect(() => {
+//     _getNFTs()
+// }, [])
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
       <Helmet>
@@ -219,6 +332,31 @@ const reservedDomains = [
        
           <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">    
             <div className="absolute md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5 flex flex-row-reverse justify-end">
+                {/* {gatedData.} */}
+                {/* {JSON.stringify(gatedData)} */}
+                <div className="sm:text-lg ml-10 md:text-xl font-semibold text-neutral-300 text-center">
+                {tokenGatesData?.gatingWallets && `Wallet Required ${tokenGatesData?.gatingWallets}` }
+                </div>
+                <div className="sm:text-lg ml-10 md:text-xl font-semibold text-neutral-300 text-center">
+                {tokenGatesData?.chain && `Chain ${tokenGatesData?.chain}` }
+             
+                </div>
+                <div className="sm:text-lg ml-10 md:text-xl font-semibold text-neutral-300 text-center">
+             
+                {tokenGatesData?.contractAddress && `Contract Address ${tokenGatesData?.contractAddress}` }
+                </div>
+              
+
+                {gatedData && <CardGatedLink data={gatedData} gatedContent= {gatedContent?.content}/>}
+                {/* {gatedContent && gatedContent?.content} */}
+          
+              
+                {/* {gatedData && <NcImage
+                    containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
+                    src={gatedData?.imageUrl}
+                    className="object-cover group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
+                />} */}
+          
 
               {/* <NftMoreDropdown
                 actions={[
@@ -275,16 +413,73 @@ const reservedDomains = [
             </div>
           </div>
         </div>
+       
       </div>
       {/* ====================== END HEADER ====================== */}
 
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28">
+        <div className="sm:text-lg mb-10 md:text-xl font-semibold text-neutral-300 text-center">
+            {hasAccess && account && gatedContent?.content && <div className="gap-x-8 gap-y-10 mt-8 lg:mt-10">
+                <a style={{ padding: '10px 50px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '100px', color: '#19FDA6', cursor: 'pointer'}} 
+               
+                        onClick={() => {
+                        // console.log('ppp')
+                        trackEvent('GatedLink_Clicked', {
+                            gatedLink:  gatedContent?.content
+                        // library,
+                        // chainId,
+                        // account,
+                        // activate,
+                        // deactivate,
+                        // active
+                        })
+                        if (gatedContent?.content) {
+
+                            // window.location.href = gatedContent?.content
+                            window.open(gatedContent?.content)
+                        }
+                       
+                        }}
+                        >{gatedContent?.content}</a> 
+
+                  {/* @ts-ignore */}
+                {/* {gatedContent && gatedContent?.content} */}
+              </div>}
+              </div>
+              <div className="sm:text-lg mb-10 md:text-xl font-semibold text-neutral-300 text-center">
+              {hasAccess && !account && <div className="gap-x-8 gap-y-10 mt-8 lg:mt-10">
+                <a style={{ padding: '10px 50px', 'boxShadow': '0 0 50px #19FDA6', borderRadius: '100px', color: '#19FDA6'}} href={gatedContent?.content} 
 
 
+                        onClick={() => {
+                        // console.log('ppp')
+                        trackEvent('GatedLink_Clicked', {
+                            gatedLink:  gatedContent?.content
+                        // library,
+                        // chainId,
+                        // account,
+                        // activate,
+                        // deactivate,
+                        // active
+                        })
+
+                        }}
+                        >Connect to view</a> 
+
+                  {/* @ts-ignore */}
+                {/* {gatedContent && gatedContent?.content} */}
+              </div>}
+
+              </div>
       {loading &&<>
            
            
            <div className="sm:text-lg mb-10 md:text-xl font-semibold text-neutral-300 text-center">
+          
+
+
+             
+
                 {/* Create, Explore, & Collect Digital Art NFTs. */}
                 Reading from the block <BeatLoader
               cssOverride={{
@@ -319,9 +514,10 @@ const reservedDomains = [
                 Gating Tokens
                 </h2> */}
            <div className="sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
+       
            {/* Gating NFT contract
     */}
-                {tokenGatesData && tokenGatesData.video && JSON.parse(tokenGatesData?.tokenGates).map((tg: { chain: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; contractAddress: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined )=> {
+                {/* {tokenGatesData && tokenGatesData.video && JSON.parse(tokenGatesData?.tokenGates).map((tg: { chain: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; contractAddress: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined )=> {
                   return <div key={index}>
       
     
@@ -346,14 +542,14 @@ const reservedDomains = [
                     </div>
                     </div>
 
-                })}
+                })} */}
               </div>
               <h2 className="text-3xl sm:text-4xl font-semibold mt-10">
                 
                 </h2>
 
             {hasAccess && <h2 className="text-3xl sm:text-4xl font-semibold">
-              Gated content
+              {/* Gated content */}
            
 
     
@@ -361,7 +557,7 @@ const reservedDomains = [
 
                 {hasAccess && <div className="gap-x-8 gap-y-10 mt-8 lg:mt-10">
                   {/* @ts-ignore */}
-                {gatedContent && gatedContent?.video?.content}
+                {/* {gatedContent && gatedContent?.content} */}
               </div>}
 
                 <h2 className="text-3xl sm:text-4xl font-semibold mt-10">
